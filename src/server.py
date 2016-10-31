@@ -6,10 +6,12 @@ import sys
 from threading import Lock
 
 incoming = {}
+master_thread = None
 N = None
 pid = None
 port = None
-threads = {}
+receive_threads = {}
+send_thread = None
 
 def new_instance(kind):
     global incoming, pid
@@ -37,7 +39,8 @@ def new_instance(kind):
         return ((sender_port, sender_subid), msg)
     def send(recipient, msg):
         recipient_port, recipient_subid = sender_port
-        msg_to_send = str(recipient_port) + ':' + str(recipient_subid) + ':' + msg
+        header = '%d:%d:%d:%d:' % (20000+pid, subid, recipient_port, recipient_subid)
+        msg_to_send = header + msg
         LOG.debug('send: ' + msg_to_send)
     return (send, receive)
 
