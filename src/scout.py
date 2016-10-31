@@ -1,6 +1,6 @@
-from threading import Thread, Lock
+import logging as LOG
 
-class Scout(Thread):
+class Scout:
     def __init__(self, acceptors, b, leader):
         this.acceptors = acceptors
         this.b = b
@@ -9,6 +9,4 @@ class Scout(Thread):
         this.waitfor = list(acceptors)
 
     def run(self):
-        filename = str(self.pid) + '.log'
-        with open(filename, 'a+') as f:
-            f.write('run Scout')
+        LOG.debug('scout.run() called')
