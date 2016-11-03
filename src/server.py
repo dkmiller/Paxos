@@ -7,7 +7,6 @@ from socket import SOCK_STREAM, socket, AF_INET
 from threading import Thread, Lock
 
 incoming = {}
-master_thread = None
 N = None
 pid = None
 port = None
@@ -15,6 +14,7 @@ receive_threads = {}
 send_thread = None
 root_port = 20000
 address = 'localhost'
+mhandler = None
 
 def new_instance(kind):
     global incoming, pid
@@ -51,8 +51,10 @@ class ListenThread(Thread):
         Thread.__init__(self)
         self.conn = conn
         self.addr = addr
+        LOG.debug("Listen Handler inited")
 
     def run(self):
+        LOG.debug("Listen Running")
         while True:
             try:
                 data = self.conn.recv(1024)
@@ -72,9 +74,10 @@ class WorkerThread(Thread):
         self.sock = socket(AF_INET, SOCK_STREAM)
         self.sock.bind((address, internal_port))
         self.sock.listen(1)
+        LOG.debug("Worker Handler inited")
 
     def run(self):
-        global threads
+        LOG.debug("Worker Running")
         while True:
             conn, addr = self.sock.accept()
             handler = ListenThread(conn, addr)
@@ -91,6 +94,7 @@ class MasterHandler(Thread):
         LOG.debug('Master Handler inited')
 
     def run(self):
+        LOG.debug("Master Running")
         while True:
             try:
                 data = self.conn.recv(1024)
@@ -115,6 +119,21 @@ class MasterHandler(Thread):
         except:
             pass
 
+def send_master(msg):
+    global mhandler
+    mhandler.send(str(msg) + '\n')
+    LOG.debug("SOCKET: Master sending")
+
+def send(pid, msg):
+    try:
+        sock = socket(AF_INET, SOCK_STREAM)
+        sock.connect((address, root_port + pid))
+        sock.send(str(msg) + '\n')
+        sock.close()
+        LOG.debug("SOCKET: sending")
+    except:
+        LOG.debug("SOCKET: ERROR")
+
 def main():
     global N, pid, port
 
@@ -129,7 +148,7 @@ def main():
     LOG.debug('IDENTITY pid: %d, port: %d ' % (pid, port))
 
     # Create the replica running on this process.
-    leaders = [(20000+i, 1) for i in xrange(N)]
+    leaders = [(root_port + i, 1) for i in xrange(N)]
     send, receive = new_instance('replica')
 
     # Spawn the replica.
@@ -141,9 +160,8 @@ def main():
     mhandler.start()
 
     # Spawn All incoming connection threads
-    handler = WorkerThreads(address, root_port+pid, pid)
+    handler = WorkerThread(address, root_port+pid, pid)
     handler.start()
-
 
     LOG.debug('main ends')
 
