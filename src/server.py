@@ -14,6 +14,7 @@ receive_threads = {}
 send_thread = None
 root_port = 20000
 address = 'localhost'
+mhandler = None
 
 def new_instance(kind):
     global incoming, pid
@@ -27,11 +28,12 @@ def new_instance(kind):
             subid = 0
         subid = str(subid)
     incoming[subid] = Queue()
+    # Syntax: sender, msg = receive()
     def receive():
-        m = incoming[subid].get(block=True).split(':',2)
+        m = incoming[subid].get(block=True).split(':',4)
         sender_port = int(m[0])
         sender_subid = m[1]
-        msg = m[3]
+        msg = m[4]
         LOG.debug('received: ' + msg)
         return ((sender_port, sender_subid), msg)
     def send(recipient, msg):
@@ -41,6 +43,7 @@ def new_instance(kind):
         header = '%d:%s:%d:%s:' % (sender_port, sender_subid, recipient_port, recipient_subid)
         msg_to_send = header + msg
         LOG.debug('send: ' + msg_to_send)
+        # TODO: actually send something!
     return (send, receive)
 
 class ListenThread(Thread):
@@ -60,7 +63,8 @@ class ListenThread(Thread):
                     data = data[:-1]
                     for line in data:
                         LOG.debug("ListenThread: " + str(line))
-                        #receive(line)
+                        # Give replica to the local replica.
+                        incoming['replica'].put(line)
             except:
                 break
 
@@ -99,7 +103,7 @@ class MasterHandler(Thread):
                     data = data[:-1]
                     for line in data:
                         LOG.debug("MasterHandler: " + str(line))
-                        #receive_master(line)
+                        # TODO: pass line to local replica!
                         
             except:
                 LOG.debug("ERROR: " + str(sys.exec_info()))
@@ -115,6 +119,21 @@ class MasterHandler(Thread):
         except:
             pass
 
+def send_master(msg):
+    global mhandler
+    mhandler.send(str(msg) + '\n')
+    LOG.debug("SOCKET: Master sending")
+
+def send(pid, msg):
+    try:
+        sock = socket(AF_INET, SOCK_STREAM)
+        sock.connect((address, root_port + pid))
+        sock.send(str(msg) + '\n')
+        sock.close()
+        LOG.debug("SOCKET: sending")
+    except:
+        LOG.debug("SOCKET: ERROR")
+
 def main():
     global N, pid, port
 
@@ -128,16 +147,6 @@ def main():
     
     LOG.debug('IDENTITY pid: %d, port: %d ' % (pid, port))
 
-    # Spawn Master Thread to listen from master
-    mhandler = MasterHandler(pid, address, port)
-    mhandler.start()
-
-    # Spawn All incoming connection threads
-    handler = WorkerThread(address, root_port+pid, pid)
-    handler.start()
-
-    # Spawn the necessary threads.
-
     # Create the replica running on this process.
     leaders = [(root_port + i, 1) for i in xrange(N)]
     send, receive = new_instance('replica')
@@ -145,6 +154,14 @@ def main():
     # Spawn the replica.
     replica = Replica(leaders, '', send, receive)
     replica.start()
+
+    # Spawn Master Thread to listen from master
+    mhandler = MasterHandler(pid, address, port)
+    mhandler.start()
+
+    # Spawn All incoming connection threads
+    handler = WorkerThread(address, root_port+pid, pid)
+    handler.start()
 
     LOG.debug('main ends')
 
