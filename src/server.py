@@ -17,7 +17,7 @@ address = 'localhost'
 mhandler = None
 
 def new_instance(kind):
-    global incoming, pid
+    global incoming, pid, send, send_master
     subid = None
     if kind in ['acceptor', 'leader', 'master', 'replica', 'scout']:
         subid = kind
@@ -29,22 +29,23 @@ def new_instance(kind):
         subid = str(subid)
     incoming[subid] = Queue()
     # Syntax: sender, msg = receive()
-    def receive():
+    def my_receive():
         m = incoming[subid].get(block=True).split(':',4)
-        sender_port = int(m[0])
+        sender_pid = int(m[0])
         sender_subid = m[1]
         msg = m[4]
         LOG.debug('received: ' + msg)
-        return ((sender_port, sender_subid), msg)
-    def send(recipient, msg):
-        recipient_port, recipient_subid = recipient
-        sender_port = root_port + pid
-        sender_subid = subid
-        header = '%d:%s:%d:%s:' % (sender_port, sender_subid, recipient_port, recipient_subid)
-        msg_to_send = header + msg
-        LOG.debug('send: ' + msg_to_send)
-        # TODO: actually send something!
-    return (send, receive)
+        return ((sender_pid, sender_subid), msg)
+    def my_send(recipient, msg):
+        recipient_pid, recipient_subid = recipient
+        if recipient_subid == 'master':
+            send_master(msg)
+        else:
+            header = '%d:%s:%d:%s:' % (pid, subid, recipient_pid, recipient_subid)
+            msg_to_send = header + msg
+            LOG.debug('send: ' + msg_to_send)
+            send(recipient_pid, msg_to_send)
+    return (my_send, my_receive)
 
 class ListenThread(Thread):
     def __init__(self, conn, addr):
@@ -64,7 +65,14 @@ class ListenThread(Thread):
                     for line in data:
                         LOG.debug("ListenThread: " + str(line))
                         # Give replica to the local replica.
-                        incoming['replica'].put(line)
+                        recipient_subid = line.split(':', 4)[3]
+                        # Message is to a commander.
+                        if recipient_subid not in ['acceptor', 'leader', 'master', 'replica', 'scout']:
+                            recipient_subid = int(recipient_subid)
+                        msg = ls[4]
+                        # Only pass on message if it is to a valid recipient. 
+                        if recipient_subid in incoming:
+                            incoming[recipient_subid].put(line)
             except:
                 break
 
@@ -103,8 +111,8 @@ class MasterHandler(Thread):
                     data = data[:-1]
                     for line in data:
                         LOG.debug("MasterHandler: " + str(line))
-                        # TODO: pass line to local replica!
-                        
+                        header = '%d:%s:%d:%s:' % (self.port, 'master', -1, 'replica')
+                        incoming['replica'].put(line)
             except:
                 LOG.debug("ERROR: " + str(sys.exec_info()))
                 self.sock.close()
@@ -149,10 +157,10 @@ def main():
 
     # Create the replica running on this process.
     leaders = [(root_port + i, 1) for i in xrange(N)]
-    send, receive = new_instance('replica')
+    my_send, my_receive = new_instance('replica')
 
     # Spawn the replica.
-    replica = Replica(leaders, '', send, receive)
+    replica = Replica(leaders, '', my_send, my_receive)
     replica.start()
 
     # Spawn Master Thread to listen from master
