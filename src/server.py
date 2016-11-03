@@ -44,6 +44,38 @@ def new_instance(kind):
         LOG.debug('send: ' + msg_to_send)
     return (send, receive)
 
+class ListenThread(Thread):
+    def __init__(self, conn, addr):
+        Thread.__init__(self)
+        self.conn = conn
+        self.addr = addr
+
+    def run(self):
+        while True:
+            try:
+                data = self.conn.recv(1024)
+                if data != "":
+                    data = data.split('\n')
+                    data = data[:-1]
+                    for line in data:
+                        LOG.debug("ListenThread: " + str(line))
+                        #receive(line)
+            except:
+                break
+
+class WorkerThread(Thread):
+    def __init__(self, address, internal_port, pid):
+        Thread.__init__(self)
+        self.sock = socket(AF_INET, SOCK_STREAM)
+        self.sock.bind((address, internal_port))
+        self.sock.listen(1)
+
+    def run(self):
+        global threads
+        while True:
+            conn, addr = self.sock.accept()
+            handler = ListenThread(conn, addr)
+            handler.start()
 
 class MasterHandler(Thread):
     def __init__(self, index, address, port):
@@ -63,8 +95,8 @@ class MasterHandler(Thread):
                     data = data.split('\n')
                     data = data[:-1]
                     for line in data:
+                        LOG.debug("MasterHandler: " + str(line))
                         #receive_master(line)
-                        LOG.debug("Master: " + str(line))
                         
             except:
                 LOG.debug("ERROR: " + str(sys.exec_info()))
@@ -90,12 +122,16 @@ def main():
     
     # Start debugger
     LOG.basicConfig(filename="LOG/" + str(pid) + '.log', level=LOG.DEBUG)
+    
+    LOG.debug('IDENTITY pid: %d, port: %d ' % (pid, port))
 
     # Spawn Master Thread to listen from master
     mhandler = MasterHandler(pid, address, port)
     mhandler.start()
 
-    LOG.debug('pid: %d, port: %d ' % (pid, port))
+    # Spawn All incoming connection threads
+    handler = WorkerThreads(address, root_port+pid, pid)
+    handler.start()
 
     # Spawn the necessary threads.
 
