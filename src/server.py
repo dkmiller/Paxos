@@ -17,30 +17,27 @@ send_thread = None
 def new_instance(kind):
     global incoming, pid
     subid = None
-    if kind == 'acceptor':
-        subid = 0
+    if kind in ['acceptor', 'leader', 'master', 'replica', 'scout']:
+        subid = kind
     elif kind == 'commander':
         if len(incoming) > 0:
-            subid = max(3, max(incoming.keys())) + 1
+            subid = max([i for i in incoming.keys() if isinstance(i, int)]) + 1
         else:
-            subid = 4
-    elif kind == 'leader':
-        subid = 1
-    elif kind == 'replica':
-        subid = 2
-    elif kind == 'scout':
-        subid = 3
+            subid = 0
+        subid = str(subid)
     incoming[subid] = Queue()
     def receive():
         m = incoming[subid].get(block=True).split(':',2)
         sender_port = int(m[0])
-        sender_subid = int(m[1])
-        msg = m[2]
+        sender_subid = m[1]
+        msg = m[3]
         LOG.debug('received: ' + msg)
         return ((sender_port, sender_subid), msg)
     def send(recipient, msg):
-        recipient_port, recipient_subid = sender_port
-        header = '%d:%d:%d:%d:' % (20000+pid, subid, recipient_port, recipient_subid)
+        recipient_port, recipient_subid = recipient
+        sender_port = 20000+pid
+        sender_subid = subid
+        header = '%d:%s:%d:%s:' % (sender_port, sender_subid, recipient_port, recipient_subid)
         msg_to_send = header + msg
         LOG.debug('send: ' + msg_to_send)
     return (send, receive)
