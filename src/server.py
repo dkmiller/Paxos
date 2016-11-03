@@ -16,9 +16,11 @@ root_port = 20000
 address = 'localhost'
 mhandler = None
 
+# TODO: make thread-safe.
 def new_instance(kind):
     global incoming, pid, send, send_master
     subid = None
+
     if kind in ['acceptor', 'leader', 'master', 'replica', 'scout']:
         subid = kind
     elif kind == 'commander':
@@ -30,12 +32,12 @@ def new_instance(kind):
     incoming[subid] = Queue()
     # Syntax: sender, msg = receive()
     def my_receive():
+        LOG.debug('my_receive called')
         m = incoming[subid].get(block=True).split(':',4)
-        sender_pid = int(m[0])
-        sender_subid = m[1]
+        sender = (int(m[0]), m[1])
         msg = m[4]
         LOG.debug('received: ' + msg)
-        return ((sender_pid, sender_subid), msg)
+        return (sender, msg)
     def my_send(recipient, msg):
         recipient_pid, recipient_subid = recipient
         if recipient_subid == 'master':
@@ -55,6 +57,7 @@ class ListenThread(Thread):
         LOG.debug("Listen Handler inited")
 
     def run(self):
+        global incoming
         LOG.debug("Listen Running")
         while True:
             try:
@@ -102,6 +105,7 @@ class MasterHandler(Thread):
         LOG.debug('Master Handler inited')
 
     def run(self):
+        global incoming
         LOG.debug("Master Running")
         while True:
             try:
@@ -157,10 +161,9 @@ def main():
 
     # Create the replica running on this process.
     leaders = [(root_port + i, 1) for i in xrange(N)]
-    my_send, my_receive = new_instance('replica')
 
     # Spawn the replica.
-    replica = Replica(leaders, '', my_send, my_receive)
+    replica = Replica(leaders, '', new_instance)
     replica.start()
 
     # Spawn Master Thread to listen from master
