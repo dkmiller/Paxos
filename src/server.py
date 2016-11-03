@@ -7,7 +7,6 @@ from socket import SOCK_STREAM, socket, AF_INET
 from threading import Thread, Lock
 
 incoming = {}
-master_thread = None
 N = None
 pid = None
 port = None
@@ -49,8 +48,10 @@ class ListenThread(Thread):
         Thread.__init__(self)
         self.conn = conn
         self.addr = addr
+        LOG.debug("Listen Handler inited")
 
     def run(self):
+        LOG.debug("Listen Running")
         while True:
             try:
                 data = self.conn.recv(1024)
@@ -69,9 +70,10 @@ class WorkerThread(Thread):
         self.sock = socket(AF_INET, SOCK_STREAM)
         self.sock.bind((address, internal_port))
         self.sock.listen(1)
+        LOG.debug("Worker Handler inited")
 
     def run(self):
-        global threads
+        LOG.debug("Worker Running")
         while True:
             conn, addr = self.sock.accept()
             handler = ListenThread(conn, addr)
@@ -88,6 +90,7 @@ class MasterHandler(Thread):
         LOG.debug('Master Handler inited')
 
     def run(self):
+        LOG.debug("Master Running")
         while True:
             try:
                 data = self.conn.recv(1024)
@@ -130,13 +133,13 @@ def main():
     mhandler.start()
 
     # Spawn All incoming connection threads
-    handler = WorkerThreads(address, root_port+pid, pid)
+    handler = WorkerThread(address, root_port+pid, pid)
     handler.start()
 
     # Spawn the necessary threads.
 
     # Create the replica running on this process.
-    leaders = [(20000+i, 1) for i in xrange(N)]
+    leaders = [(root_port + i, 1) for i in xrange(N)]
     send, receive = new_instance('replica')
 
     # Spawn the replica.

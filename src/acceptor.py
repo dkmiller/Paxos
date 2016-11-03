@@ -6,8 +6,6 @@ class Acceptor(Thread):
         self.N = N
 
     def run(self):
-        filename = str(self.pid) + '.log'
-        with open(filename, 'a+') as f:
-            f.write('run Acceptor')
+        ballot_num = None, accepted = []
 
         # TODO: while True:
