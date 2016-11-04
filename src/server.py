@@ -25,7 +25,6 @@ class Communicator:
         self.mhandler = mhandler
         self.pid = pid
         self.send = send
-        self.send_master = send_master
     def build(self, kind):
         with self.incoming_lock:
             if kind == 'commander':
@@ -45,16 +44,13 @@ class Communicator:
             message = content[4]
             return (sender, message)
         def my_send(recipient, message):
-            LOG.debug('my_send()')
             recipient_pid, recipient_subid = recipient
             if recipient_subid == 'master':
                 self.mhandler.send(message)
-                LOG.debug('sent %s to master' % message)
             else:
                 header = '%d:%s:%d:%s:' % (self.pid, str(subid), recipient_pid, recipient_subid)
                 send_message = header + message
                 self.send(recipient_pid, send_message)
-        LOG.debug('Connector.build()')
         return (my_send, my_receive)
 
 class ListenThread(Thread):
@@ -64,7 +60,6 @@ class ListenThread(Thread):
         self.addr = addr
         self.buffer = ''
         self.valid = True
-        LOG.debug("ListenHandler()")
 
     def run(self):
         global incoming, incoming_lock
@@ -98,8 +93,6 @@ class WorkerThread(Thread):
         self.sock = socket(AF_INET, SOCK_STREAM)
         self.sock.bind((address, internal_port))
         self.sock.listen(1)
-        LOG.debug('WorkerThread()')
-
     def run(self):
         LOG.debug('WorkerThread.run()')
         while True:
@@ -118,8 +111,6 @@ class MasterHandler(Thread):
         self.port = port
         self.buffer = ''
         self.valid = True
-        LOG.debug('MasterHandler()')
-
     def run(self):
         global incoming, incoming_lock
         LOG.debug('MasterHandler.run()')
@@ -140,27 +131,14 @@ class MasterHandler(Thread):
                     self.valid = False
                     self.conn.close()
                     break
-
     def send(self, s):
-        LOG.debug('MasterHandler.send(%s)' % s)
         self.conn.send(str(s) + '\n')
-        LOG.debug('MasterHandler.send() complete')
-
+        LOG.debug('MasterHandler.send(%s)' % s)
     def close(self):
         try:
             self.sock.close()
         except:
             pass
-
-def send_master(msg):
-    global mhandler
-    LOG.debug('send_master(%s)' % msg)
-    try:
-        mhandler.send(str(msg) + '\n')
-        LOG.debug('send_master() completed')
-    except AttributeError:
-        LOG.debug('mhandler.send does not exist')
-        LOG.debug('type(mhandler) = %s' % str(type(mhandler)))
 
 def send(pid, msg):
     try:
@@ -173,7 +151,7 @@ def send(pid, msg):
         LOG.debug("SOCKET: ERROR")
 
 def main():
-    global incoming, incoming_lock, N, pid, port, send, send_master
+    global incoming, incoming_lock, N, pid, port, send
 
     # Read global state.
     pid = int(sys.argv[1])
