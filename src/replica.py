@@ -16,7 +16,7 @@ class Replica(Thread):
     def run(self):
         while True:
             sender, msg = self.receive()
-            LOG.debug('Replica.receive: \'%s\'' % msg)
+            LOG.debug('Replica.receive: (%s,\'%s\')' % (str(sender),msg))
             master = (-1, 'master')
             self.send(master, 'ack 0')
             LOG.debug('Replica.send: \'ack 0\'')
