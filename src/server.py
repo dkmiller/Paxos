@@ -7,7 +7,7 @@ from socket import SOCK_STREAM, socket, AF_INET
 from threading import Thread, Lock
 
 incoming = {}
-incoming_lock = None
+incoming_lock = Lock()
 N = None
 pid = None
 port = None
@@ -18,10 +18,11 @@ address = 'localhost'
 mhandler = None
 
 class Communicator:
-    def __init__(self, incoming, incoming_lock, pid, send, send_master):
+    def __init__(self, incoming, incoming_lock, pid, send, mhandler):
         self.commander_seq = 0
         self.incoming = incoming
         self.incoming_lock = incoming_lock
+        self.mhandler = mhandler
         self.pid = pid
         self.send = send
         self.send_master = send_master
@@ -32,32 +33,28 @@ class Communicator:
                 commander_seq += 1
             else:
                 subid = kind
-            LOG.debug('subid = ' + str(subid))
             if subid not in self.incoming:
                 self.incoming[subid] = Queue()
-            LOG.debug('self.incoming = %s' % str(self.incoming))
 
         # Syntax: sender, message = receive().
         def my_receive():
-            LOG.debug('%d: receive() called' % self.pid)
             # Blocks until a message is ready.
             content = self.incoming[subid].get(block=True).split(':',4)
             sender = (int(content[0]),content[1]) # (port, subid)
             # Skip recipient port, subid.
             message = content[4]
-            LOG.debug('%d: receive message: %s' % (self.pid, message))
             return (sender, message)
-        LOG.debug('defined my_receive()')
         def my_send(recipient, message):
+            LOG.debug('my_send()')
             recipient_pid, recipient_subid = recipient
             if recipient_subid == 'master':
-                self.send_master(message)
+                self.mhandler.send(message)
+                LOG.debug('sent %s to master' % message)
             else:
                 header = '%d:%s:%d:%s:' % (self.pid, str(subid), recipient_pid, recipient_subid)
                 send_message = header + message
-                LOG.debug('send: %s' % send_message)
                 self.send(recipient_pid, send_message)
-        LOG.debug('about to return (my_send, my_receive)')
+        LOG.debug('Connector.build()')
         return (my_send, my_receive)
 
 class ListenThread(Thread):
@@ -67,16 +64,15 @@ class ListenThread(Thread):
         self.addr = addr
         self.buffer = ''
         self.valid = True
-        LOG.debug("Listen Handler inited")
+        LOG.debug("ListenHandler()")
 
     def run(self):
         global incoming, incoming_lock
-        LOG.debug("Listen Running")
+        LOG.debug('ListenHandler.run()')
         while self.valid:
             if '\n' in self.buffer:
                 (line, rest) = self.buffer.split('\n',1)
                 self.buffer = rest
-                LOG.debug('ListenThread: received %s' % str(line))
                 recipient_subid = line.split(':', 4)[3]
                 try:
                     recipient_subid = int(recipient_subid)
@@ -102,10 +98,10 @@ class WorkerThread(Thread):
         self.sock = socket(AF_INET, SOCK_STREAM)
         self.sock.bind((address, internal_port))
         self.sock.listen(1)
-        LOG.debug("Worker Handler inited")
+        LOG.debug('WorkerThread()')
 
     def run(self):
-        LOG.debug("Worker Running")
+        LOG.debug('WorkerThread.run()')
         while True:
             conn, addr = self.sock.accept()
             handler = ListenThread(conn, addr)
@@ -122,18 +118,17 @@ class MasterHandler(Thread):
         self.port = port
         self.buffer = ''
         self.valid = True
-        LOG.debug('MasterHandler init')
+        LOG.debug('MasterHandler()')
 
     def run(self):
         global incoming, incoming_lock
-        LOG.debug('MasterHandler Running')
+        LOG.debug('MasterHandler.run()')
         while self.valid:
             if '\n' in self.buffer:
                 (line, rest) = self.buffer.split('\n', 1)
                 self.buffer = rest
                 header = '%d:%s:%d:%s:' % (-1, 'master', self.index, 'replica')
                 line = header + line
-                LOG.debug('received %s' % line)
                 if 'replica' in incoming:
                     incoming['replica'].put(line)
             else:
@@ -147,7 +142,9 @@ class MasterHandler(Thread):
                     break
 
     def send(self, s):
+        LOG.debug('MasterHandler.send(%s)' % s)
         self.conn.send(str(s) + '\n')
+        LOG.debug('MasterHandler.send() complete')
 
     def close(self):
         try:
@@ -157,8 +154,13 @@ class MasterHandler(Thread):
 
 def send_master(msg):
     global mhandler
-    mhandler.send(str(msg) + '\n')
-    LOG.debug("SOCKET: Master sending")
+    LOG.debug('send_master(%s)' % msg)
+    try:
+        mhandler.send(str(msg) + '\n')
+        LOG.debug('send_master() completed')
+    except AttributeError:
+        LOG.debug('mhandler.send does not exist')
+        LOG.debug('type(mhandler) = %s' % str(type(mhandler)))
 
 def send(pid, msg):
     try:
@@ -180,30 +182,20 @@ def main():
     
     # Start debugger
     LOG.basicConfig(filename="LOG/" + str(pid) + '.log', level=LOG.DEBUG)
-    
-    LOG.debug('IDENTITY pid: %d, port: %d ' % (pid, port))
 
-    # Create the replica running on this process.
-    leaders = [(root_port + i, 1) for i in xrange(N)]
-
-    incoming_lock = Lock()
-    communicator = Communicator(incoming, incoming_lock, pid, send, send_master)
-    LOG.debug('created communicator')
-
-    # Spawn the replica.
-    replica = Replica(leaders, '', communicator)
-    LOG.debug('created replica')
-    replica.start()
-
-    # Spawn Master Thread to listen from master
+    # Create the necessary classes.
     mhandler = MasterHandler(pid, address, port)
-    mhandler.start()
-
-    # Spawn All incoming connection threads
     handler = WorkerThread(address, root_port+pid, pid)
+    leaders = [(root_port + i, 1) for i in xrange(N)]
+    communicator = Communicator(incoming, incoming_lock, pid, send, mhandler)
+    replica = Replica(leaders, '', communicator)
+
+    # Spawn all threads.
+    replica.start()
+    mhandler.start()
     handler.start()
 
-    LOG.debug('main ends')
+    LOG.debug('main() ends IDENTITY pid: %d, port: %d ' % (pid, port))
 
 if __name__ == "__main__":
     main()
