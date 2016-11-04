@@ -2,7 +2,8 @@ import logging as LOG
 from threading import Thread, Lock
 
 class Replica(Thread):
-    def __init__(self, leaders, initial_state, new_instance):
+    def __init__(self, leaders, initial_state, communicator):
+        LOG.debug('Replica(): begin')
         Thread.__init__(self)
         self.decisions = []
         self.leaders = leaders
@@ -10,8 +11,8 @@ class Replica(Thread):
         self.state = initial_state
         self.slot_num = 1
 
-        self.new_instance = new_instance
-        self.send, self.receive = self.new_instance('replica')
+        LOG.debug('about to call build()')
+        self.send, self.receive = communicator.build('replica')
         LOG.debug('Replica(): leaders = ' + str(leaders))
 
     def run(self):
