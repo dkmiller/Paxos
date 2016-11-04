@@ -63,7 +63,6 @@ class ListenThread(Thread):
 
     def run(self):
         global incoming, incoming_lock
-        LOG.debug('ListenHandler.run()')
         while self.valid:
             if '\n' in self.buffer:
                 (line, rest) = self.buffer.split('\n',1)
@@ -94,7 +93,6 @@ class WorkerThread(Thread):
         self.sock.bind((address, internal_port))
         self.sock.listen(1)
     def run(self):
-        LOG.debug('WorkerThread.run()')
         while True:
             conn, addr = self.sock.accept()
             handler = ListenThread(conn, addr)
@@ -113,7 +111,6 @@ class MasterHandler(Thread):
         self.valid = True
     def run(self):
         global incoming, incoming_lock
-        LOG.debug('MasterHandler.run()')
         while self.valid:
             if '\n' in self.buffer:
                 (line, rest) = self.buffer.split('\n', 1)
@@ -133,7 +130,6 @@ class MasterHandler(Thread):
                     break
     def send(self, s):
         self.conn.send(str(s) + '\n')
-        LOG.debug('MasterHandler.send(%s)' % s)
     def close(self):
         try:
             self.sock.close()
@@ -146,7 +142,6 @@ def send(pid, msg):
         sock.connect((address, root_port + pid))
         sock.send(str(msg) + '\n')
         sock.close()
-        LOG.debug("SOCKET: sending")
     except:
         LOG.debug("SOCKET: ERROR")
 

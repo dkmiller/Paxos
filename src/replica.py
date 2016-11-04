@@ -14,11 +14,10 @@ class Replica(Thread):
         LOG.debug('Replica(): leaders = ' + str(leaders))
 
     def run(self):
-        LOG.debug('replica.run() called')
         while True:
             sender, msg = self.receive()
-            LOG.debug('replica received %s' % msg)
+            LOG.debug('Replica.receive: \'%s\'' % msg)
             master = (-1, 'master')
             self.send(master, 'ack 0')
-            LOG.debug('send ack 0 to master')
+            LOG.debug('Replica.send: \'ack 0\'')
 
