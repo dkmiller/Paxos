@@ -4,6 +4,7 @@ import logging as LOG
 
 class Acceptor(Thread):
     def __init__(self, pid, N, send, receive):
+        Thread.__init__(self)
         self.pid = pid
         self.N = N
         self.send = send
@@ -17,7 +18,7 @@ class Acceptor(Thread):
         accepted = []
 
         while (True):
-            sender, msg = receive()
+            sender, msg = self.receive()
             LOG.debug("ACCEPTOR: receive: " + str(msg) + " , SENDER: " + str(sender))
             msg = msg.split(':')
             

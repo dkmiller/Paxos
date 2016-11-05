@@ -1,12 +1,23 @@
 import logging as LOG
 
-class Scout:
-    def __init__(self, acceptors, b, leader):
-        this.acceptors = acceptors
-        this.b = b
-        this.leader = leader
-        this.pvalues = []
-        this.waitfor = list(acceptors)
+class Scout(Thread):
+    def __init__(self, myleader, acceptors, b, send, receive):
+        Thread.__init__(self)
+        self.acceptors = acceptors
+        self.b = b
+        self.myleader = myleader
+        self.send = send
+        self.receive = receive
+        LOG.debug("SCOUT inited")
 
     def run(self):
-        LOG.debug('scout.run() called')
+        LOG.debug('SCOUT running')
+        waitfor = self.acceptors
+        pvalues = []
+
+        # send to all acceptors
+        for acceptor in acceptors:
+            send_msg = "p1a:" + str(b)
+            # TODO:
+            this.send(acceptor, send)
+            
