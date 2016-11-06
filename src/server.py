@@ -108,6 +108,7 @@ class MasterHandler(Thread):
             pass
 
 def send(pid, msg):
+    global root_port
     try:
         sock = socket(AF_INET, SOCK_STREAM)
         sock.connect((address, root_port + pid))
@@ -117,7 +118,7 @@ def send(pid, msg):
         LOG.debug('SOCKET: ERROR')
 
 def main():
-    global incoming, incoming_lock, N, pid, port, send
+    global incoming, incoming_lock, N, pid, port, root_port, send
 
     # Read global state.
     pid = int(sys.argv[1])
@@ -125,7 +126,7 @@ def main():
     port = int(sys.argv[3])
     
     # Start and configure debugger
-    LOG.basicConfig(filename='LOG/' + str(pid) + '.log', level=LOG.DEBUG)
+    LOG.basicConfig(filename='LOG/%d.log' % pid, level=LOG.DEBUG)
     LOG.debug('Server.main()')
 
     # Create the necessary classes.
