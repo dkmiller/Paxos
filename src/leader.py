@@ -1,13 +1,16 @@
 import logging as LOG
+from commander import Commander
+from scout import Scout
 from threading import Thread, Lock
 
 class Leader(Thread):
-    def __init__(self, acceptors, replicas, send, receive):
+    def __init__(self, acceptors, replicas, communicator):
         Thread.__init__(self)
         self.acceptors = acceptors
+        self.communicator = communicator
         self.replicas = replicas
-        self.send = send
-        self.receive = receive
+
+        self.send, self.receive = communicator.build('leader')
         LOG.debug('LEADER inited')
 
     def run(self):
@@ -17,7 +20,9 @@ class Leader(Thread):
         proposals = []
     
         # TODO
-        spawn scout(self.acceptors, ballot_num)
+        me = self.communicator.identity('leader')
+        scout = Scout(me, self.acceptors, ballot_num, self.communicator)
+        scout.start()
 
         while True:
             sender, msg = self.receive()
@@ -32,8 +37,11 @@ class Leader(Thread):
                 proposals = list(set([sp]).union(proposals))
                 if active:
                     bsp = (ballot_num, s, p)
-                    # TODO
-                    spawn Commander(self.acceptors, self.replicas, bsp)
+
+                    # Spawn commander.
+                    commander = Commander(self.acceptors, self.replicas, bsp, self.communicator)
+                    commander.start()
+                    #spawn Commander(self.acceptors, self.replicas, bsp)
                
             # Case 2
             if msg[0] == "adopted":
@@ -41,8 +49,9 @@ class Leader(Thread):
                 proposals = proposals (xor) pvalues
                 for proposal in proposals:
                     bsp = (ballot_num, proposal[0], proposal[1])
-                    # TODO:
-                    Spawn Commander(self.acceptors, self.replicas, bsp)
+                    commander = Commander(self.acceptors, self.replicas, bsp, self.communicator)
+                    commander.start()
+                    #Spawn Commander(self.acceptors, self.replicas, bsp)
                 active = True
                 
             # Case 3
@@ -51,5 +60,8 @@ class Leader(Thread):
                 if b > ballot_num:
                     active = False
                     ballot_num = b + 1
-                    # TODO:
-                    spawn Scout(self.acceptors, ballot_num)
+                    # TODO: Spawn Scout.
+                    me = self.communicator.identity('leader')
+                    scout = Scout(me, self.acceptors, ballot_num, self.communicator)
+                    scout.start()
+                    #spawn Scout(self.acceptors, ballot_num)
