@@ -26,5 +26,3 @@ class Replica(Thread):
                 p = int(msg[1])
                 propose(p)
 
-
-            
