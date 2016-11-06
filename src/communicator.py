@@ -32,7 +32,10 @@ class Communicator:
         # Syntax: sender, message = receive().
         def my_receive():
             # Blocks until a message is ready.
-            content = self.incoming[subid].get(block=True).split(':',4)
+            LOG.debug('Communicator.receive: before block')
+            content = self.incoming[subid].get(block=True)
+            LOG.debug('Communicator.receive: after block')
+            content = content.split(':',4)
             sender = (int(content[0]),content[1]) # (pid, subid)
             # Skip recipient pid, subid.
             message = content[4]

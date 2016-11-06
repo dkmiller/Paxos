@@ -36,16 +36,19 @@ class ListenThread(Thread):
         while self.valid:
             if '\n' in self.buffer:
                 (line, rest) = self.buffer.split('\n',1)
-                LOG.debug('received: %s' % line)
+                LOG.debug('ListenThread.run: received: %s' % line)
                 self.buffer = rest
                 recipient_subid = line.split(':', 4)[3]
                 try:
                     recipient_subid = int(recipient_subid)
                 except ValueError:
                     pass
+                LOG.debug('ListenThread.run: about to put message')
                 with incoming_lock:
                     if recipient_subid in incoming:
+                        LOG.debug('ListenThread.run: inside if, subid = ' + str(recipient_subid))
                         incoming[recipient_subid].put(line)
+                        LOG.debug('ListenThread.run: empty = %s' % incoming[recipient_subid].empty())
             else:
                 try:
                     data = self.conn.recv(1024)
