@@ -1,63 +1,28 @@
 import logging as LOG
 import os
 from Queue import Queue
-from acceptor import Acceptor
-from leader import Leader
-from replica import Replica
-import sys
 from socket import SOCK_STREAM, socket, AF_INET
+import sys
 from threading import Thread, Lock
 
-incoming = {}
+# Application code.
+from acceptor import Acceptor
+from communicator import Communicator
+from leader import Leader
+from replica import Replica
+
+# Global variables.
+incoming = {} # Hashmap of queues of messages for different subids.
 incoming_lock = Lock()
-N = None
-pid = None
-port = None
+N = None # Number of processes.
+pid = None # Process ID of this process.
+port = None # Port number to listen on for master-communication.
 receive_threads = {}
 send_thread = None
 root_port = 20000
 address = 'localhost'
 mhandler = None
 
-class Communicator:
-    def __init__(self, incoming, incoming_lock, pid, send, mhandler):
-        self.commander_seq = 0
-        self.incoming = incoming
-        self.incoming_lock = incoming_lock
-        self.mhandler = mhandler
-        self.pid = pid
-        self.send = send
-    # Returns an "identity" (pid, kind) for the calling thread.
-    def identity(kind):
-        return (self.pid, kind)
-    def build(self, kind):
-        with self.incoming_lock:
-            if kind == 'commander':
-                subid = self.commander_seq
-                commander_seq += 1
-            else:
-                subid = kind
-            if subid not in self.incoming:
-                self.incoming[subid] = Queue()
-
-        # Syntax: sender, message = receive().
-        def my_receive():
-            # Blocks until a message is ready.
-            content = self.incoming[subid].get(block=True).split(':',4)
-            sender = (int(content[0]),content[1]) # (port, subid)
-            # Skip recipient port, subid.
-            message = content[4]
-            return (sender, message)
-        def my_send(recipient, message):
-            LOG.debug('sending: %s' % message)
-            recipient_pid, recipient_subid = recipient
-            if recipient_subid == 'master':
-                self.mhandler.send(message)
-            else:
-                header = '%d:%s:%d:%s:' % (self.pid, str(subid), recipient_pid, recipient_subid)
-                send_message = header + message
-                self.send(recipient_pid, send_message)
-        return (my_send, my_receive)
 
 class ListenThread(Thread):
     def __init__(self, conn, addr):
@@ -94,7 +59,7 @@ class ListenThread(Thread):
                 
 
 class WorkerThread(Thread):
-    def __init__(self, address, internal_port, pid):
+    def __init__(self, address, internal_port):
         Thread.__init__(self)
         self.sock = socket(AF_INET, SOCK_STREAM)
         self.sock.bind((address, internal_port))
@@ -150,7 +115,7 @@ def send(pid, msg):
         sock.send(str(msg) + '\n')
         sock.close()
     except:
-        LOG.debug("SOCKET: ERROR")
+        LOG.debug('SOCKET: ERROR')
 
 def main():
     global incoming, incoming_lock, N, pid, port, send
@@ -160,12 +125,13 @@ def main():
     N = int(sys.argv[2])
     port = int(sys.argv[3])
     
-    # Start debugger
-    LOG.basicConfig(filename="LOG/" + str(pid) + '.log', level=LOG.DEBUG)
+    # Start and configure debugger
+    name = 'LOG/%d.log' % pid
+    LOG.basicConfig(filename=name, level=LOG.DEBUG)
 
     # Create the necessary classes.
     mhandler = MasterHandler(pid, address, port)
-    handler = WorkerThread(address, root_port+pid, pid)
+    handler = WorkerThread(address, root_port + pid)
     communicator = Communicator(incoming, incoming_lock, pid, send, mhandler)
 
     acceptors = [(i, 'acceptor') for i in xrange(N)]
@@ -179,8 +145,8 @@ def main():
 
     # Spawn Paxos threads.
     acceptor.start()
-    leader.start()
     replica.start()
+    leader.start()
     # Spawn handler threads.
     mhandler.start()
     handler.start()
