@@ -17,7 +17,7 @@ class Commander(Thread):
 
         # send to all acceptors
         for acceptor in self.acceptors:
-            send_msg = 'p2a:%s' % self.bsp
+            send_msg = 'p2a:' + str(self.bsp)
             self.send(acceptor, send_msg)
 
         while True:
@@ -33,7 +33,7 @@ class Commander(Thread):
                     if 2*len(waitfor) < len(self.acceptors):
                         for replica in self.replicas:
                             sp = (self.bsp[1], self.bsp[2])
-                            send_msg = 'decision:%s' % sp
+                            send_msg = 'decision:' + str(sp)
                             self.send(replica, send_msg)
                         break
 
