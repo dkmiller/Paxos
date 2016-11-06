@@ -18,7 +18,7 @@ class Commander(Thread):
 
         # send to all acceptors
         for acceptor in acceptors:
-            send_msg = "p2a:" + str(bsp)
+            send_msg = "p2a:" + str(self.bsp)
             # TODO:
             self.send(acceptor, send_msg)
 
@@ -31,11 +31,12 @@ class Commander(Thread):
             if msg[0] == "p2b":
                 b = int(msg[1])
                 if b == self.b:
-                    pvalues = list(set(bsp).union(pvalues))
+                    pvalues = list(set(self.bsp).union(pvalues))
                     waitfor = waitfor - sender
-                    if len(waitfor) < len(acceptors)/2:
-                        for replica in replicas:
-                            send_msg = "decision:" +str(self.bsp[1]) +str(self.bsp[2])
+                    if len(waitfor) < len(self.acceptors)/2:
+                        for replica in self.replicas:
+                            sp = (self.bsp[1], self.bsp[2])
+                            send_msg = "decision:" +str(sp))
                             self.send(replica, send_msg)
                         break
 
