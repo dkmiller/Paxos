@@ -1,4 +1,5 @@
 import logging as LOG
+from threading import Thread, Lock
 
 class Scout(Thread):
     def __init__(self, myleader, acceptors, b, send, receive):
@@ -19,7 +20,7 @@ class Scout(Thread):
         for acceptor in acceptors:
             send_msg = "p1a:" + str(b)
             # TODO:
-            this.send(acceptor, send)
+            self.send(acceptor, send_msg)
 
         while True:
             sender, msg = self.receive() # Wrong - receive from acceptor
