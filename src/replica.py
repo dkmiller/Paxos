@@ -6,6 +6,7 @@ class Replica(Thread):
         Thread.__init__(self)
         self.leaders = leaders
         self.state = initial_state
+        self.message_to_log = ''
 
         self.send, self.receive = communicator.build('replica')
         
@@ -21,14 +22,16 @@ class Replica(Thread):
         while True:
             sender, msg = self.receive()
             LOG.debug('Replica.receive: (%s,%s)' % (sender, msg))
-            self.message_to_log = ''
 
             # Case 1: request
             if sender[1] == 'master':
-               msg = msg.split()
-               p = int(msg[1]) # Message ID
-               self.message_to_log = msg[2]
-               propose(p)
+                LOG.debug('Replica.receive: received from master')
+                msg = msg.split()
+                p = int(msg[1]) # Message ID
+                self.message_to_log = msg[2]
+                LOG.debug('Replica.receive: about to propose')
+                self.propose(p)
+                LOG.debug('Replica.receive: propose()')
 
             msg = msg.split(':')
             # Case 2
@@ -53,7 +56,8 @@ class Replica(Thread):
                         if not proposed:
                             perform(p_dash)
 
-    def propose(p):
+    def propose(self, p):
+        LOG.debug('Replica.propose()')
         if all([decision[1] != p for decision in self.decisions]):
             new_list = list(set(self.proposals).union(self.decisions))
             s_dash = 1
@@ -62,10 +66,11 @@ class Replica(Thread):
             sp = (s_dash, p)
             self.proposals = list(set([sp]).union(self.proposals))
             for leader in self.leaders:
-                send_msg = "propose:" + str(sp)
-                self.sender(leader, send_msg)
+                send_msg = 'propose:%s' % sp
+                self.send(leader, send_msg)
+       LOG.debug('Replica.propose() ends')
 
-    def perform(p):
+    def perform(self, p):
         incremented = False
         for s in range(1,self.slot_num):
             if (s,p) in self.decisions:

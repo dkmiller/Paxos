@@ -1,6 +1,5 @@
 import logging as LOG
 import os
-from Queue import Queue
 from socket import SOCK_STREAM, socket, AF_INET
 import sys
 from threading import Thread, Lock
@@ -126,13 +125,14 @@ def main():
     port = int(sys.argv[3])
     
     # Start and configure debugger
-    name = 'LOG/%d.log' % pid
-    LOG.basicConfig(filename=name, level=LOG.DEBUG)
+    LOG.basicConfig(filename='LOG/' + str(pid) + '.log', level=LOG.DEBUG)
+    LOG.debug('Server.main()')
 
     # Create the necessary classes.
     mhandler = MasterHandler(pid, address, port)
     handler = WorkerThread(address, root_port + pid)
     communicator = Communicator(incoming, incoming_lock, pid, send, mhandler)
+    LOG.debug('Handlers initiated')
 
     acceptors = [(i, 'acceptor') for i in xrange(N)]
     leaders = [(i, 'leader') for i in xrange(N)]

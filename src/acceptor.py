@@ -1,9 +1,10 @@
-from threading import Thread, Lock
 import ast
 import logging as LOG
+from threading import Thread, Lock
 
 class Acceptor(Thread):
     def __init__(self, communicator):
+        LOG.debug('Acceptor()')
         Thread.__init__(self)
         self.send, self.receive = communicator.build('acceptor')
         LOG.debug("ACCEPTOR inited")

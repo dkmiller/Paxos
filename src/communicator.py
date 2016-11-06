@@ -1,3 +1,5 @@
+from Queue import Queue
+
 # A send/receive factory. Constructs, for any kind of thread
 # (e.g. replica, leader, etc.) send and receive functions.
 class Communicator:
