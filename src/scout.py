@@ -35,7 +35,7 @@ class Scout(Thread):
                     pvalues = list(set(bsp).union(pvalues))
                     waitfor = waitfor - sender
                     if len(waitfor) < len(acceptors)/2:
-                        send_msg = "adopted:" + str(self.b) + str(pvalues)
+                        send_msg = "adopted:" + str(self.b) + ":" + str(pvalues)
                         self.send(sender, send_msg)
                         break
 

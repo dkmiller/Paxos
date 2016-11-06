@@ -47,7 +47,7 @@ class Leader(Thread):
             # Case 2
             if msg[0] == 'adopted':
                 pvalues = ast.literal_eval(msg[2])
-                proposals = self.xor(proposals, self.pmax(pvalues))
+                proposals = xor(proposals, pmax(pvalues))
                 for proposal in proposals:
                     bsp = (ballot_num, proposal[0], proposal[1])
                     Commander(self.acceptors, self.replicas, bsp, self.communicator).start()
@@ -62,7 +62,34 @@ class Leader(Thread):
                     # Spawn Scout.
                     me = self.communicator.identity('leader')
                     Scout(me, self.acceptors, ballot_num, self.communicator).start()
-    def pmax(self, pvals):
-        pass
+    
+    def pmax(pvals):
+        new_sp_list = []
+        slots_done = []
+        for bsp in pvals:
+            b = bsp[0]
+            s = bsp[1]
+            p = bsp[2]
+            if s in slots_done:
+                continue
+            for bsp2 in pvals:
+                b2 = bsp2[0]
+                s2 = bsp2[1]
+                p2 = bsp2[2]
+                if s == s2:
+                    if b2 > b:
+                        p = p2
+            new_sp_list.append((s,p))
+            slots_done.append(s)
+        return new_sp_list
+    
     def xor(x, y):
-        pass
+        new_sp_list = []
+        slots_done = []
+        for sp in y:
+            new_sp_list.append(sp)
+            slots_done.append(sp[0])
+        for sp in x:
+            if sp[0] not in slots_done:
+                new_sp_list.append(sp)
+        return new_sp_list
