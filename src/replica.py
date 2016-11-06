@@ -61,3 +61,16 @@ class Replica(Thread):
                 self.sender(leader, send_msg)
 
     def perform(p):
+        incremented = False
+        for s in range(1,self.slot_num):
+            if (s,p) in self.decisions:
+                self.slot_num += 1
+                incremented = True
+                break
+        
+        if not incremented:
+            # TODO:
+            (next, result) = op(self.state)
+            self.state = next
+            self.slot_num += 1
+            send to master("response" + result)
