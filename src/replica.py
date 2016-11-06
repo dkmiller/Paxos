@@ -68,7 +68,7 @@ class Replica(Thread):
             for leader in self.leaders:
                 send_msg = 'propose:%s' % sp
                 self.send(leader, send_msg)
-       LOG.debug('Replica.propose() ends')
+        LOG.debug('Replica.propose() ends')
 
     def perform(self, p):
         incremented = False
