@@ -20,4 +20,6 @@ class Replica(Thread):
             master = (-1, 'master')
             self.send(master, 'ack 0')
             LOG.debug('Replica.send: \'ack 0\'')
+            for leader in self.leaders:
+                self.send(leader, 'hello leader!')
 

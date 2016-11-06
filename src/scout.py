@@ -2,14 +2,14 @@ import logging as LOG
 from threading import Thread, Lock
 
 class Scout(Thread):
-    def __init__(self, myleader, acceptors, b, send, receive):
+    def __init__(self, myleader, acceptors, b, communicator):
         Thread.__init__(self)
         self.acceptors = acceptors
         self.b = b
         self.myleader = myleader
-        self.send = send
-        self.receive = receive
-        LOG.debug("SCOUT inited")
+
+        self.send = send, self.receive = communicator.build('scout')
+        LOG.debug("Scout(): acceptors = %s" % str(acceptors))
 
     def run(self):
         LOG.debug('SCOUT running')
@@ -19,11 +19,11 @@ class Scout(Thread):
         # send to all acceptors
         for acceptor in acceptors:
             send_msg = "p1a:" + str(b)
-            # TODO:
             self.send(acceptor, send_msg)
 
         while True:
-            sender, msg = self.receive() # Wrong - receive from acceptor
+            # sender = person that sent msg
+            sender, msg = self.receive()
             LOG.debug("SCOUT: receive: " + str(msg) + " , SENDER: " + str(sender))
             msg = msg.split(":")
 

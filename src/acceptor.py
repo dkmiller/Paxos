@@ -3,12 +3,9 @@ import ast
 import logging as LOG
 
 class Acceptor(Thread):
-    def __init__(self, pid, N, send, receive):
+    def __init__(self, communicator):
         Thread.__init__(self)
-        self.pid = pid
-        self.N = N
-        self.send = send
-        self.receive = receive
+        self.send, self.receive = communicator.build('acceptor')
         LOG.debug("ACCEPTOR inited")
 
     def run(self):

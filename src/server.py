@@ -1,6 +1,8 @@
 import logging as LOG
 import os
 from Queue import Queue
+from acceptor import Acceptor
+from leader import Leader
 from replica import Replica
 import sys
 from socket import SOCK_STREAM, socket, AF_INET
@@ -25,6 +27,9 @@ class Communicator:
         self.mhandler = mhandler
         self.pid = pid
         self.send = send
+    # Returns an "identity" (pid, kind) for the calling thread.
+    def identity(kind):
+        return (self.pid, kind)
     def build(self, kind):
         with self.incoming_lock:
             if kind == 'commander':
@@ -44,6 +49,7 @@ class Communicator:
             message = content[4]
             return (sender, message)
         def my_send(recipient, message):
+            LOG.debug('sending: %s' % message)
             recipient_pid, recipient_subid = recipient
             if recipient_subid == 'master':
                 self.mhandler.send(message)
@@ -66,6 +72,7 @@ class ListenThread(Thread):
         while self.valid:
             if '\n' in self.buffer:
                 (line, rest) = self.buffer.split('\n',1)
+                LOG.debug('received: %s' % line)
                 self.buffer = rest
                 recipient_subid = line.split(':', 4)[3]
                 try:
@@ -159,12 +166,22 @@ def main():
     # Create the necessary classes.
     mhandler = MasterHandler(pid, address, port)
     handler = WorkerThread(address, root_port+pid, pid)
-    leaders = [(root_port + i, 1) for i in xrange(N)]
     communicator = Communicator(incoming, incoming_lock, pid, send, mhandler)
-    replica = Replica(leaders, '', communicator)
 
-    # Spawn all threads.
+    acceptors = [(i, 'acceptor') for i in xrange(N)]
+    leaders = [(i, 'leader') for i in xrange(N)]
+    replicas = [(i, 'replica') for i in xrange(N)]
+    acceptor = Acceptor(communicator)
+    replica = Replica(leaders, '', communicator)
+    leader = Leader(acceptors, replicas, communicator)
+
+    LOG.debug('server: incoming = %s' % str(incoming))
+
+    # Spawn Paxos threads.
+    acceptor.start()
+    leader.start()
     replica.start()
+    # Spawn handler threads.
     mhandler.start()
     handler.start()
 
