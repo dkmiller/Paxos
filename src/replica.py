@@ -13,25 +13,30 @@ class Replica(Thread):
         self.proposals = []
         self.decisions = []
         
-        LOG.debug('Replica(): leaders = ' + str(leaders))
+        LOG.debug('Replica(): leaders = %s' % leaders)
 
     def run(self):
-        LOG.debug('REPLICA running')
+        LOG.debug('Replica.run()')
 
         while True:
             sender, msg = self.receive()
-            LOG.debug("REPLICA: receive: " + str(msg) + " , SENDER: " + str(sender))
-            msg = msg.split(":")
+            LOG.debug('Replica.receive: (%s,%s)' % (sender, msg))
+            self.message_to_log = ''
 
-            # Case 1
-            if msg[0] == "request":
-                p = int(msg[1])
-                propose(p)
+            # Case 1: request
+            if sender[1] == 'master':
+               msg = msg.split()
+               p = int(msg[1]) # Message ID
+               self.message_to_log = msg[2]
+               propose(p)
 
+            msg = msg.split(':')
             # Case 2
             if msg[0] == "decision":
                 sp = ast.literal_eval(msg[1])
-                self.decisions = list(set([sp]).union(self.decisions))
+                # decisions = decisions union [sp]
+                if sp not in self.decisions:
+                    self.decisions.append(sp)
 
                 for decision in self.decisions:
                     p_dash = decision[1]
@@ -69,8 +74,7 @@ class Replica(Thread):
                 break
         
         if not incremented:
-            # TODO:
-            (next, result) = op(self.state)
-            self.state = next
+            self.state += ',%s' % self.message_to_log
             self.slot_num += 1
-            send to master("response" + result)
+            masterid = (-1,'master')
+            self.send(masterid, 'ack %d' % p)
