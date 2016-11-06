@@ -1,0 +1,17 @@
+0 start 4 10000
+1 start 4 10001
+2 start 4 10002
+3 start 4 10003
+0 msg 0 WhatsYourName
+-1 waitForAck 0
+1 msg 1 Alice
+2 msg 2 Bob
+3 msg 3 Carol
+-1 waitForAck 1
+-1 waitForAck 2
+-1 waitForAck 3
+0 get chatLog
+1 get chatLog
+2 get chatLog
+3 get chatLog
+exit
