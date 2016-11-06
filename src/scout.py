@@ -9,7 +9,7 @@ class Scout(Thread):
         self.myleader = myleader
 
         self.send = send, self.receive = communicator.build('scout')
-        LOG.debug('Scout(): acceptors = %s' % acceptors)
+        LOG.debug('Scout(): acceptors = ' + str(acceptors))
 
     def run(self):
         LOG.debug('Scout.run()')
@@ -34,7 +34,7 @@ class Scout(Thread):
                     pvalues = list(set(bsp).union(pvalues))
                     waitfor = waitfor.remove(sender)
                     if 2*len(waitfor) < len(self.acceptors):
-                        send_msg = 'adopted:%s:%s'% (self.b, pvalues)
+                        send_msg = 'adopted:' + str(self.b) + ":" + str(pvalues)
                         self.send(self.myleader, send_msg)
                         break
 
