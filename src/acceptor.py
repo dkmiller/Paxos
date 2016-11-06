@@ -17,7 +17,7 @@ class Acceptor(Thread):
         # List of <b,s,p>
         accepted = []
 
-        while (True):
+        while True:
             sender, msg = self.receive()
             LOG.debug("ACCEPTOR: receive: " + str(msg) + " , SENDER: " + str(sender))
             msg = msg.split(':')
