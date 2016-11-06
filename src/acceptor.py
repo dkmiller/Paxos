@@ -16,7 +16,7 @@ class Acceptor(Thread):
 
         while True:
             sender, msg = self.receive()
-            LOG.debug("ACCEPTOR: receive: " + str(msg) + " , SENDER: " + str(sender))
+            LOG.debug("ACCEPTOR: receive: %s, SENDER: %s" % (msg, str(sender)))
             msg = msg.split(':')
             
             # Case 1
@@ -33,6 +33,7 @@ class Acceptor(Thread):
                 b = bsp[0]
                 s = bsp[1]
                 p = bsp[2]
+                LOG.debug('Acceptor.run(): (b, s, p) = (%s,%s,%s)' % (str(b),str(s),str(p)))
                 if b >= ballot_num:
                     ballot_num = b
                     accepted = list(set([bsp]).union(accepted))

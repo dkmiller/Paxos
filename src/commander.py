@@ -1,5 +1,5 @@
-from threading import Thread, Lock
 import logging as LOG
+from threading import Thread, Lock
 
 class Commander(Thread):
     def __init__(self, acceptors, replicas, bsp, communicator):
@@ -9,37 +9,36 @@ class Commander(Thread):
         self.bsp = bsp
 
         self.send, self.receive = communicator.build('commander')
-        LOG.debug("COMMANDER inited")
+        LOG.debug('Commander()')
 
     def run(self):
-        LOG.debug('COMMANDER running')
-	waitfor = list(self.acceptors)
-        pvalues = []
+        LOG.debug('Commander.run()')
+	waitfor = list(self.acceptors) # Copy of self.acceptors.
 
         # send to all acceptors
         for acceptor in self.acceptors:
-            send_msg = "p2a:" + str(self.bsp)
+            send_msg = 'p2a:%s' % self.bsp
             self.send(acceptor, send_msg)
 
         while True:
             sender, msg = self.receive()
-            LOG.debug("COMMANDER: receive: " + str(msg) + " , SENDER: " + str(sender))
-            msg = msg.split(":")
+            LOG.debug('Commander.receive: %s, sender: %s' % (msg, sender))
+            msg = msg.split(':')
 
             # Case 1
-            if msg[0] == "p2b":
+            if msg[0] == 'p2b':
                 b = int(msg[1])
                 if b == self.b:
-                    pvalues = list(set(self.bsp).union(pvalues))
                     waitfor.remove(sender)
-                    if len(waitfor) < len(self.acceptors)/2:
+                    if 2*len(waitfor) < len(self.acceptors):
                         for replica in self.replicas:
                             sp = (self.bsp[1], self.bsp[2])
-                            send_msg = "decision:" +str(sp))
+                            send_msg = 'decision:%s' % sp
                             self.send(replica, send_msg)
                         break
 
                 else:
-                    send_msg = "preempted:" + str(b)
+                    send_msg = 'preempted:%s' % b
                     self.send(sender, send_msg)
-                    break
+                    LOG.debug('Commander.run: %s' % send_msg)
+                    break # This will exit the while loop, ending the thread.
