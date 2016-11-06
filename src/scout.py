@@ -9,37 +9,36 @@ class Scout(Thread):
         self.myleader = myleader
 
         self.send = send, self.receive = communicator.build('scout')
-        LOG.debug("Scout(): acceptors = %s" % str(acceptors))
+        LOG.debug('Scout(): acceptors = %s' % acceptors)
 
     def run(self):
-        LOG.debug('SCOUT running')
-        waitfor = self.acceptors
+        LOG.debug('Scout.run()')
+        waitfor = list(self.acceptors) # Copy
         pvalues = []
 
         # send to all acceptors
         for acceptor in acceptors:
-            send_msg = "p1a:" + str(b)
+            send_msg = 'p1a:%s' % self.b
             self.send(acceptor, send_msg)
 
         while True:
             # sender = person that sent msg
             sender, msg = self.receive()
-            LOG.debug("SCOUT: receive: " + str(msg) + " , SENDER: " + str(sender))
-            msg = msg.split(":")
+            LOG.debug('Scout.receive: (%s,%s)' % (sender, msg))
+            msg = msg.split(':')
 
-            # Case 1
             if msg[0] == "p1b":
                 b = int(msg[1])
                 bsp = ast.literal_eval(msg[2])
                 if b == self.b:
                     pvalues = list(set(bsp).union(pvalues))
-                    waitfor = waitfor - sender
-                    if len(waitfor) < len(acceptors)/2:
-                        send_msg = "adopted:" + str(self.b) + str(pvalues)
-                        self.send(sender, send_msg)
+                    waitfor = waitfor.remove(sender)
+                    if 2*len(waitfor) < len(self.acceptors):
+                        send_msg = 'adopted:%s:%s'% (self.b, pvalues)
+                        self.send(self.myleader, send_msg)
                         break
 
                 else:
-                    send_msg = "preempted:" + str(b)
-                    self.send(sender, send_msg)
+                    send_msg = 'preempted:%s' % self.b
+                    self.send(self.myleader, send_msg)
                     break
