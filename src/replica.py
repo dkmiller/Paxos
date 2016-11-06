@@ -1,3 +1,4 @@
+import inspect
 import logging as LOG
 from threading import Thread, Lock
 
@@ -57,7 +58,7 @@ class Replica(Thread):
                             perform(p_dash)
 
     def propose(self, p):
-        LOG.debug('Replica.propose()')
+        LOG.debug('Replica.propose: p=%s' % p)
         if all([decision[1] != p for decision in self.decisions]):
             new_list = list(set(self.proposals).union(self.decisions))
             s_dash = 1
@@ -66,8 +67,12 @@ class Replica(Thread):
             sp = (s_dash, p)
             self.proposals = list(set([sp]).union(self.proposals))
             for leader in self.leaders:
-                send_msg = 'propose:%s' % sp
+                send_msg = 'propose:' + str(sp)
+                LOG.debug('Replica.propose: for: send(%s,%s)' % (leader,send_msg))
+                LOG.debug('Replica.propose: type(send) = %s' % type(self.send))
+                LOG.debug('Replica.propose: inspect(send) = ' + str(inspect.getargspec(self.send)))
                 self.send(leader, send_msg)
+                LOG.debug('Replica.propose: for: send() complete')
         LOG.debug('Replica.propose() ends')
 
     def perform(self, p):

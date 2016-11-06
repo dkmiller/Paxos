@@ -1,4 +1,5 @@
 from Queue import Queue
+import logging as LOG
 
 # A send/receive factory. Constructs, for any kind of thread
 # (e.g. replica, leader, etc.) send and receive functions.
@@ -38,7 +39,7 @@ class Communicator:
             return (sender, message)
 
         def my_send(recipient, message):
-            LOG.debug('sending: %s' % message)
+            LOG.debug('Communicator.send')
             recipient_pid, recipient_subid = recipient
             if recipient_subid == 'master':
                 self.mhandler.send(message)
