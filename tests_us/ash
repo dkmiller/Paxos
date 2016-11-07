@@ -1,5 +1,0 @@
-0 start 1 9000
-0 msg 0 Hello
--1 waitForAck 0
-0 get chatLog
-exit
