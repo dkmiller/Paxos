@@ -1,7 +1,7 @@
-0 start 4 10000
-1 start 4 10001
-2 start 4 10002
-3 start 4 10003
+0 start 4 10017
+1 start 4 10018
+2 start 4 10019
+3 start 4 10020
 0 msg 0 WhatsYourName
 -1 waitForAck 0
 1 crashDecision 0
