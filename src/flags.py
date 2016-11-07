@@ -4,7 +4,7 @@ from threading import Lock
 def die():
     import os
     LOG.debug('CRASHING *********************')
-    os._exit(1)
+    os._exit()
 
 class Crash:
     def __init__(self):
