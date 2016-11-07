@@ -8,12 +8,15 @@ import time
 # Application code.
 from acceptor import Acceptor
 from communicator import Communicator
+from flags import Crash, CrashAfter
 from leader import Leader
 from replica import Replica
 
 # Global variables.
 incoming = {} # Hashmap of queues of messages for different subids.
 incoming_lock = Lock()
+flags = {}
+flags_lock = Lock()
 N = None # Number of processes.
 pid = None # Process ID of this process.
 port = None # Port number to listen on for master-communication.
@@ -82,15 +85,35 @@ class MasterHandler(Thread):
         self.buffer = ''
         self.valid = True
     def run(self):
-        global incoming, incoming_lock
+        global flags, flags_lock, incoming, incoming_lock
         while self.valid:
             if '\n' in self.buffer:
                 (line, rest) = self.buffer.split('\n', 1)
                 self.buffer = rest
-                header = '%d:%s:%d:%s:' % (-1, 'master', self.index, 'replica')
-                line = header + line
-                if 'replica' in incoming:
-                    incoming['replica'].put(line)
+                if 'msg' in line or 'get chatLog' in line:
+                    header = '%d:%s:%d:%s:' % (-1, 'master', self.index, 'replica')
+                    line = header + line
+                    if 'replica' in incoming:
+                        incoming['replica'].put(line)
+                elif 'crash' in line:
+                    line = line.split()
+                    word = line[0]
+                    crash_pids = map(int, line[1:])
+                    if word == 'crashAfterP1b':
+                        word = 'p1b'
+                    elif word == 'crashAfterP2b':
+                        word = 'p2b'
+                    elif word == 'crashP1a':
+                        word = 'p1a'
+                    elif word == 'crashP2a':
+                        word = 'p2a'
+                    elif word == 'crashDecision':
+                        word = 'decision'
+                    else:
+                        Crash()
+                    flag = CrashAfter(word, crash_pids)
+                    with flags_lock:
+                        flags.append(flag)
             else:
                 try:
                     data = self.conn.recv(1024)
@@ -109,7 +132,10 @@ class MasterHandler(Thread):
             pass
 
 def send(pid, msg):
-    global root_port
+    global flags, flags_lock, root_port
+    with flags_lock:
+        for flag in flags:
+            flag.should_I_die(msg)
     try:
         sock = socket(AF_INET, SOCK_STREAM)
         sock.connect((address, root_port + pid))
