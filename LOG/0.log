@@ -1,0 +1,65 @@
+DEBUG:root:Acceptor()
+DEBUG:root:Replica(): leaders = [(0, 'leader')]
+DEBUG:root:Leader()
+DEBUG:root:ACCEPTOR running
+DEBUG:root:Leader.run()
+DEBUG:root:Replica.run()
+DEBUG:root:Communicator.build(0,leader)
+DEBUG:root:main() ends IDENTITY pid: 0, port: 9000 
+DEBUG:root:Communicator.receive: -1:master:0:replica:msg 0 Hello
+DEBUG:root:BALLOT: (0, 0)
+DEBUG:root:Replica.receive: ((-1, 'master'),msg 0 Hello)
+DEBUG:root:Communicator.build(0,leader)
+DEBUG:root:Replica.receive: received from master
+DEBUG:root:Scout(): acceptors = [(0, 'acceptor')]
+DEBUG:root:Replica.propose: p=0
+DEBUG:root:Scout.run()
+DEBUG:root:Communicator.send: propose:(1, 0)
+DEBUG:root:SCOUT sending to acceptor
+DEBUG:root:Communicator.send: p1a:(0, 0)
+DEBUG:root:Replica.receive: propose() done
+DEBUG:root:ListenThread.run: received: 0:replica:0:leader:propose:(1, 0)
+DEBUG:root:ListenThread.run: received: 0:scout:0:acceptor:p1a:(0, 0)
+DEBUG:root:Communicator.receive: 0:replica:0:leader:propose:(1, 0)
+DEBUG:root:Leader.receive: ((0, 'replica'),propose:(1, 0))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Communicator.receive: 0:scout:0:acceptor:p1a:(0, 0)
+DEBUG:root:ACCEPTOR: receive: p1a:(0, 0), SENDER: (0, 'scout')
+DEBUG:root:ACCEPTOR sending msg to scout
+DEBUG:root:Communicator.send: p1b:(0, 0):[]
+DEBUG:root:ListenThread.run: received: 0:acceptor:0:scout:p1b:(0, 0):[]
+DEBUG:root:Communicator.receive: 0:acceptor:0:scout:p1b:(0, 0):[]
+DEBUG:root:Scout.receive: ((0, 'acceptor'),p1b:(0, 0):[])
+DEBUG:root:Communicator.send: adopted:(0, 0):[]
+DEBUG:root:Scout: dying
+DEBUG:root:ListenThread.run: received: 0:scout:0:leader:adopted:(0, 0):[]
+DEBUG:root:Communicator.receive: 0:scout:0:leader:adopted:(0, 0):[]
+DEBUG:root:Leader.receive: ((0, 'scout'),adopted:(0, 0):[])
+DEBUG:root:--------------------ADOPTED-----------------
+DEBUG:root:PROPOSALS: [(1, 0)]
+DEBUG:root:PMAX: []
+DEBUG:root:After xor: [(1, 0)]
+DEBUG:root:Leader spawning COM: ((0, 0), 1, 0)
+DEBUG:root:Commander()
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.send: p2a:((0, 0), 1, 0)
+DEBUG:root:ListenThread.run: received: 0:0:0:acceptor:p2a:((0, 0), 1, 0)
+DEBUG:root:Communicator.receive: 0:0:0:acceptor:p2a:((0, 0), 1, 0)
+DEBUG:root:ACCEPTOR: receive: p2a:((0, 0), 1, 0), SENDER: (0, '0')
+DEBUG:root:Acceptor.run(): (b, s, p) = ((0, 0),1,0)
+DEBUG:root:Communicator.send: p2b:(0, 0)
+DEBUG:root:ListenThread.run: received: 0:acceptor:0:0:p2b:(0, 0)
+DEBUG:root:Communicator.receive: 0:acceptor:0:0:p2b:(0, 0)
+DEBUG:root:Commander.receive: p2b:(0, 0), sender: (0, 'acceptor')
+DEBUG:root:COMMANDER p2b: []
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:Communicator.send: decision:(1, 0)
+DEBUG:root:ListenThread.run: received: 0:0:0:replica:decision:(1, 0)
+DEBUG:root:Communicator.receive: 0:0:0:replica:decision:(1, 0)
+DEBUG:root:Replica.receive: ((0, '0'),decision:(1, 0))
+DEBUG:root:----------------ANSWER: 1, 0
+DEBUG:root:Communicator.send: ack 0 1
+DEBUG:root:Communicator.receive: -1:master:0:replica:get chatLog
+DEBUG:root:Replica.receive: ((-1, 'master'),get chatLog)
+DEBUG:root:Replica.receive: received from master
+DEBUG:root:Communicator.send: chatLog 1-0
