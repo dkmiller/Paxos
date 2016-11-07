@@ -4,14 +4,14 @@
 3 start 4 10003
 0 msg 0 WhatsYourName
 -1 waitForAck 0
-1 crashDecision 0
+3 crash
 1 msg 1 Alice
 2 msg 2 Bob
-3 msg 3 Carol
-3 waitForAck 1
+-1 waitForAck 1
 -1 waitForAck 2
+3 start 4 10004
+3 msg 3 Carol
 -1 waitForAck 3
 0 get chatLog
-2 get chatLog
 3 get chatLog
 exit
