@@ -8,7 +8,6 @@ class Replica(Thread):
         Thread.__init__(self)
         self.leaders = leaders
         self.state = initial_state
-        self.message_to_log = ''
 
         self.send, self.receive = communicator.build('replica')
         
@@ -32,8 +31,7 @@ class Replica(Thread):
                 msg = msg.split()
                 
                 if msg[0] == "msg":
-                    p = int(msg[1]) # Message ID
-                    self.message_to_log = msg[2]
+                    p = (int(msg[1]), msg[2]) # Message ID
                     self.propose(p)
                     LOG.debug('Replica.receive: propose() done')
                     continue
@@ -41,7 +39,7 @@ class Replica(Thread):
                     masterid = (-1,'master')
                     send_msg = "chatLog "
                     for my_s in self.state:
-                        send_msg += str(my_s) + "-" + str(self.state[my_s]) + ","
+                        send_msg += str(self.state[my_s][1]) + ","
                     self.send(masterid, send_msg[:-1])
                     continue
 
@@ -82,7 +80,7 @@ class Replica(Thread):
                             self.perform(p_dash)
 
     def propose(self, p):
-        LOG.debug('Replica.propose: p=%s' % p)
+        LOG.debug('Replica.propose: p=' + str(p))
         if all([decision[1] != p for decision in self.decisions]):
             new_list = list(set(self.proposals).union(self.decisions))
             s_dash = 1
@@ -106,5 +104,5 @@ class Replica(Thread):
             self.state[self.slot_num] = p
             LOG.debug("----------------ANSWER: " + str(self.slot_num) + ", " + str(p))
             masterid = (-1,'master')
-            self.send(masterid, 'ack ' + str(p) + ' ' + str(self.slot_num))
+            self.send(masterid, 'ack ' + str(p[0]) + ' ' + str(self.slot_num))
             self.slot_num += 1
