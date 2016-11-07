@@ -7,6 +7,7 @@ class Commander(Thread):
         self.acceptors = acceptors
         self.replicas = replicas
         self.bsp = bsp
+        self.ready = False
 
         self.send, self.receive = communicator.build('commander')
         LOG.debug('Commander()')
@@ -25,17 +26,34 @@ class Commander(Thread):
             LOG.debug('Commander.receive: %s, sender: %s' % (msg, sender))
             msg = msg.split(':')
 
+            if self.ready:
+                if msg[0] == 'internal_state':
+                    internal_state = ast.literal_eval(msg[1])
+                    for replica in self.replicas:
+                        sp = (self.bsp[1], self.bsp[2])
+                        send_msg = 'decision:' + str(sp) + ":" + str(internal_state)
+                        self.send(replica, send_msg)
+                    break
+                else:
+                    continue
+
             # Case 1
             if msg[0] == 'p2b':
                 b = int(msg[1])
                 if b == self.b:
                     waitfor.remove(sender)
                     if 2*len(waitfor) < len(self.acceptors):
-                        for replica in self.replicas:
-                            sp = (self.bsp[1], self.bsp[2])
-                            send_msg = 'decision:' + str(sp)
-                            self.send(replica, send_msg)
-                        break
+
+                        # ask internal state
+                        self.ready = True
+                        replica = self.communicator.identity('replica')
+                        send_msg = 'give_internal_state'
+                        self.send(replica, send_msg)
+#                        for replica in self.replicas:
+#                            sp = (self.bsp[1], self.bsp[2])
+#                            send_msg = 'decision:' + str(sp) + ":" + str(internal_state)
+#                            self.send(replica, send_msg)
+#                        break
 
                 else:
                     send_msg = 'preempted:%s' % b

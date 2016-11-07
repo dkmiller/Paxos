@@ -1,0 +1,32 @@
+DEBUG:root:Server.main()
+DEBUG:root:Handlers initiated
+DEBUG:root:Acceptor()
+DEBUG:root:ACCEPTOR inited
+DEBUG:root:Replica(): leaders = [(0, 'leader'), (1, 'leader'), (2, 'leader'), (3, 'leader')]
+DEBUG:root:Leader()
+DEBUG:root:server: incoming = {'replica': <Queue.Queue instance at 0x105d506c8>, 'leader': <Queue.Queue instance at 0x105d50ab8>, 'acceptor': <Queue.Queue instance at 0x105d503f8>}
+DEBUG:root:ACCEPTOR running
+DEBUG:root:Replica.run()
+DEBUG:root:Leader.run()
+DEBUG:root:Leader about to spawn scout
+DEBUG:root:Scout(): acceptors = [(0, 'acceptor'), (1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Scout.run()
+DEBUG:root:Leader in infinite loop
+DEBUG:root:SCOUT sending to acceptor
+DEBUG:root:main() ends IDENTITY pid: 0, port: 10000 
+DEBUG:root:SOCKET: ERROR '0:scout:1:acceptor:p1a:0'
+DEBUG:root:Communicator.send()
+DEBUG:root:SCOUT sending to acceptor
+DEBUG:root:SOCKET: ERROR '0:scout:2:acceptor:p1a:0'
+DEBUG:root:Communicator.send()
+DEBUG:root:SCOUT sending to acceptor
+DEBUG:root:SOCKET: ERROR '0:scout:3:acceptor:p1a:0'
+DEBUG:root:Communicator.send()
+DEBUG:root:SCOUT in infinite loop
+DEBUG:root:Replica.receive: ((-1, 'master'),msg 0 WhatsYourName)
+DEBUG:root:Replica.receive: received from master
+DEBUG:root:Replica.propose: p=0
+DEBUG:root:Communicator.send()
+DEBUG:root:ListenThread.run: received: 0:replica:0:leader:propose:(1, 0)
+DEBUG:root:Leader.receive: ((0, 'replica'),propose:(1, 0))
+DEBUG:root:Leader in infinite loop

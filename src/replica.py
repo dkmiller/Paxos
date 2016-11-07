@@ -34,9 +34,17 @@ class Replica(Thread):
                 LOG.debug('Replica.receive: propose() done')
 
             msg = msg.split(':')
+
+            if msg[0] == "give_internal_state":
+                send_msg = "internal_state:" + str(self.decisions)
+                self.send(sender, send_msg)
+
             # Case 2
             if msg[0] == "decision":
                 sp = ast.literal_eval(msg[1])
+                new_list = ast.literal_eval(msg[2])
+
+                self.decisions = list(set(new_list).union(self.decisions))
                 # decisions = decisions union [sp]
                 if sp not in self.decisions:
                     self.decisions.append(sp)

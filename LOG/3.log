@@ -1,0 +1,24 @@
+DEBUG:root:Server.main()
+DEBUG:root:Handlers initiated
+DEBUG:root:Acceptor()
+DEBUG:root:ACCEPTOR inited
+DEBUG:root:Replica(): leaders = [(0, 'leader'), (1, 'leader'), (2, 'leader'), (3, 'leader')]
+DEBUG:root:Leader()
+DEBUG:root:server: incoming = {'replica': <Queue.Queue instance at 0x10c2286c8>, 'leader': <Queue.Queue instance at 0x10c228ab8>, 'acceptor': <Queue.Queue instance at 0x10c2283f8>}
+DEBUG:root:ACCEPTOR running
+DEBUG:root:Replica.run()
+DEBUG:root:Leader.run()
+DEBUG:root:Leader about to spawn scout
+DEBUG:root:Scout(): acceptors = [(0, 'acceptor'), (1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:main() ends IDENTITY pid: 3, port: 10003 
+DEBUG:root:Scout.run()
+DEBUG:root:Leader in infinite loop
+DEBUG:root:SCOUT sending to acceptor
+DEBUG:root:Communicator.send()
+DEBUG:root:SCOUT sending to acceptor
+DEBUG:root:Communicator.send()
+DEBUG:root:SCOUT sending to acceptor
+DEBUG:root:Communicator.send()
+DEBUG:root:SCOUT in infinite loop
+DEBUG:root:ListenThread.run: received: 3:scout:3:acceptor:p1a:0
+DEBUG:root:ACCEPTOR: receive: p1a:0, SENDER: (3, 'scout')
