@@ -19,7 +19,7 @@ class Scout(Thread):
 
         # send to all acceptors
         for acceptor in self.acceptors:
-            send_msg = 'p1a:%s' % self.b
+            send_msg = 'p1a:' + str(self.b)
             LOG.debug("SCOUT sending to acceptor")
             self.send(acceptor, send_msg)
 
@@ -30,7 +30,7 @@ class Scout(Thread):
             msg = msg.split(':')
 
             if msg[0] == "p1b":
-                b = int(msg[1])
+                b = ast.literal_eval(msg[1])
                 bsp = ast.literal_eval(msg[2])
                 if b == self.b:
                     pvalues = list(set(bsp).union(pvalues))
@@ -41,7 +41,7 @@ class Scout(Thread):
                         LOG.debug('Scout: dying')
                         break
                 else:
-                    send_msg = 'preempted:%s' % b
+                    send_msg = 'preempted:' + str(b)
                     self.send(self.myleader, send_msg)
                     LOG.debug('Scout: dying')
                     break

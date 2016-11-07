@@ -17,7 +17,7 @@ class Leader(Thread):
 
     def run(self):
         LOG.debug('Leader.run()')
-        ballot_num = 0
+        ballot_num = (0,self.communicator.pid())
         active = False
         proposals = []
    
@@ -55,17 +55,17 @@ class Leader(Thread):
                 proposals = self.xor(proposals, new_sp_list)
                 LOG.debug("After xor: " + str(proposals))
                 for proposal in proposals:
-                    bsp = (int(msg[1]), proposal[0], proposal[1])
+                    bsp = (ast.literal_eval(msg[1]), proposal[0], proposal[1])
                     LOG.debug("Leader spawning COM: " + str(bsp))
                     Commander(self.acceptors, self.replicas, bsp, self.communicator).start()
                 active = True
                 
             # Case 3
             if msg[0] == "preempted":
-                b = int(msg[1])
+                b = ast.literal_eval(msg[1])
                 if b > ballot_num:
                     active = False
-                    ballot_num = b + 1
+                    ballot_num[0] = b[0] + 1
                     # Spawn Scout.
                     me = self.communicator.identity('leader')
                     Scout(me, self.acceptors, ballot_num, self.communicator).start()

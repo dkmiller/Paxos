@@ -10,7 +10,7 @@ class Acceptor(Thread):
 
     def run(self):
         LOG.debug("ACCEPTOR running")
-        ballot_num = -1
+        ballot_num = (-1,-1)
         # List of <b,s,p>
         accepted = []
 
@@ -21,7 +21,7 @@ class Acceptor(Thread):
             
             # Case 1
             if msg[0] == "p1a":
-                b = int(msg[1])
+                b = ast.literal_eval(msg[1])
                 if b > ballot_num:
                     ballot_num = b
                 send_msg = "p1b:" + str(ballot_num) + ":" + str(accepted)

@@ -1,0 +1,1738 @@
+DEBUG:root:Acceptor()
+DEBUG:root:Replica(): leaders = [(0, 'leader'), (1, 'leader'), (2, 'leader'), (3, 'leader')]
+DEBUG:root:Leader()
+DEBUG:root:ACCEPTOR running
+DEBUG:root:Leader.run()
+DEBUG:root:Communicator.build(3,leader)
+DEBUG:root:Scout(): acceptors = [(0, 'acceptor'), (1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Replica.run()
+DEBUG:root:ListenThread.run: received: 0:replica:3:leader:propose:(1, 0)
+DEBUG:root:Scout.run()
+DEBUG:root:SCOUT sending to acceptor
+DEBUG:root:Communicator.send: p1a:0
+DEBUG:root:main() ends IDENTITY pid: 3, port: 10003 
+DEBUG:root:Communicator.receive: 0:replica:3:leader:propose:(1, 0)
+DEBUG:root:Leader.receive: ((0, 'replica'),propose:(1, 0))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:ListenThread.run: received: 1:0:3:acceptor:p2a:(0, 1, 0)
+DEBUG:root:Communicator.receive: 1:0:3:acceptor:p2a:(0, 1, 0)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 1, 0), SENDER: (1, '0')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,1,0)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 2:0:3:acceptor:p2a:(0, 1, 0)
+DEBUG:root:SCOUT sending to acceptor
+DEBUG:root:Communicator.send: p1a:0
+DEBUG:root:SCOUT sending to acceptor
+DEBUG:root:Communicator.send: p1a:0
+DEBUG:root:SCOUT sending to acceptor
+DEBUG:root:Communicator.send: p1a:0
+DEBUG:root:ListenThread.run: received: 3:scout:3:acceptor:p1a:0
+DEBUG:root:SOCKET: ERROR 3:acceptor:1:0:p2b:0
+DEBUG:root:Communicator.receive: 2:0:3:acceptor:p2a:(0, 1, 0)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 1, 0), SENDER: (2, '0')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,1,0)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 0:0:3:acceptor:p2a:(0, 1, 0)
+DEBUG:root:Communicator.receive: 3:scout:3:acceptor:p1a:0
+DEBUG:root:ACCEPTOR: receive: p1a:0, SENDER: (3, 'scout')
+DEBUG:root:ACCEPTOR sending msg to scout
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:scout:p1b:0:[(0, 1, 0)]
+DEBUG:root:Communicator.send: p1b:0:[(0, 1, 0)]
+DEBUG:root:Communicator.receive: 1:acceptor:3:scout:p1b:0:[(0, 1, 0)]
+DEBUG:root:Scout.receive: ((1, 'acceptor'),p1b:0:[(0, 1, 0)])
+DEBUG:root:Communicator.receive: 0:0:3:acceptor:p2a:(0, 1, 0)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 1, 0), SENDER: (0, '0')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,1,0)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:scout:p1b:0:[(0, 1, 0)]
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:scout:p1b:0:[(0, 1, 0)]
+DEBUG:root:Communicator.receive: 3:acceptor:3:scout:p1b:0:[(0, 1, 0)]
+DEBUG:root:Scout.receive: ((3, 'acceptor'),p1b:0:[(0, 1, 0)])
+DEBUG:root:Communicator.receive: 0:acceptor:3:scout:p1b:0:[(0, 1, 0)]
+DEBUG:root:Scout.receive: ((0, 'acceptor'),p1b:0:[(0, 1, 0)])
+DEBUG:root:Communicator.send: adopted:0:[(0, 1, 0)]
+DEBUG:root:Scout: dying
+DEBUG:root:ListenThread.run: received: 3:scout:3:leader:adopted:0:[(0, 1, 0)]
+DEBUG:root:Communicator.receive: 3:scout:3:leader:adopted:0:[(0, 1, 0)]
+DEBUG:root:Leader.receive: ((3, 'scout'),adopted:0:[(0, 1, 0)])
+DEBUG:root:--------------------ADOPTED-----------------
+DEBUG:root:PROPOSALS: [(1, 0)]
+DEBUG:root:PMAX: [(0, 1, 0)]
+DEBUG:root:After xor: [(1, 0)]
+DEBUG:root:Leader spawning COM: (0, 1, 0)
+DEBUG:root:Commander()
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.send: p2a:(0, 1, 0)
+DEBUG:root:ListenThread.run: received: 2:0:3:replica:decision:(1, 0)
+DEBUG:root:Communicator.send: p2a:(0, 1, 0)
+DEBUG:root:ListenThread.run: received: 0:0:3:replica:decision:(1, 0)
+DEBUG:root:Communicator.receive: 2:0:3:replica:decision:(1, 0)
+DEBUG:root:Replica.receive: ((2, '0'),decision:(1, 0))
+DEBUG:root:----------------ANSWER: 1, 0
+DEBUG:root:Communicator.send: ack 0 1
+DEBUG:root:Communicator.receive: 0:0:3:replica:decision:(1, 0)
+DEBUG:root:Replica.receive: ((0, '0'),decision:(1, 0))
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:scout:p1b:0:[(0, 1, 0)]
+DEBUG:root:Communicator.send: p2a:(0, 1, 0)
+DEBUG:root:Communicator.send: p2a:(0, 1, 0)
+DEBUG:root:ListenThread.run: received: 1:0:3:replica:decision:(1, 0)
+DEBUG:root:ListenThread.run: received: 3:0:3:acceptor:p2a:(0, 1, 0)
+DEBUG:root:Communicator.receive: 1:0:3:replica:decision:(1, 0)
+DEBUG:root:Replica.receive: ((1, '0'),decision:(1, 0))
+DEBUG:root:Communicator.receive: 3:0:3:acceptor:p2a:(0, 1, 0)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 1, 0), SENDER: (3, '0')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,1,0)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:0:p2b:0
+DEBUG:root:Communicator.receive: 0:acceptor:3:0:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:0:p2b:0
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:0:p2b:0
+DEBUG:root:Communicator.receive: 1:acceptor:3:0:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (1, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.receive: 2:acceptor:3:0:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (2, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(3, 'acceptor')]
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:Communicator.send: decision:(1, 0)
+DEBUG:root:Communicator.send: decision:(1, 0)
+DEBUG:root:Communicator.send: decision:(1, 0)
+DEBUG:root:Communicator.send: decision:(1, 0)
+DEBUG:root:ListenThread.run: received: 3:0:3:replica:decision:(1, 0)
+DEBUG:root:Communicator.receive: 3:0:3:replica:decision:(1, 0)
+DEBUG:root:Replica.receive: ((3, '0'),decision:(1, 0))
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:0:p2b:0
+DEBUG:root:Communicator.receive: -1:master:3:replica:msg 3 Carol
+DEBUG:root:Replica.receive: ((-1, 'master'),msg 3 Carol)
+DEBUG:root:Replica.receive: received from master
+DEBUG:root:Replica.propose: p=3
+DEBUG:root:Communicator.send: propose:(2, 3)
+DEBUG:root:Communicator.send: propose:(2, 3)
+DEBUG:root:Communicator.send: propose:(2, 3)
+DEBUG:root:Communicator.send: propose:(2, 3)
+DEBUG:root:Replica.receive: propose() done
+DEBUG:root:ListenThread.run: received: 3:replica:3:leader:propose:(2, 3)
+DEBUG:root:Communicator.receive: 3:replica:3:leader:propose:(2, 3)
+DEBUG:root:Leader.receive: ((3, 'replica'),propose:(2, 3))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Leader spawning COM: (0, 2, 3)
+DEBUG:root:Commander()
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.send: p2a:(0, 2, 3)
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(2, 2)
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(2, 2)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(2, 2))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(2, 1)
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(2, 1)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(2, 1))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:ListenThread.run: received: 1:1:3:acceptor:p2a:(0, 2, 3)
+DEBUG:root:ListenThread.run: received: 0:1:3:acceptor:p2a:(0, 2, 3)
+DEBUG:root:Communicator.receive: 1:1:3:acceptor:p2a:(0, 2, 3)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 2, 3), SENDER: (1, '1')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,2,3)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.receive: 0:1:3:acceptor:p2a:(0, 2, 3)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 2, 3), SENDER: (0, '1')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,2,3)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.send: p2a:(0, 2, 3)
+DEBUG:root:ListenThread.run: received: 2:1:3:acceptor:p2a:(0, 2, 3)
+DEBUG:root:Communicator.receive: 2:1:3:acceptor:p2a:(0, 2, 3)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 2, 3), SENDER: (2, '1')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,2,3)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.send: p2a:(0, 2, 3)
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:1:p2b:0
+DEBUG:root:Communicator.send: p2a:(0, 2, 3)
+DEBUG:root:SOCKET: ERROR 3:1:3:acceptor:p2a:(0, 2, 3)
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:1:p2b:0
+DEBUG:root:Communicator.receive: 0:acceptor:3:1:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.receive: 1:acceptor:3:1:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (1, 'acceptor')
+DEBUG:root:ListenThread.run: received: 0:1:3:replica:decision:(2, 3)
+DEBUG:root:COMMANDER p2b: [(2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.receive: 0:1:3:replica:decision:(2, 3)
+DEBUG:root:Replica.receive: ((0, '1'),decision:(2, 3))
+DEBUG:root:----------------ANSWER: 2, 3
+DEBUG:root:Communicator.send: ack 3 2
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:1:p2b:0
+DEBUG:root:Communicator.receive: 2:acceptor:3:1:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (2, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(3, 'acceptor')]
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:Communicator.send: decision:(2, 3)
+DEBUG:root:ListenThread.run: received: 2:1:3:replica:decision:(2, 3)
+DEBUG:root:Communicator.receive: 2:1:3:replica:decision:(2, 3)
+DEBUG:root:Replica.receive: ((2, '1'),decision:(2, 3))
+DEBUG:root:ListenThread.run: received: 1:1:3:replica:decision:(2, 3)
+DEBUG:root:Communicator.receive: 1:1:3:replica:decision:(2, 3)
+DEBUG:root:Replica.receive: ((1, '1'),decision:(2, 3))
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(3, 2)
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(3, 2)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(3, 2))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Leader spawning COM: (0, 3, 2)
+DEBUG:root:Commander()
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.send: p2a:(0, 3, 2)
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(3, 1)
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(3, 1)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(3, 1))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Communicator.send: decision:(2, 3)
+DEBUG:root:Communicator.send: p2a:(0, 3, 2)
+DEBUG:root:Communicator.send: decision:(2, 3)
+DEBUG:root:Communicator.send: decision:(2, 3)
+DEBUG:root:ListenThread.run: received: 3:1:3:replica:decision:(2, 3)
+DEBUG:root:Communicator.receive: 3:1:3:replica:decision:(2, 3)
+DEBUG:root:Replica.receive: ((3, '1'),decision:(2, 3))
+DEBUG:root:ListenThread.run: received: 1:2:3:acceptor:p2a:(0, 3, 1)
+DEBUG:root:Communicator.receive: 1:2:3:acceptor:p2a:(0, 3, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 3, 1), SENDER: (1, '2')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,3,1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.send: p2a:(0, 3, 2)
+DEBUG:root:Communicator.send: p2a:(0, 3, 2)
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:2:p2b:0
+DEBUG:root:ListenThread.run: received: 2:2:3:acceptor:p2a:(0, 3, 2)
+DEBUG:root:ListenThread.run: received: 0:2:3:acceptor:p2a:(0, 3, 1)
+DEBUG:root:Communicator.receive: 2:2:3:acceptor:p2a:(0, 3, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 3, 2), SENDER: (2, '2')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,3,2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(4, 1)
+DEBUG:root:ListenThread.run: received: 0:3:3:acceptor:p2a:(0, 4, 1)
+DEBUG:root:Communicator.receive: 0:acceptor:3:2:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(4, 1)
+DEBUG:root:ListenThread.run: received: 1:3:3:acceptor:p2a:(0, 4, 1)
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(4, 2)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(4, 1))
+DEBUG:root:ListenThread.run: received: 3:2:3:acceptor:p2a:(0, 3, 2)
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Leader spawning COM: (0, 4, 1)
+DEBUG:root:Commander()
+DEBUG:root:ListenThread.run: received: 2:3:3:acceptor:p2a:(0, 4, 1)
+DEBUG:root:Communicator.receive: 0:2:3:acceptor:p2a:(0, 3, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 3, 1), SENDER: (0, '2')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,3,1)
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(4, 2)
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(4, 2))
+DEBUG:root:Communicator.send: p2a:(0, 4, 1)
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Communicator.receive: 0:3:3:acceptor:p2a:(0, 4, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 4, 1), SENDER: (0, '3')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,4,1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:2:p2b:0
+DEBUG:root:Communicator.send: p2a:(0, 4, 1)
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:2:p2b:0
+DEBUG:root:Communicator.receive: 2:acceptor:3:2:p2b:0
+DEBUG:root:ListenThread.run: received: 1:2:3:replica:decision:(3, 1)
+DEBUG:root:Commander.receive: p2b:0, sender: (2, 'acceptor')
+DEBUG:root:Communicator.receive: 1:2:3:replica:decision:(3, 1)
+DEBUG:root:Replica.receive: ((1, '2'),decision:(3, 1))
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.receive: 1:acceptor:3:2:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (1, 'acceptor')
+DEBUG:root:----------------ANSWER: 3, 1
+DEBUG:root:Communicator.send: ack 1 3
+DEBUG:root:COMMANDER p2b: [(3, 'acceptor')]
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:Communicator.send: decision:(3, 2)
+DEBUG:root:Communicator.receive: 1:3:3:acceptor:p2a:(0, 4, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 4, 1), SENDER: (1, '3')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,4,1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.send: p2a:(0, 4, 1)
+DEBUG:root:Communicator.send: decision:(3, 2)
+DEBUG:root:Communicator.receive: 3:2:3:acceptor:p2a:(0, 3, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 3, 2), SENDER: (3, '2')
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:3:p2b:0
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,3,2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.send: p2a:(0, 4, 1)
+DEBUG:root:Communicator.send: decision:(3, 2)
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(5, 1)
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(5, 1)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(5, 1))
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:2:p2b:0
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Communicator.receive: 2:3:3:acceptor:p2a:(0, 4, 1)
+DEBUG:root:Leader spawning COM: (0, 5, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 4, 1), SENDER: (2, '3')
+DEBUG:root:Commander()
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(5, 2)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,4,1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(5, 2)
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.send: p2a:(0, 5, 1)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(5, 2))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:ListenThread.run: received: 2:2:3:replica:decision:(3, 2)
+DEBUG:root:Communicator.receive: 0:acceptor:3:3:p2b:0
+DEBUG:root:Communicator.receive: 2:2:3:replica:decision:(3, 2)
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:Replica.receive: ((2, '2'),decision:(3, 2))
+DEBUG:root:ListenThread.run: received: 3:3:3:acceptor:p2a:(0, 4, 1)
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.send: decision:(3, 2)
+DEBUG:root:Communicator.send: p2a:(0, 5, 1)
+DEBUG:root:Communicator.receive: 3:3:3:acceptor:p2a:(0, 4, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 4, 1), SENDER: (3, '3')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,4,1)
+DEBUG:root:ListenThread.run: received: 0:3:3:replica:decision:(4, 1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.receive: 0:3:3:replica:decision:(4, 1)
+DEBUG:root:Replica.receive: ((0, '3'),decision:(4, 1))
+DEBUG:root:ListenThread.run: received: 0:4:3:acceptor:p2a:(0, 5, 1)
+DEBUG:root:ListenThread.run: received: 3:2:3:replica:decision:(3, 2)
+DEBUG:root:Communicator.receive: 3:2:3:replica:decision:(3, 2)
+DEBUG:root:Replica.receive: ((3, '2'),decision:(3, 2))
+DEBUG:root:Communicator.send: p2a:(0, 5, 1)
+DEBUG:root:ListenThread.run: received: 2:4:3:acceptor:p2a:(0, 5, 1)
+DEBUG:root:ListenThread.run: received: 1:4:3:acceptor:p2a:(0, 5, 1)
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:3:p2b:0
+DEBUG:root:Communicator.receive: 1:acceptor:3:3:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (1, 'acceptor')
+DEBUG:root:Communicator.send: p2a:(0, 5, 1)
+DEBUG:root:COMMANDER p2b: [(2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:4:p2b:0
+DEBUG:root:Communicator.receive: 0:4:3:acceptor:p2a:(0, 5, 1)
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:3:p2b:0
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 5, 1), SENDER: (0, '4')
+DEBUG:root:Communicator.receive: 2:acceptor:3:3:p2b:0
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,5,1)
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:3:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (2, 'acceptor')
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:COMMANDER p2b: [(3, 'acceptor')]
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:Communicator.send: decision:(4, 1)
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(6, 1)
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(6, 1)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(6, 1))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Leader spawning COM: (0, 6, 1)
+DEBUG:root:Commander()
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.send: p2a:(0, 6, 1)
+DEBUG:root:Communicator.receive: 0:acceptor:3:4:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:ListenThread.run: received: 3:4:3:acceptor:p2a:(0, 5, 1)
+DEBUG:root:Communicator.send: p2a:(0, 6, 1)
+DEBUG:root:ListenThread.run: received: 0:2:3:replica:decision:(3, 1)
+DEBUG:root:Communicator.send: p2a:(0, 6, 1)
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(6, 2)
+DEBUG:root:Communicator.receive: 0:2:3:replica:decision:(3, 1)
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(6, 2)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(6, 2))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Replica.receive: ((0, '2'),decision:(3, 1))
+DEBUG:root:ListenThread.run: received: 1:3:3:replica:decision:(4, 1)
+DEBUG:root:Communicator.send: decision:(4, 1)
+DEBUG:root:Communicator.receive: 2:4:3:acceptor:p2a:(0, 5, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 5, 1), SENDER: (2, '4')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,5,1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.receive: 1:3:3:replica:decision:(4, 1)
+DEBUG:root:Replica.receive: ((1, '3'),decision:(4, 1))
+DEBUG:root:ListenThread.run: received: 0:5:3:acceptor:p2a:(0, 6, 1)
+DEBUG:root:Communicator.send: p2a:(0, 6, 1)
+DEBUG:root:ListenThread.run: received: 1:5:3:acceptor:p2a:(0, 6, 1)
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:5:p2b:0
+DEBUG:root:ListenThread.run: received: 2:3:3:replica:decision:(4, 1)
+DEBUG:root:Communicator.receive: 2:3:3:replica:decision:(4, 1)
+DEBUG:root:Replica.receive: ((2, '3'),decision:(4, 1))
+DEBUG:root:SOCKET: ERROR 3:3:1:replica:decision:(4, 1)
+DEBUG:root:Communicator.send: decision:(4, 1)
+DEBUG:root:Communicator.receive: 0:acceptor:3:5:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:SOCKET: ERROR 3:acceptor:2:4:p2b:0
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:ListenThread.run: received: 3:5:3:acceptor:p2a:(0, 6, 1)
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:4:p2b:0
+DEBUG:root:Communicator.receive: 1:4:3:acceptor:p2a:(0, 5, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 5, 1), SENDER: (1, '4')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,5,1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.receive: 1:acceptor:3:4:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (1, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.send: decision:(4, 1)
+DEBUG:root:Communicator.receive: 3:4:3:acceptor:p2a:(0, 5, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 5, 1), SENDER: (3, '4')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,5,1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 2:5:3:acceptor:p2a:(0, 6, 1)
+DEBUG:root:Communicator.receive: 0:5:3:acceptor:p2a:(0, 6, 1)
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:4:p2b:0
+DEBUG:root:Communicator.receive: 3:acceptor:3:4:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (3, 'acceptor')
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 6, 1), SENDER: (0, '5')
+DEBUG:root:COMMANDER p2b: [(2, 'acceptor')]
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,6,1)
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:4:p2b:0
+DEBUG:root:ListenThread.run: received: 3:3:3:replica:decision:(4, 1)
+DEBUG:root:Communicator.send: decision:(5, 1)
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(7, 2)
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(7, 2)
+DEBUG:root:Communicator.receive: 1:5:3:acceptor:p2a:(0, 6, 1)
+DEBUG:root:Communicator.receive: 3:3:3:replica:decision:(4, 1)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(7, 2))
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 6, 1), SENDER: (1, '5')
+DEBUG:root:Replica.receive: ((3, '3'),decision:(4, 1))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,6,1)
+DEBUG:root:Leader spawning COM: (0, 7, 2)
+DEBUG:root:Commander()
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 0:4:3:replica:decision:(5, 1)
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.send: decision:(5, 1)
+DEBUG:root:Communicator.send: p2a:(0, 7, 2)
+DEBUG:root:Communicator.receive: 0:4:3:replica:decision:(5, 1)
+DEBUG:root:Replica.receive: ((0, '4'),decision:(5, 1))
+DEBUG:root:Communicator.receive: 3:5:3:acceptor:p2a:(0, 6, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 6, 1), SENDER: (3, '5')
+DEBUG:root:ListenThread.run: received: 0:6:3:acceptor:p2a:(0, 7, 1)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,6,1)
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:5:p2b:0
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.receive: 1:acceptor:3:5:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (1, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.receive: 2:5:3:acceptor:p2a:(0, 6, 1)
+DEBUG:root:ListenThread.run: received: 1:6:3:acceptor:p2a:(0, 7, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 6, 1), SENDER: (2, '5')
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:5:p2b:0
+DEBUG:root:Communicator.send: decision:(5, 1)
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(7, 1)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,6,1)
+DEBUG:root:Communicator.send: p2a:(0, 7, 2)
+DEBUG:root:ListenThread.run: received: 1:4:3:replica:decision:(5, 1)
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(7, 1)
+DEBUG:root:Communicator.receive: 3:acceptor:3:5:p2b:0
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:5:p2b:0
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.receive: 1:4:3:replica:decision:(5, 1)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(7, 1))
+DEBUG:root:Replica.receive: ((1, '4'),decision:(5, 1))
+DEBUG:root:Commander.receive: p2b:0, sender: (3, 'acceptor')
+DEBUG:root:Leader: Inside propose
+DEBUG:root:COMMANDER p2b: [(2, 'acceptor')]
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:Communicator.send: decision:(6, 1)
+DEBUG:root:Communicator.send: decision:(5, 1)
+DEBUG:root:ListenThread.run: received: 0:7:3:acceptor:p2a:(0, 8, 2)
+DEBUG:root:Communicator.send: p2a:(0, 7, 2)
+DEBUG:root:Communicator.receive: 0:6:3:acceptor:p2a:(0, 7, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 7, 1), SENDER: (0, '6')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,7,1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.send: decision:(6, 1)
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(8, 2)
+DEBUG:root:ListenThread.run: received: 0:5:3:replica:decision:(6, 1)
+DEBUG:root:Communicator.receive: 0:5:3:replica:decision:(6, 1)
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(8, 2)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(8, 2))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Leader spawning COM: (0, 8, 2)
+DEBUG:root:Replica.receive: ((0, '5'),decision:(6, 1))
+DEBUG:root:Commander()
+DEBUG:root:ListenThread.run: received: 2:4:3:replica:decision:(5, 1)
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.send: p2a:(0, 8, 2)
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:6:p2b:0
+DEBUG:root:Communicator.receive: 2:4:3:replica:decision:(5, 1)
+DEBUG:root:Replica.receive: ((2, '4'),decision:(5, 1))
+DEBUG:root:Communicator.send: decision:(6, 1)
+DEBUG:root:ListenThread.run: received: 2:6:3:acceptor:p2a:(0, 7, 2)
+DEBUG:root:Communicator.send: p2a:(0, 7, 2)
+DEBUG:root:ListenThread.run: received: 3:4:3:replica:decision:(5, 1)
+DEBUG:root:Communicator.receive: 3:4:3:replica:decision:(5, 1)
+DEBUG:root:Replica.receive: ((3, '4'),decision:(5, 1))
+DEBUG:root:Communicator.receive: 1:6:3:acceptor:p2a:(0, 7, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 7, 2), SENDER: (1, '6')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,7,2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 2:7:3:acceptor:p2a:(0, 8, 2)
+DEBUG:root:Communicator.send: p2a:(0, 8, 2)
+DEBUG:root:Communicator.send: decision:(6, 1)
+DEBUG:root:Communicator.receive: 0:acceptor:3:6:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:ListenThread.run: received: 1:5:3:replica:decision:(6, 1)
+DEBUG:root:Communicator.receive: 1:5:3:replica:decision:(6, 1)
+DEBUG:root:Replica.receive: ((1, '5'),decision:(6, 1))
+DEBUG:root:ListenThread.run: received: 3:6:3:acceptor:p2a:(0, 7, 2)
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(8, 1)
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(8, 1)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(8, 1))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Communicator.receive: 0:7:3:acceptor:p2a:(0, 8, 2)
+DEBUG:root:Communicator.send: p2a:(0, 8, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 8, 2), SENDER: (0, '7')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,8,2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(9, 2)
+DEBUG:root:Communicator.send: p2a:(0, 8, 2)
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(9, 2)
+DEBUG:root:ListenThread.run: received: 3:5:3:replica:decision:(6, 1)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(9, 2))
+DEBUG:root:ListenThread.run: received: 2:5:3:replica:decision:(6, 1)
+DEBUG:root:Communicator.receive: 3:5:3:replica:decision:(6, 1)
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Leader spawning COM: (0, 9, 2)
+DEBUG:root:Commander()
+DEBUG:root:Replica.receive: ((3, '5'),decision:(6, 1))
+DEBUG:root:Communicator.receive: 2:5:3:replica:decision:(6, 1)
+DEBUG:root:Replica.receive: ((2, '5'),decision:(6, 1))
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.send: p2a:(0, 9, 2)
+DEBUG:root:ListenThread.run: received: 1:7:3:acceptor:p2a:(0, 8, 2)
+DEBUG:root:Communicator.receive: 2:6:3:acceptor:p2a:(0, 7, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 7, 2), SENDER: (2, '6')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,7,2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 3:7:3:acceptor:p2a:(0, 8, 2)
+DEBUG:root:ListenThread.run: received: 0:6:3:replica:decision:(7, 1)
+DEBUG:root:Communicator.receive: 0:6:3:replica:decision:(7, 1)
+DEBUG:root:Replica.receive: ((0, '6'),decision:(7, 1))
+DEBUG:root:Communicator.send: p2a:(0, 9, 2)
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:6:p2b:0
+DEBUG:root:Communicator.receive: 2:7:3:acceptor:p2a:(0, 8, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 8, 2), SENDER: (2, '7')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,8,2)
+DEBUG:root:Communicator.receive: 2:acceptor:3:6:p2b:0
+DEBUG:root:ListenThread.run: received: 0:8:3:acceptor:p2a:(0, 9, 2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (2, 'acceptor')
+DEBUG:root:ListenThread.run: received: 2:8:3:acceptor:p2a:(0, 9, 2)
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.send: p2a:(0, 9, 2)
+DEBUG:root:ListenThread.run: received: 1:8:3:acceptor:p2a:(0, 9, 2)
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:7:p2b:0
+DEBUG:root:Communicator.receive: 0:acceptor:3:7:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.receive: 3:6:3:acceptor:p2a:(0, 7, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 7, 2), SENDER: (3, '6')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,7,2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.send: p2a:(0, 9, 2)
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:6:p2b:0
+DEBUG:root:Communicator.receive: 1:7:3:acceptor:p2a:(0, 8, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 8, 2), SENDER: (1, '7')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,8,2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.receive: 1:acceptor:3:6:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (1, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(3, 'acceptor')]
+DEBUG:root:Communicator.receive: 3:7:3:acceptor:p2a:(0, 8, 2)
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:6:p2b:0
+DEBUG:root:Communicator.send: decision:(7, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 8, 2), SENDER: (3, '7')
+DEBUG:root:ListenThread.run: received: 3:8:3:acceptor:p2a:(0, 9, 2)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,8,2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.send: decision:(7, 2)
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(9, 1)
+DEBUG:root:Communicator.send: decision:(7, 2)
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(9, 1)
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(10, 2)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(9, 1))
+DEBUG:root:ListenThread.run: received: 0:7:3:replica:decision:(8, 2)
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(10, 2)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(10, 2))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Leader spawning COM: (0, 10, 2)
+DEBUG:root:Commander()
+DEBUG:root:Communicator.receive: 0:7:3:replica:decision:(8, 2)
+DEBUG:root:Replica.receive: ((0, '7'),decision:(8, 2))
+DEBUG:root:Commander.run()
+DEBUG:root:ListenThread.run: received: 1:6:3:replica:decision:(7, 2)
+DEBUG:root:Communicator.send: p2a:(0, 10, 2)
+DEBUG:root:Communicator.receive: 0:8:3:acceptor:p2a:(0, 9, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 9, 2), SENDER: (0, '8')
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:7:p2b:0
+DEBUG:root:Communicator.receive: 1:6:3:replica:decision:(7, 2)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,9,2)
+DEBUG:root:Replica.receive: ((1, '6'),decision:(7, 2))
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.receive: 3:acceptor:3:7:p2b:0
+DEBUG:root:ListenThread.run: received: 0:9:3:acceptor:p2a:(0, 10, 2)
+DEBUG:root:Commander.receive: p2b:0, sender: (3, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor')]
+DEBUG:root:Communicator.send: decision:(7, 2)
+DEBUG:root:Communicator.send: p2a:(0, 10, 2)
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:8:p2b:0
+DEBUG:root:Communicator.receive: 2:8:3:acceptor:p2a:(0, 9, 2)
+DEBUG:root:Communicator.receive: 0:acceptor:3:8:p2b:0
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 9, 2), SENDER: (2, '8')
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,9,2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 3:6:3:replica:decision:(7, 2)
+DEBUG:root:Communicator.receive: 3:6:3:replica:decision:(7, 2)
+DEBUG:root:Replica.receive: ((3, '6'),decision:(7, 2))
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:7:p2b:0
+DEBUG:root:Communicator.receive: 2:acceptor:3:7:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (2, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor')]
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:Communicator.send: decision:(8, 2)
+DEBUG:root:Communicator.send: p2a:(0, 10, 2)
+DEBUG:root:Communicator.send: decision:(8, 2)
+DEBUG:root:ListenThread.run: received: 1:9:3:acceptor:p2a:(0, 10, 2)
+DEBUG:root:Communicator.receive: 1:8:3:acceptor:p2a:(0, 9, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 9, 2), SENDER: (1, '8')
+DEBUG:root:Communicator.send: p2a:(0, 10, 2)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,9,2)
+DEBUG:root:Communicator.send: decision:(8, 2)
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:7:p2b:0
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 2:6:3:replica:decision:(7, 2)
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(10, 1)
+DEBUG:root:Communicator.receive: 2:6:3:replica:decision:(7, 2)
+DEBUG:root:ListenThread.run: received: 3:9:3:acceptor:p2a:(0, 10, 2)
+DEBUG:root:Replica.receive: ((2, '6'),decision:(7, 2))
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(10, 1)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(10, 1))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Communicator.send: decision:(8, 2)
+DEBUG:root:Communicator.receive: 3:8:3:acceptor:p2a:(0, 9, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 9, 2), SENDER: (3, '8')
+DEBUG:root:ListenThread.run: received: 0:10:3:acceptor:p2a:(0, 11, 2)
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:9:p2b:0
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,9,2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.receive: 0:acceptor:3:9:p2b:0
+DEBUG:root:ListenThread.run: received: 3:7:3:replica:decision:(8, 2)
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.receive: 3:7:3:replica:decision:(8, 2)
+DEBUG:root:Replica.receive: ((3, '7'),decision:(8, 2))
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(11, 2)
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(11, 2)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(11, 2))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Leader spawning COM: (0, 11, 2)
+DEBUG:root:Commander()
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.send: p2a:(0, 11, 2)
+DEBUG:root:ListenThread.run: received: 2:9:3:acceptor:p2a:(0, 10, 2)
+DEBUG:root:ListenThread.run: received: 1:7:3:replica:decision:(8, 2)
+DEBUG:root:Communicator.receive: 1:7:3:replica:decision:(8, 2)
+DEBUG:root:Replica.receive: ((1, '7'),decision:(8, 2))
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:8:p2b:0
+DEBUG:root:Communicator.receive: 3:acceptor:3:8:p2b:0
+DEBUG:root:Communicator.receive: 0:9:3:acceptor:p2a:(0, 10, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 10, 2), SENDER: (0, '9')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,10,2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (3, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor')]
+DEBUG:root:ListenThread.run: received: 2:7:3:replica:decision:(8, 2)
+DEBUG:root:Communicator.receive: 2:7:3:replica:decision:(8, 2)
+DEBUG:root:Replica.receive: ((2, '7'),decision:(8, 2))
+DEBUG:root:Communicator.send: p2a:(0, 11, 2)
+DEBUG:root:Communicator.receive: 1:9:3:acceptor:p2a:(0, 10, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 10, 2), SENDER: (1, '9')
+DEBUG:root:ListenThread.run: received: 1:10:3:acceptor:p2a:(0, 11, 2)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,10,2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 0:8:3:replica:decision:(9, 2)
+DEBUG:root:Communicator.receive: 0:8:3:replica:decision:(9, 2)
+DEBUG:root:Replica.receive: ((0, '8'),decision:(9, 2))
+DEBUG:root:Communicator.send: p2a:(0, 11, 2)
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(11, 1)
+DEBUG:root:Communicator.receive: 3:9:3:acceptor:p2a:(0, 10, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 10, 2), SENDER: (3, '9')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,10,2)
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(11, 1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(11, 1))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:8:p2b:0
+DEBUG:root:Communicator.receive: 1:acceptor:3:8:p2b:0
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:10:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (1, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(2, 'acceptor')]
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:Communicator.send: decision:(9, 2)
+DEBUG:root:Communicator.send: p2a:(0, 11, 2)
+DEBUG:root:ListenThread.run: received: 1:8:3:replica:decision:(9, 2)
+DEBUG:root:Communicator.receive: 1:8:3:replica:decision:(9, 2)
+DEBUG:root:Replica.receive: ((1, '8'),decision:(9, 2))
+DEBUG:root:Communicator.receive: 0:10:3:acceptor:p2a:(0, 11, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 11, 2), SENDER: (0, '10')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,11,2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:9:p2b:0
+DEBUG:root:Communicator.receive: 3:acceptor:3:9:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (3, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor')]
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:8:p2b:0
+DEBUG:root:Communicator.send: decision:(9, 2)
+DEBUG:root:ListenThread.run: received: 2:10:3:acceptor:p2a:(0, 11, 2)
+DEBUG:root:Communicator.receive: 0:acceptor:3:10:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:ListenThread.run: received: 3:10:3:acceptor:p2a:(0, 11, 2)
+DEBUG:root:Communicator.send: decision:(9, 2)
+DEBUG:root:Communicator.receive: 2:9:3:acceptor:p2a:(0, 10, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 10, 2), SENDER: (2, '9')
+DEBUG:root:ListenThread.run: received: 2:8:3:replica:decision:(9, 2)
+DEBUG:root:Communicator.send: decision:(9, 2)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,10,2)
+DEBUG:root:ListenThread.run: received: 0:11:3:acceptor:p2a:(0, 12, 2)
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:9:p2b:0
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(12, 1)
+DEBUG:root:Communicator.receive: 2:8:3:replica:decision:(9, 2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.receive: 2:acceptor:3:9:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (2, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor')]
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:Replica.receive: ((2, '8'),decision:(9, 2))
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(12, 2)
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(12, 1)
+DEBUG:root:Communicator.send: decision:(10, 2)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(12, 1))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Leader spawning COM: (0, 12, 1)
+DEBUG:root:ListenThread.run: received: 3:8:3:replica:decision:(9, 2)
+DEBUG:root:ListenThread.run: received: 1:11:3:acceptor:p2a:(0, 12, 2)
+DEBUG:root:Commander()
+DEBUG:root:ListenThread.run: received: 0:9:3:replica:decision:(10, 2)
+DEBUG:root:Communicator.receive: 3:8:3:replica:decision:(9, 2)
+DEBUG:root:Replica.receive: ((3, '8'),decision:(9, 2))
+DEBUG:root:Communicator.receive: 0:9:3:replica:decision:(10, 2)
+DEBUG:root:Replica.receive: ((0, '9'),decision:(10, 2))
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(12, 2)
+DEBUG:root:Commander.run()
+DEBUG:root:ListenThread.run: received: 2:11:3:acceptor:p2a:(0, 12, 1)
+DEBUG:root:Communicator.receive: 1:10:3:acceptor:p2a:(0, 11, 2)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(12, 2))
+DEBUG:root:Communicator.send: p2a:(0, 12, 1)
+DEBUG:root:ListenThread.run: received: 1:9:3:replica:decision:(10, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 11, 2), SENDER: (1, '10')
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,11,2)
+DEBUG:root:Communicator.send: decision:(10, 2)
+DEBUG:root:Communicator.receive: 1:9:3:replica:decision:(10, 2)
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:9:p2b:0
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Replica.receive: ((1, '9'),decision:(10, 2))
+DEBUG:root:Communicator.send: p2a:(0, 12, 1)
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(13, 1)
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(13, 1)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(13, 1))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Leader spawning COM: (0, 13, 1)
+DEBUG:root:Commander()
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:10:p2b:0
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.send: p2a:(0, 13, 1)
+DEBUG:root:Communicator.receive: 2:acceptor:3:10:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (2, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.send: decision:(10, 2)
+DEBUG:root:Communicator.receive: 2:10:3:acceptor:p2a:(0, 11, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 11, 2), SENDER: (2, '10')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,11,2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 0:10:3:replica:decision:(11, 2)
+DEBUG:root:Communicator.receive: 0:10:3:replica:decision:(11, 2)
+DEBUG:root:Replica.receive: ((0, '10'),decision:(11, 2))
+DEBUG:root:Communicator.send: p2a:(0, 12, 1)
+DEBUG:root:Communicator.send: decision:(10, 2)
+DEBUG:root:Communicator.send: p2a:(0, 13, 1)
+DEBUG:root:Communicator.receive: 3:10:3:acceptor:p2a:(0, 11, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 11, 2), SENDER: (3, '10')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,11,2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(13, 2)
+DEBUG:root:ListenThread.run: received: 2:9:3:replica:decision:(10, 2)
+DEBUG:root:ListenThread.run: received: 3:9:3:replica:decision:(10, 2)
+DEBUG:root:Communicator.receive: 2:9:3:replica:decision:(10, 2)
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(13, 2)
+DEBUG:root:Replica.receive: ((2, '9'),decision:(10, 2))
+DEBUG:root:Communicator.receive: 3:9:3:replica:decision:(10, 2)
+DEBUG:root:Replica.receive: ((3, '9'),decision:(10, 2))
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(13, 2))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Communicator.send: p2a:(0, 12, 1)
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:10:p2b:0
+DEBUG:root:Communicator.receive: 0:11:3:acceptor:p2a:(0, 12, 2)
+DEBUG:root:Communicator.receive: 3:acceptor:3:10:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (3, 'acceptor')
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 12, 2), SENDER: (0, '11')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,12,2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor')]
+DEBUG:root:ListenThread.run: received: 2:12:3:acceptor:p2a:(0, 13, 1)
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:Communicator.send: decision:(11, 2)
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:10:p2b:0
+DEBUG:root:Communicator.receive: 1:11:3:acceptor:p2a:(0, 12, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 12, 2), SENDER: (1, '11')
+DEBUG:root:ListenThread.run: received: 0:12:3:acceptor:p2a:(0, 13, 2)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,12,2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:11:p2b:0
+DEBUG:root:Communicator.send: p2a:(0, 13, 1)
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(14, 1)
+DEBUG:root:Communicator.receive: 0:acceptor:3:11:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(14, 1)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(14, 1))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Leader spawning COM: (0, 14, 1)
+DEBUG:root:ListenThread.run: received: 3:11:3:acceptor:p2a:(0, 12, 1)
+DEBUG:root:Commander()
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.send: p2a:(0, 14, 1)
+DEBUG:root:ListenThread.run: received: 1:10:3:replica:decision:(11, 2)
+DEBUG:root:Communicator.receive: 1:10:3:replica:decision:(11, 2)
+DEBUG:root:Replica.receive: ((1, '10'),decision:(11, 2))
+DEBUG:root:Communicator.receive: 2:11:3:acceptor:p2a:(0, 12, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 12, 1), SENDER: (2, '11')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,12,1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:SOCKET: ERROR 3:10:0:replica:decision:(11, 2)
+DEBUG:root:Communicator.send: decision:(11, 2)
+DEBUG:root:Communicator.send: p2a:(0, 13, 1)
+DEBUG:root:Communicator.send: decision:(11, 2)
+DEBUG:root:ListenThread.run: received: 0:13:3:acceptor:p2a:(0, 14, 1)
+DEBUG:root:Communicator.receive: 2:12:3:acceptor:p2a:(0, 13, 1)
+DEBUG:root:Communicator.send: p2a:(0, 14, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 13, 1), SENDER: (2, '12')
+DEBUG:root:ListenThread.run: received: 1:12:3:acceptor:p2a:(0, 13, 1)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,13,1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(14, 2)
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(14, 2)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(14, 2))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Communicator.send: p2a:(0, 14, 1)
+DEBUG:root:Communicator.send: decision:(11, 2)
+DEBUG:root:ListenThread.run: received: 3:12:3:acceptor:p2a:(0, 13, 1)
+DEBUG:root:ListenThread.run: received: 1:13:3:acceptor:p2a:(0, 14, 1)
+DEBUG:root:Communicator.send: p2a:(0, 14, 1)
+DEBUG:root:Communicator.receive: 0:12:3:acceptor:p2a:(0, 13, 2)
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:12:p2b:0
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 13, 2), SENDER: (0, '12')
+DEBUG:root:Communicator.receive: 0:acceptor:3:12:p2b:0
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,13,2)
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:ListenThread.run: received: 3:10:3:replica:decision:(11, 2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.receive: 3:10:3:replica:decision:(11, 2)
+DEBUG:root:ListenThread.run: received: 3:13:3:acceptor:p2a:(0, 14, 1)
+DEBUG:root:Replica.receive: ((3, '10'),decision:(11, 2))
+DEBUG:root:Communicator.receive: 3:11:3:acceptor:p2a:(0, 12, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 12, 1), SENDER: (3, '11')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,12,1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(15, 1)
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(15, 1)
+DEBUG:root:Communicator.receive: 0:13:3:acceptor:p2a:(0, 14, 1)
+DEBUG:root:ListenThread.run: received: 2:10:3:replica:decision:(11, 2)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(15, 1))
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 14, 1), SENDER: (0, '13')
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:11:p2b:0
+DEBUG:root:Communicator.receive: 2:10:3:replica:decision:(11, 2)
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,14,1)
+DEBUG:root:Replica.receive: ((2, '10'),decision:(11, 2))
+DEBUG:root:Leader spawning COM: (0, 15, 1)
+DEBUG:root:ListenThread.run: received: 1:11:3:replica:decision:(12, 2)
+DEBUG:root:Communicator.receive: 3:acceptor:3:11:p2b:0
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 0:11:3:replica:decision:(12, 2)
+DEBUG:root:Commander()
+DEBUG:root:Communicator.receive: 1:11:3:replica:decision:(12, 2)
+DEBUG:root:Commander.receive: p2b:0, sender: (3, 'acceptor')
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:11:p2b:0
+DEBUG:root:Commander.run()
+DEBUG:root:Replica.receive: ((1, '11'),decision:(12, 2))
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor')]
+DEBUG:root:Communicator.receive: 0:11:3:replica:decision:(12, 2)
+DEBUG:root:Replica.receive: ((0, '11'),decision:(12, 2))
+DEBUG:root:Communicator.receive: 2:acceptor:3:11:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (2, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor')]
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:Communicator.send: decision:(12, 1)
+DEBUG:root:Communicator.send: p2a:(0, 15, 1)
+DEBUG:root:ListenThread.run: received: 0:14:3:acceptor:p2a:(0, 15, 1)
+DEBUG:root:Communicator.receive: 1:12:3:acceptor:p2a:(0, 13, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 13, 1), SENDER: (1, '12')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,13,1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 2:11:3:replica:decision:(12, 1)
+DEBUG:root:Communicator.receive: 2:11:3:replica:decision:(12, 1)
+DEBUG:root:Replica.receive: ((2, '11'),decision:(12, 1))
+DEBUG:root:Communicator.send: decision:(12, 1)
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:13:p2b:0
+DEBUG:root:ListenThread.run: received: 2:13:3:acceptor:p2a:(0, 14, 1)
+DEBUG:root:ListenThread.run: received: 2:14:3:acceptor:p2a:(0, 15, 1)
+DEBUG:root:Communicator.receive: 0:acceptor:3:13:p2b:0
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(16, 1)
+DEBUG:root:Communicator.send: p2a:(0, 15, 1)
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(15, 2)
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(16, 1)
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(16, 1))
+DEBUG:root:Communicator.receive: 3:12:3:acceptor:p2a:(0, 13, 1)
+DEBUG:root:Communicator.send: decision:(12, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 13, 1), SENDER: (3, '12')
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,13,1)
+DEBUG:root:Communicator.send: decision:(12, 1)
+DEBUG:root:Communicator.send: p2a:(0, 15, 1)
+DEBUG:root:Leader spawning COM: (0, 16, 1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Commander()
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(15, 2)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(15, 2))
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.send: p2a:(0, 16, 1)
+DEBUG:root:ListenThread.run: received: 3:11:3:replica:decision:(12, 1)
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Communicator.receive: 3:11:3:replica:decision:(12, 1)
+DEBUG:root:Replica.receive: ((3, '11'),decision:(12, 1))
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:11:p2b:0
+DEBUG:root:Communicator.send: p2a:(0, 16, 1)
+DEBUG:root:Communicator.send: p2a:(0, 15, 1)
+DEBUG:root:ListenThread.run: received: 0:15:3:acceptor:p2a:(0, 16, 1)
+DEBUG:root:ListenThread.run: received: 1:14:3:acceptor:p2a:(0, 15, 1)
+DEBUG:root:Communicator.send: p2a:(0, 16, 1)
+DEBUG:root:ListenThread.run: received: 0:12:3:replica:decision:(13, 2)
+DEBUG:root:Communicator.receive: 1:13:3:acceptor:p2a:(0, 14, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 14, 1), SENDER: (1, '13')
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:12:p2b:0
+DEBUG:root:Communicator.send: p2a:(0, 16, 1)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,14,1)
+DEBUG:root:Communicator.receive: 0:12:3:replica:decision:(13, 2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 3:14:3:acceptor:p2a:(0, 15, 1)
+DEBUG:root:Communicator.receive: 3:acceptor:3:12:p2b:0
+DEBUG:root:Replica.receive: ((0, '12'),decision:(13, 2))
+DEBUG:root:Commander.receive: p2b:0, sender: (3, 'acceptor')
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(17, 1)
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor')]
+DEBUG:root:ListenThread.run: received: 3:15:3:acceptor:p2a:(0, 16, 1)
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(17, 1)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(17, 1))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Leader spawning COM: (0, 17, 1)
+DEBUG:root:Commander()
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.send: p2a:(0, 17, 1)
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(16, 2)
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(16, 2)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(16, 2))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Communicator.send: p2a:(0, 17, 1)
+DEBUG:root:Communicator.receive: 3:13:3:acceptor:p2a:(0, 14, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 14, 1), SENDER: (3, '13')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,14,1)
+DEBUG:root:ListenThread.run: received: 2:12:3:replica:decision:(13, 1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 2:15:3:acceptor:p2a:(0, 16, 1)
+DEBUG:root:Communicator.receive: 2:12:3:replica:decision:(13, 1)
+DEBUG:root:Communicator.receive: 0:14:3:acceptor:p2a:(0, 15, 1)
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:14:p2b:0
+DEBUG:root:Communicator.send: p2a:(0, 17, 1)
+DEBUG:root:ListenThread.run: received: 1:15:3:acceptor:p2a:(0, 16, 1)
+DEBUG:root:Replica.receive: ((2, '12'),decision:(13, 1))
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:13:p2b:0
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 15, 1), SENDER: (0, '14')
+DEBUG:root:Communicator.receive: 0:acceptor:3:14:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.receive: 3:acceptor:3:13:p2b:0
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,15,1)
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:12:p2b:0
+DEBUG:root:Communicator.send: p2a:(0, 17, 1)
+DEBUG:root:ListenThread.run: received: 0:16:3:acceptor:p2a:(0, 17, 1)
+DEBUG:root:Commander.receive: p2b:0, sender: (3, 'acceptor')
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.receive: 2:acceptor:3:12:p2b:0
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor')]
+DEBUG:root:Commander.receive: p2b:0, sender: (2, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor')]
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:Communicator.send: decision:(13, 1)
+DEBUG:root:Communicator.receive: 2:13:3:acceptor:p2a:(0, 14, 1)
+DEBUG:root:ListenThread.run: received: 1:12:3:replica:decision:(13, 1)
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(17, 2)
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:13:p2b:0
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 14, 1), SENDER: (2, '13')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,14,1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 2:16:3:acceptor:p2a:(0, 17, 1)
+DEBUG:root:Communicator.send: decision:(13, 1)
+DEBUG:root:Communicator.receive: 1:12:3:replica:decision:(13, 1)
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(17, 2)
+DEBUG:root:Communicator.receive: 2:14:3:acceptor:p2a:(0, 15, 1)
+DEBUG:root:Communicator.receive: 2:acceptor:3:13:p2b:0
+DEBUG:root:Communicator.send: decision:(13, 1)
+DEBUG:root:ListenThread.run: received: 0:13:3:replica:decision:(14, 1)
+DEBUG:root:Replica.receive: ((1, '12'),decision:(13, 1))
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(17, 2))
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 15, 1), SENDER: (2, '14')
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(18, 1)
+DEBUG:root:Commander.receive: p2b:0, sender: (2, 'acceptor')
+DEBUG:root:Communicator.send: decision:(13, 1)
+DEBUG:root:Communicator.receive: 0:13:3:replica:decision:(14, 1)
+DEBUG:root:ListenThread.run: received: 1:13:3:replica:decision:(14, 1)
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,15,1)
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor')]
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:15:p2b:0
+DEBUG:root:Replica.receive: ((0, '13'),decision:(14, 1))
+DEBUG:root:Communicator.receive: 1:13:3:replica:decision:(14, 1)
+DEBUG:root:ListenThread.run: received: 0:17:3:acceptor:p2a:(0, 18, 1)
+DEBUG:root:ListenThread.run: received: 3:12:3:replica:decision:(13, 1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(18, 1)
+DEBUG:root:Replica.receive: ((1, '13'),decision:(14, 1))
+DEBUG:root:Communicator.receive: 3:12:3:replica:decision:(13, 1)
+DEBUG:root:Replica.receive: ((3, '12'),decision:(13, 1))
+DEBUG:root:Communicator.receive: 0:acceptor:3:15:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.send: decision:(14, 1)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(18, 1))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Leader spawning COM: (0, 18, 1)
+DEBUG:root:Communicator.receive: 0:15:3:acceptor:p2a:(0, 16, 1)
+DEBUG:root:Commander()
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 16, 1), SENDER: (0, '15')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,16,1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.send: p2a:(0, 18, 1)
+DEBUG:root:ListenThread.run: received: 3:16:3:acceptor:p2a:(0, 17, 1)
+DEBUG:root:ListenThread.run: received: 1:16:3:acceptor:p2a:(0, 17, 2)
+DEBUG:root:SOCKET: ERROR 3:17:0:acceptor:p2a:(0, 18, 1)
+DEBUG:root:Communicator.send: p2a:(0, 18, 1)
+DEBUG:root:Communicator.send: decision:(14, 1)
+DEBUG:root:Communicator.receive: 1:14:3:acceptor:p2a:(0, 15, 1)
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(18, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 15, 1), SENDER: (1, '14')
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(18, 2)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,15,1)
+DEBUG:root:Communicator.send: p2a:(0, 18, 1)
+DEBUG:root:Communicator.send: decision:(14, 1)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(18, 2))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:12:p2b:0
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(19, 1)
+DEBUG:root:Communicator.send: p2a:(0, 18, 1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(19, 1)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(19, 1))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Leader spawning COM: (0, 19, 1)
+DEBUG:root:Commander()
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.send: p2a:(0, 19, 1)
+DEBUG:root:ListenThread.run: received: 1:17:3:acceptor:p2a:(0, 18, 1)
+DEBUG:root:Communicator.send: decision:(14, 1)
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:16:p2b:0
+DEBUG:root:Communicator.receive: 0:acceptor:3:16:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:ListenThread.run: received: 3:17:3:acceptor:p2a:(0, 18, 1)
+DEBUG:root:Communicator.send: p2a:(0, 19, 1)
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:13:p2b:0
+DEBUG:root:ListenThread.run: received: 3:13:3:replica:decision:(14, 1)
+DEBUG:root:Communicator.receive: 3:14:3:acceptor:p2a:(0, 15, 1)
+DEBUG:root:ListenThread.run: received: 2:17:3:acceptor:p2a:(0, 18, 1)
+DEBUG:root:Communicator.receive: 3:13:3:replica:decision:(14, 1)
+DEBUG:root:Communicator.send: p2a:(0, 19, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 15, 1), SENDER: (3, '14')
+DEBUG:root:ListenThread.run: received: 0:14:3:replica:decision:(15, 1)
+DEBUG:root:Replica.receive: ((3, '13'),decision:(14, 1))
+DEBUG:root:ListenThread.run: received: 2:14:3:replica:decision:(15, 1)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,15,1)
+DEBUG:root:ListenThread.run: received: 2:13:3:replica:decision:(14, 1)
+DEBUG:root:ListenThread.run: received: 2:18:3:acceptor:p2a:(0, 19, 1)
+DEBUG:root:Communicator.send: p2a:(0, 19, 1)
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(19, 2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.receive: 0:14:3:replica:decision:(15, 1)
+DEBUG:root:Replica.receive: ((0, '14'),decision:(15, 1))
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(20, 1)
+DEBUG:root:ListenThread.run: received: 1:18:3:acceptor:p2a:(0, 19, 1)
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(19, 2)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(19, 2))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(20, 1)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(20, 1))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Leader spawning COM: (0, 20, 1)
+DEBUG:root:Communicator.receive: 2:14:3:replica:decision:(15, 1)
+DEBUG:root:Communicator.receive: 3:15:3:acceptor:p2a:(0, 16, 1)
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:14:p2b:0
+DEBUG:root:ListenThread.run: received: 3:18:3:acceptor:p2a:(0, 19, 1)
+DEBUG:root:Replica.receive: ((2, '14'),decision:(15, 1))
+DEBUG:root:Communicator.receive: 2:13:3:replica:decision:(14, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 16, 1), SENDER: (3, '15')
+DEBUG:root:Communicator.receive: 3:acceptor:3:14:p2b:0
+DEBUG:root:Replica.receive: ((2, '13'),decision:(14, 1))
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,16,1)
+DEBUG:root:Commander.receive: p2b:0, sender: (3, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor')]
+DEBUG:root:Commander()
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.send: p2a:(0, 20, 1)
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:14:p2b:0
+DEBUG:root:ListenThread.run: received: 0:18:3:acceptor:p2a:(0, 19, 1)
+DEBUG:root:Communicator.send: p2a:(0, 20, 1)
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(21, 1)
+DEBUG:root:Communicator.receive: 2:acceptor:3:14:p2b:0
+DEBUG:root:Communicator.receive: 2:15:3:acceptor:p2a:(0, 16, 1)
+DEBUG:root:Communicator.send: p2a:(0, 20, 1)
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:15:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (2, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor')]
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 16, 1), SENDER: (2, '15')
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(21, 1)
+DEBUG:root:Communicator.receive: 3:acceptor:3:15:p2b:0
+DEBUG:root:Communicator.send: decision:(15, 1)
+DEBUG:root:ListenThread.run: received: 1:19:3:acceptor:p2a:(0, 20, 1)
+DEBUG:root:Communicator.send: p2a:(0, 20, 1)
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(20, 2)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,16,1)
+DEBUG:root:ListenThread.run: received: 1:14:3:replica:decision:(15, 1)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(21, 1))
+DEBUG:root:Commander.receive: p2b:0, sender: (3, 'acceptor')
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:15:p2b:0
+DEBUG:root:Communicator.send: decision:(15, 1)
+DEBUG:root:ListenThread.run: received: 3:19:3:acceptor:p2a:(0, 20, 1)
+DEBUG:root:Leader: Inside propose
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor')]
+DEBUG:root:Communicator.receive: 2:acceptor:3:15:p2b:0
+DEBUG:root:Communicator.receive: 1:14:3:replica:decision:(15, 1)
+DEBUG:root:Leader spawning COM: (0, 21, 1)
+DEBUG:root:ListenThread.run: received: 2:19:3:acceptor:p2a:(0, 20, 1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(22, 1)
+DEBUG:root:ListenThread.run: received: 1:20:3:acceptor:p2a:(0, 21, 1)
+DEBUG:root:Commander.receive: p2b:0, sender: (2, 'acceptor')
+DEBUG:root:Replica.receive: ((1, '14'),decision:(15, 1))
+DEBUG:root:Commander()
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor')]
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:14:p2b:0
+DEBUG:root:ListenThread.run: received: 0:15:3:replica:decision:(16, 1)
+DEBUG:root:Communicator.receive: 1:15:3:acceptor:p2a:(0, 16, 1)
+DEBUG:root:Communicator.send: decision:(15, 1)
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:Commander.run()
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(21, 2)
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(20, 2)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(20, 2))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:ListenThread.run: received: 0:19:3:acceptor:p2a:(0, 20, 1)
+DEBUG:root:Communicator.send: decision:(15, 1)
+DEBUG:root:Communicator.send: decision:(16, 1)
+DEBUG:root:Communicator.send: p2a:(0, 21, 1)
+DEBUG:root:ListenThread.run: received: 0:20:3:acceptor:p2a:(0, 21, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 16, 1), SENDER: (1, '15')
+DEBUG:root:Communicator.receive: 0:15:3:replica:decision:(16, 1)
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(22, 1)
+DEBUG:root:Communicator.send: decision:(16, 1)
+DEBUG:root:Replica.receive: ((0, '15'),decision:(16, 1))
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,16,1)
+DEBUG:root:ListenThread.run: received: 3:14:3:replica:decision:(15, 1)
+DEBUG:root:Communicator.send: p2a:(0, 21, 1)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(22, 1))
+DEBUG:root:ListenThread.run: received: 2:20:3:acceptor:p2a:(0, 21, 1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.receive: 3:14:3:replica:decision:(15, 1)
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Replica.receive: ((3, '14'),decision:(15, 1))
+DEBUG:root:Leader spawning COM: (0, 22, 1)
+DEBUG:root:Commander()
+DEBUG:root:Communicator.send: decision:(16, 1)
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:18:p2b:0
+DEBUG:root:Communicator.send: p2a:(0, 21, 1)
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.send: p2a:(0, 22, 1)
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(23, 1)
+DEBUG:root:Communicator.send: decision:(16, 1)
+DEBUG:root:Communicator.receive: 0:acceptor:3:18:p2b:0
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(21, 2)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(21, 2))
+DEBUG:root:ListenThread.run: received: 0:21:3:acceptor:p2a:(0, 22, 1)
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Communicator.receive: 0:16:3:acceptor:p2a:(0, 17, 1)
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:16:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(23, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 17, 1), SENDER: (0, '16')
+DEBUG:root:Communicator.send: p2a:(0, 22, 1)
+DEBUG:root:ListenThread.run: received: 3:15:3:replica:decision:(16, 1)
+DEBUG:root:Communicator.send: p2a:(0, 21, 1)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,17,1)
+DEBUG:root:Communicator.receive: 2:acceptor:3:16:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (2, 'acceptor')
+DEBUG:root:Communicator.receive: 3:15:3:replica:decision:(16, 1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(23, 1))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Replica.receive: ((3, '15'),decision:(16, 1))
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Leader spawning COM: (0, 23, 1)
+DEBUG:root:Commander()
+DEBUG:root:Communicator.send: p2a:(0, 22, 1)
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.receive: 2:16:3:acceptor:p2a:(0, 17, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 17, 1), SENDER: (2, '16')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,17,1)
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:15:p2b:0
+DEBUG:root:Communicator.send: p2a:(0, 23, 1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 3:20:3:acceptor:p2a:(0, 21, 1)
+DEBUG:root:ListenThread.run: received: 2:21:3:acceptor:p2a:(0, 22, 1)
+DEBUG:root:ListenThread.run: received: 1:21:3:acceptor:p2a:(0, 22, 1)
+DEBUG:root:Communicator.send: p2a:(0, 22, 1)
+DEBUG:root:ListenThread.run: received: 2:15:3:replica:decision:(16, 1)
+DEBUG:root:Communicator.send: p2a:(0, 23, 1)
+DEBUG:root:Communicator.receive: 2:15:3:replica:decision:(16, 1)
+DEBUG:root:Replica.receive: ((2, '15'),decision:(16, 1))
+DEBUG:root:Communicator.receive: 0:17:3:acceptor:p2a:(0, 18, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 18, 1), SENDER: (0, '17')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,18,1)
+DEBUG:root:ListenThread.run: received: 1:22:3:acceptor:p2a:(0, 23, 1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 3:21:3:acceptor:p2a:(0, 22, 1)
+DEBUG:root:Communicator.receive: 3:16:3:acceptor:p2a:(0, 17, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 17, 1), SENDER: (3, '16')
+DEBUG:root:ListenThread.run: received: 2:22:3:acceptor:p2a:(0, 23, 1)
+DEBUG:root:ListenThread.run: received: 0:22:3:acceptor:p2a:(0, 23, 1)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,17,1)
+DEBUG:root:Communicator.send: p2a:(0, 23, 1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.send: p2a:(0, 23, 1)
+DEBUG:root:Communicator.receive: 1:16:3:acceptor:p2a:(0, 17, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 17, 2), SENDER: (1, '16')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,17,2)
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:16:p2b:0
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 3:22:3:acceptor:p2a:(0, 23, 1)
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(24, 1)
+DEBUG:root:Communicator.receive: 3:acceptor:3:16:p2b:0
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(24, 1)
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(22, 2)
+DEBUG:root:Commander.receive: p2b:0, sender: (3, 'acceptor')
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:17:p2b:0
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(24, 1))
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor')]
+DEBUG:root:ListenThread.run: received: 1:15:3:replica:decision:(16, 1)
+DEBUG:root:Communicator.receive: 1:17:3:acceptor:p2a:(0, 18, 1)
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:Communicator.receive: 2:acceptor:3:17:p2b:0
+DEBUG:root:Leader: Inside propose
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 18, 1), SENDER: (1, '17')
+DEBUG:root:Communicator.send: decision:(17, 1)
+DEBUG:root:Leader spawning COM: (0, 24, 1)
+DEBUG:root:Communicator.receive: 1:15:3:replica:decision:(16, 1)
+DEBUG:root:Commander.receive: p2b:0, sender: (2, 'acceptor')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,18,1)
+DEBUG:root:Commander()
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:16:p2b:0
+DEBUG:root:COMMANDER p2b: [(0, 'acceptor'), (1, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Replica.receive: ((1, '15'),decision:(16, 1))
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 0:16:3:replica:decision:(17, 1)
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(22, 2)
+DEBUG:root:ListenThread.run: received: 2:16:3:replica:decision:(17, 1)
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.receive: 0:16:3:replica:decision:(17, 1)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(22, 2))
+DEBUG:root:Communicator.send: p2a:(0, 24, 1)
+DEBUG:root:Replica.receive: ((0, '16'),decision:(17, 1))
+DEBUG:root:ListenThread.run: received: 1:23:3:acceptor:p2a:(0, 24, 1)
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Communicator.receive: 3:17:3:acceptor:p2a:(0, 18, 1)
+DEBUG:root:Communicator.receive: 2:16:3:replica:decision:(17, 1)
+DEBUG:root:Communicator.send: decision:(17, 1)
+DEBUG:root:Communicator.send: p2a:(0, 24, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 18, 1), SENDER: (3, '17')
+DEBUG:root:Replica.receive: ((2, '16'),decision:(17, 1))
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(25, 1)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,18,1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(23, 2)
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(25, 1)
+DEBUG:root:Communicator.send: p2a:(0, 24, 1)
+DEBUG:root:Communicator.send: decision:(17, 1)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(25, 1))
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:17:p2b:0
+DEBUG:root:Communicator.receive: 2:17:3:acceptor:p2a:(0, 18, 1)
+DEBUG:root:Communicator.send: p2a:(0, 24, 1)
+DEBUG:root:Communicator.receive: 3:acceptor:3:17:p2b:0
+DEBUG:root:Communicator.send: decision:(17, 1)
+DEBUG:root:Leader: Inside propose
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 18, 1), SENDER: (2, '17')
+DEBUG:root:Commander.receive: p2b:0, sender: (3, 'acceptor')
+DEBUG:root:Leader spawning COM: (0, 25, 1)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,18,1)
+DEBUG:root:ListenThread.run: received: 3:23:3:acceptor:p2a:(0, 24, 1)
+DEBUG:root:ListenThread.run: received: 1:16:3:replica:decision:(17, 2)
+DEBUG:root:COMMANDER p2b: [(0, 'acceptor'), (1, 'acceptor')]
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Commander()
+DEBUG:root:ListenThread.run: received: 0:23:3:acceptor:p2a:(0, 24, 1)
+DEBUG:root:Communicator.receive: 1:16:3:replica:decision:(17, 2)
+DEBUG:root:ListenThread.run: received: 3:16:3:replica:decision:(17, 1)
+DEBUG:root:ListenThread.run: received: 2:23:3:acceptor:p2a:(0, 24, 1)
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(23, 2)
+DEBUG:root:Commander.run()
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:19:p2b:0
+DEBUG:root:Communicator.receive: 2:18:3:acceptor:p2a:(0, 19, 1)
+DEBUG:root:Replica.receive: ((1, '16'),decision:(17, 2))
+DEBUG:root:Communicator.receive: 3:16:3:replica:decision:(17, 1)
+DEBUG:root:Communicator.send: p2a:(0, 25, 1)
+DEBUG:root:ListenThread.run: received: 0:17:3:replica:decision:(18, 1)
+DEBUG:root:Communicator.receive: 0:acceptor:3:19:p2b:0
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 19, 1), SENDER: (2, '18')
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(23, 2))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.send: p2a:(0, 25, 1)
+DEBUG:root:ListenThread.run: received: 1:24:3:acceptor:p2a:(0, 25, 1)
+DEBUG:root:Replica.receive: ((3, '16'),decision:(17, 1))
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,19,1)
+DEBUG:root:Communicator.send: p2a:(0, 25, 1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.receive: 0:17:3:replica:decision:(18, 1)
+DEBUG:root:Replica.receive: ((0, '17'),decision:(18, 1))
+DEBUG:root:Communicator.send: p2a:(0, 25, 1)
+DEBUG:root:ListenThread.run: received: 0:24:3:acceptor:p2a:(0, 25, 1)
+DEBUG:root:ListenThread.run: received: 2:24:3:acceptor:p2a:(0, 25, 1)
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(26, 1)
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(24, 2)
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(26, 1)
+DEBUG:root:Communicator.receive: 1:18:3:acceptor:p2a:(0, 19, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 19, 1), SENDER: (1, '18')
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(26, 1))
+DEBUG:root:ListenThread.run: received: 1:17:3:replica:decision:(18, 1)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,19,1)
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Leader spawning COM: (0, 26, 1)
+DEBUG:root:Communicator.receive: 1:17:3:replica:decision:(18, 1)
+DEBUG:root:ListenThread.run: received: 3:24:3:acceptor:p2a:(0, 25, 1)
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:17:p2b:0
+DEBUG:root:Replica.receive: ((1, '17'),decision:(18, 1))
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:18:p2b:0
+DEBUG:root:Commander()
+DEBUG:root:Communicator.receive: 3:18:3:acceptor:p2a:(0, 19, 1)
+DEBUG:root:ListenThread.run: received: 0:25:3:acceptor:p2a:(0, 26, 1)
+DEBUG:root:Communicator.receive: 1:acceptor:3:17:p2b:0
+DEBUG:root:Communicator.receive: 2:acceptor:3:18:p2b:0
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 19, 1), SENDER: (3, '18')
+DEBUG:root:Commander.run()
+DEBUG:root:Commander.receive: p2b:0, sender: (1, 'acceptor')
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(24, 2)
+DEBUG:root:ListenThread.run: received: 2:17:3:replica:decision:(18, 1)
+DEBUG:root:Commander.receive: p2b:0, sender: (2, 'acceptor')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,19,1)
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(27, 1)
+DEBUG:root:Communicator.send: p2a:(0, 26, 1)
+DEBUG:root:COMMANDER p2b: [(0, 'acceptor')]
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(24, 2))
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.receive: 2:17:3:replica:decision:(18, 1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(25, 2)
+DEBUG:root:Leader: Inside propose
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:Replica.receive: ((2, '17'),decision:(18, 1))
+DEBUG:root:Communicator.send: p2a:(0, 26, 1)
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(27, 1)
+DEBUG:root:Communicator.receive: 0:18:3:acceptor:p2a:(0, 19, 1)
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:18:p2b:0
+DEBUG:root:Communicator.send: decision:(18, 1)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(27, 1))
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 19, 1), SENDER: (0, '18')
+DEBUG:root:Communicator.receive: 3:acceptor:3:18:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (3, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor')]
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,19,1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Leader: Inside propose
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:20:p2b:0
+DEBUG:root:Communicator.send: decision:(18, 1)
+DEBUG:root:Communicator.send: decision:(19, 1)
+DEBUG:root:Communicator.send: p2a:(0, 26, 1)
+DEBUG:root:ListenThread.run: received: 1:25:3:acceptor:p2a:(0, 26, 1)
+DEBUG:root:Communicator.receive: 1:19:3:acceptor:p2a:(0, 20, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 20, 1), SENDER: (1, '19')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,20,1)
+DEBUG:root:Communicator.receive: 0:acceptor:3:20:p2b:0
+DEBUG:root:Leader spawning COM: (0, 27, 1)
+DEBUG:root:Communicator.send: decision:(19, 1)
+DEBUG:root:ListenThread.run: received: 0:26:3:acceptor:p2a:(0, 27, 1)
+DEBUG:root:Communicator.send: p2a:(0, 26, 1)
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Commander()
+DEBUG:root:ListenThread.run: received: 2:25:3:acceptor:p2a:(0, 26, 1)
+DEBUG:root:Communicator.send: decision:(18, 1)
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:19:p2b:0
+DEBUG:root:Communicator.send: decision:(19, 1)
+DEBUG:root:ListenThread.run: received: 2:18:3:replica:decision:(19, 1)
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(25, 2)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(25, 2))
+DEBUG:root:Communicator.receive: 2:acceptor:3:19:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (2, 'acceptor')
+DEBUG:root:Communicator.send: decision:(18, 1)
+DEBUG:root:Communicator.send: p2a:(0, 27, 1)
+DEBUG:root:ListenThread.run: received: 3:25:3:acceptor:p2a:(0, 26, 1)
+DEBUG:root:Communicator.receive: 2:18:3:replica:decision:(19, 1)
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.receive: 3:19:3:acceptor:p2a:(0, 20, 1)
+DEBUG:root:Communicator.send: decision:(19, 1)
+DEBUG:root:Leader: Inside propose
+DEBUG:root:ListenThread.run: received: 1:18:3:replica:decision:(19, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 20, 1), SENDER: (3, '19')
+DEBUG:root:ListenThread.run: received: 1:26:3:acceptor:p2a:(0, 27, 1)
+DEBUG:root:Replica.receive: ((2, '18'),decision:(19, 1))
+DEBUG:root:Communicator.send: p2a:(0, 27, 1)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,20,1)
+DEBUG:root:Communicator.receive: 1:18:3:replica:decision:(19, 1)
+DEBUG:root:ListenThread.run: received: 2:26:3:acceptor:p2a:(0, 27, 1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.send: p2a:(0, 27, 1)
+DEBUG:root:ListenThread.run: received: 3:17:3:replica:decision:(18, 1)
+DEBUG:root:Replica.receive: ((1, '18'),decision:(19, 1))
+DEBUG:root:ListenThread.run: received: 3:18:3:replica:decision:(19, 1)
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(26, 2)
+DEBUG:root:Communicator.send: p2a:(0, 27, 1)
+DEBUG:root:Communicator.receive: 2:19:3:acceptor:p2a:(0, 20, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 20, 1), SENDER: (2, '19')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,20,1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 0:27:3:acceptor:p2a:(0, 28, 1)
+DEBUG:root:Communicator.receive: 3:17:3:replica:decision:(18, 1)
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:18:p2b:0
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:19:p2b:0
+DEBUG:root:Replica.receive: ((3, '17'),decision:(18, 1))
+DEBUG:root:Communicator.receive: 3:18:3:replica:decision:(19, 1)
+DEBUG:root:ListenThread.run: received: 3:26:3:acceptor:p2a:(0, 27, 1)
+DEBUG:root:Replica.receive: ((3, '18'),decision:(19, 1))
+DEBUG:root:Communicator.receive: 3:acceptor:3:19:p2b:0
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(26, 2)
+DEBUG:root:Communicator.receive: 1:20:3:acceptor:p2a:(0, 21, 1)
+DEBUG:root:Commander.receive: p2b:0, sender: (3, 'acceptor')
+DEBUG:root:ListenThread.run: received: 1:19:3:replica:decision:(20, 1)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(26, 2))
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 21, 1), SENDER: (1, '20')
+DEBUG:root:ListenThread.run: received: 0:18:3:replica:decision:(19, 1)
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor')]
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Communicator.receive: 1:19:3:replica:decision:(20, 1)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,21,1)
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(28, 1)
+DEBUG:root:Replica.receive: ((1, '19'),decision:(20, 1))
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.send: decision:(20, 1)
+DEBUG:root:Communicator.receive: 0:18:3:replica:decision:(19, 1)
+DEBUG:root:Replica.receive: ((0, '18'),decision:(19, 1))
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(28, 1)
+DEBUG:root:Communicator.send: decision:(20, 1)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(28, 1))
+DEBUG:root:Communicator.receive: 0:19:3:acceptor:p2a:(0, 20, 1)
+DEBUG:root:Communicator.send: decision:(20, 1)
+DEBUG:root:Leader: Inside propose
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(27, 2)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 20, 1), SENDER: (0, '19')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,20,1)
+DEBUG:root:Leader spawning COM: (0, 28, 1)
+DEBUG:root:Communicator.send: decision:(20, 1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Commander()
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:21:p2b:0
+DEBUG:root:Commander.run()
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:19:p2b:0
+DEBUG:root:Communicator.receive: 0:20:3:acceptor:p2a:(0, 21, 1)
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(27, 2)
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(29, 1)
+DEBUG:root:ListenThread.run: received: 3:19:3:replica:decision:(20, 1)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(27, 2))
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 21, 1), SENDER: (0, '20')
+DEBUG:root:Communicator.send: p2a:(0, 28, 1)
+DEBUG:root:Communicator.receive: 0:acceptor:3:21:p2b:0
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Communicator.receive: 3:19:3:replica:decision:(20, 1)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,21,1)
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(29, 1)
+DEBUG:root:Communicator.send: p2a:(0, 28, 1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(28, 2)
+DEBUG:root:Replica.receive: ((3, '19'),decision:(20, 1))
+DEBUG:root:ListenThread.run: received: 2:19:3:replica:decision:(20, 1)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(29, 1))
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.receive: 2:20:3:acceptor:p2a:(0, 21, 1)
+DEBUG:root:ListenThread.run: received: 0:28:3:acceptor:p2a:(0, 29, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 21, 1), SENDER: (2, '20')
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Communicator.receive: 2:19:3:replica:decision:(20, 1)
+DEBUG:root:Communicator.send: p2a:(0, 28, 1)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,21,1)
+DEBUG:root:ListenThread.run: received: 2:27:3:acceptor:p2a:(0, 28, 1)
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:22:p2b:0
+DEBUG:root:Leader spawning COM: (0, 29, 1)
+DEBUG:root:Replica.receive: ((2, '19'),decision:(20, 1))
+DEBUG:root:Communicator.send: p2a:(0, 28, 1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(30, 1)
+DEBUG:root:Commander()
+DEBUG:root:Communicator.receive: 0:acceptor:3:22:p2b:0
+DEBUG:root:ListenThread.run: received: 3:27:3:acceptor:p2a:(0, 28, 1)
+DEBUG:root:Communicator.receive: 0:21:3:acceptor:p2a:(0, 22, 1)
+DEBUG:root:ListenThread.run: received: 0:19:3:replica:decision:(20, 1)
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 22, 1), SENDER: (0, '21')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,22,1)
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(29, 2)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(28, 2)
+DEBUG:root:Communicator.receive: 0:19:3:replica:decision:(20, 1)
+DEBUG:root:Communicator.send: p2a:(0, 29, 1)
+DEBUG:root:Communicator.receive: 3:20:3:acceptor:p2a:(0, 21, 1)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(28, 2))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Communicator.send: p2a:(0, 29, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 21, 1), SENDER: (3, '20')
+DEBUG:root:Replica.receive: ((0, '19'),decision:(20, 1))
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(30, 1)
+DEBUG:root:ListenThread.run: received: 1:27:3:acceptor:p2a:(0, 28, 1)
+DEBUG:root:Communicator.send: p2a:(0, 29, 1)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,21,1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 1:20:3:replica:decision:(21, 1)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(30, 1))
+DEBUG:root:ListenThread.run: received: 2:28:3:acceptor:p2a:(0, 29, 1)
+DEBUG:root:Communicator.send: p2a:(0, 29, 1)
+DEBUG:root:Communicator.receive: 1:20:3:replica:decision:(21, 1)
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Replica.receive: ((1, '20'),decision:(21, 1))
+DEBUG:root:Leader spawning COM: (0, 30, 1)
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:20:p2b:0
+DEBUG:root:Communicator.receive: 2:21:3:acceptor:p2a:(0, 22, 1)
+DEBUG:root:Commander()
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:20:p2b:0
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 22, 1), SENDER: (2, '21')
+DEBUG:root:Communicator.receive: 2:acceptor:3:20:p2b:0
+DEBUG:root:ListenThread.run: received: 0:29:3:acceptor:p2a:(0, 30, 1)
+DEBUG:root:Commander.run()
+DEBUG:root:Commander.receive: p2b:0, sender: (2, 'acceptor')
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(29, 2)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,22,1)
+DEBUG:root:Communicator.send: p2a:(0, 30, 1)
+DEBUG:root:ListenThread.run: received: 0:20:3:replica:decision:(21, 1)
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(30, 2)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(29, 2))
+DEBUG:root:Communicator.receive: 3:acceptor:3:20:p2b:0
+DEBUG:root:ListenThread.run: received: 3:28:3:acceptor:p2a:(0, 29, 1)
+DEBUG:root:Communicator.receive: 0:20:3:replica:decision:(21, 1)
+DEBUG:root:Communicator.send: p2a:(0, 30, 1)
+DEBUG:root:ListenThread.run: received: 1:28:3:acceptor:p2a:(0, 29, 1)
+DEBUG:root:Communicator.receive: 1:21:3:acceptor:p2a:(0, 22, 1)
+DEBUG:root:Leader: Inside propose
+DEBUG:root:ListenThread.run: received: 2:20:3:replica:decision:(21, 1)
+DEBUG:root:ListenThread.run: received: 0:21:3:replica:decision:(22, 1)
+DEBUG:root:Commander.receive: p2b:0, sender: (3, 'acceptor')
+DEBUG:root:Replica.receive: ((0, '20'),decision:(21, 1))
+DEBUG:root:Communicator.send: p2a:(0, 30, 1)
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:23:p2b:0
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 22, 1), SENDER: (1, '21')
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(30, 2)
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor')]
+DEBUG:root:ListenThread.run: received: 2:29:3:acceptor:p2a:(0, 30, 1)
+DEBUG:root:Communicator.receive: 2:20:3:replica:decision:(21, 1)
+DEBUG:root:Replica.receive: ((2, '20'),decision:(21, 1))
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(31, 2)
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:21:p2b:0
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,22,1)
+DEBUG:root:Communicator.send: p2a:(0, 30, 1)
+DEBUG:root:Communicator.receive: 0:acceptor:3:23:p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:Communicator.receive: 2:acceptor:3:21:p2b:0
+DEBUG:root:Communicator.receive: 0:21:3:replica:decision:(22, 1)
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(30, 2))
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(31, 1)
+DEBUG:root:ListenThread.run: received: 3:29:3:acceptor:p2a:(0, 30, 1)
+DEBUG:root:Communicator.receive: 1:22:3:acceptor:p2a:(0, 23, 1)
+DEBUG:root:ListenThread.run: received: 0:30:3:acceptor:p2a:(0, 31, 1)
+DEBUG:root:Commander.receive: p2b:0, sender: (2, 'acceptor')
+DEBUG:root:Communicator.send: decision:(21, 1)
+DEBUG:root:Replica.receive: ((0, '21'),decision:(22, 1))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:ListenThread.run: received: 1:29:3:acceptor:p2a:(0, 30, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 23, 1), SENDER: (1, '22')
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(31, 2)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,23,1)
+DEBUG:root:Communicator.send: decision:(21, 1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(31, 2))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(32, 1)
+DEBUG:root:Leader spawning COM: (0, 31, 2)
+DEBUG:root:Communicator.receive: 3:21:3:acceptor:p2a:(0, 22, 1)
+DEBUG:root:Communicator.send: decision:(21, 1)
+DEBUG:root:ListenThread.run: received: 2:30:3:acceptor:p2a:(0, 31, 1)
+DEBUG:root:Commander()
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 22, 1), SENDER: (3, '21')
+DEBUG:root:Communicator.send: decision:(21, 1)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,22,1)
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(31, 1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 3:20:3:replica:decision:(21, 1)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(31, 1))
+DEBUG:root:Communicator.send: p2a:(0, 31, 2)
+DEBUG:root:Communicator.receive: 2:22:3:acceptor:p2a:(0, 23, 1)
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:21:p2b:0
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Communicator.receive: 3:20:3:replica:decision:(21, 1)
+DEBUG:root:ListenThread.run: received: 1:30:3:acceptor:p2a:(0, 31, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 23, 1), SENDER: (2, '22')
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,23,1)
+DEBUG:root:Communicator.receive: 3:acceptor:3:21:p2b:0
+DEBUG:root:Communicator.send: p2a:(0, 31, 2)
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(32, 1)
+DEBUG:root:Replica.receive: ((3, '20'),decision:(21, 1))
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Commander.receive: p2b:0, sender: (3, 'acceptor')
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:20:p2b:0
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(32, 1))
+DEBUG:root:Communicator.send: p2a:(0, 31, 2)
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:24:p2b:0
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor')]
+DEBUG:root:ListenThread.run: received: 1:21:3:replica:decision:(22, 1)
+DEBUG:root:Communicator.receive: 0:22:3:acceptor:p2a:(0, 23, 1)
+DEBUG:root:ListenThread.run: received: 2:21:3:replica:decision:(22, 1)
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(32, 2)
+DEBUG:root:Leader: Inside propose
+DEBUG:root:Communicator.receive: 0:acceptor:3:24:p2b:0
+DEBUG:root:Communicator.send: p2a:(0, 31, 2)
+DEBUG:root:----------------DECISION----------------
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:22:p2b:0
+DEBUG:root:ListenThread.run: received: 2:31:3:acceptor:p2a:(0, 32, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 23, 1), SENDER: (0, '22')
+DEBUG:root:Communicator.receive: 1:21:3:replica:decision:(22, 1)
+DEBUG:root:Replica.receive: ((1, '21'),decision:(22, 1))
+DEBUG:root:Communicator.receive: 2:21:3:replica:decision:(22, 1)
+DEBUG:root:Replica.receive: ((2, '21'),decision:(22, 1))
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(33, 1)
+DEBUG:root:ListenThread.run: received: 1:31:3:acceptor:p2a:(0, 32, 1)
+DEBUG:root:Communicator.send: decision:(22, 1)
+DEBUG:root:Commander.receive: p2b:0, sender: (0, 'acceptor')
+DEBUG:root:Leader spawning COM: (0, 32, 1)
+DEBUG:root:ListenThread.run: received: 0:31:3:acceptor:p2a:(0, 32, 1)
+DEBUG:root:Communicator.receive: 2:acceptor:3:22:p2b:0
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,23,1)
+DEBUG:root:ListenThread.run: received: 3:30:3:acceptor:p2a:(0, 31, 2)
+DEBUG:root:Communicator.send: decision:(22, 1)
+DEBUG:root:Commander()
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (2, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Commander.receive: p2b:0, sender: (2, 'acceptor')
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.send: decision:(22, 1)
+DEBUG:root:ListenThread.run: received: 2:acceptor:3:23:p2b:0
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(33, 2)
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.send: p2a:(0, 32, 1)
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(32, 2)
+DEBUG:root:Communicator.send: decision:(22, 1)
+DEBUG:root:Communicator.receive: 2:acceptor:3:23:p2b:0
+DEBUG:root:Communicator.receive: 3:22:3:acceptor:p2a:(0, 23, 1)
+DEBUG:root:ListenThread.run: received: 1:acceptor:3:21:p2b:0
+DEBUG:root:Leader.receive: ((2, 'replica'),propose:(32, 2))
+DEBUG:root:Communicator.send: p2a:(0, 32, 1)
+DEBUG:root:Commander.receive: p2b:0, sender: (2, 'acceptor')
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 23, 1), SENDER: (3, '22')
+DEBUG:root:Leader: Inside propose
+DEBUG:root:ListenThread.run: received: 3:21:3:replica:decision:(22, 1)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,23,1)
+DEBUG:root:Communicator.send: p2a:(0, 32, 1)
+DEBUG:root:COMMANDER p2b: [(1, 'acceptor'), (3, 'acceptor')]
+DEBUG:root:Communicator.receive: 1:replica:3:leader:propose:(33, 1)
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:ListenThread.run: received: 1:22:3:replica:decision:(23, 1)
+DEBUG:root:Communicator.receive: 3:21:3:replica:decision:(22, 1)
+DEBUG:root:Communicator.send: p2a:(0, 32, 1)
+DEBUG:root:Leader.receive: ((1, 'replica'),propose:(33, 1))
+DEBUG:root:ListenThread.run: received: 2:32:3:acceptor:p2a:(0, 33, 1)
+DEBUG:root:Communicator.receive: 1:23:3:acceptor:p2a:(0, 24, 1)
+DEBUG:root:Replica.receive: ((3, '21'),decision:(22, 1))
+DEBUG:root:Leader: Inside propose
+DEBUG:root:ListenThread.run: received: 0:32:3:acceptor:p2a:(0, 33, 1)
+DEBUG:root:ACCEPTOR: receive: p2a:(0, 24, 1), SENDER: (1, '23')
+DEBUG:root:Leader spawning COM: (0, 33, 1)
+DEBUG:root:ListenThread.run: received: 3:acceptor:3:22:p2b:0
+DEBUG:root:Communicator.receive: 1:22:3:replica:decision:(23, 1)
+DEBUG:root:Acceptor.run(): (b, s, p) = (0,24,1)
+DEBUG:root:Commander()
+DEBUG:root:ListenThread.run: received: 3:31:3:acceptor:p2a:(0, 32, 1)
+DEBUG:root:Replica.receive: ((1, '22'),decision:(23, 1))
+DEBUG:root:Communicator.receive: 3:acceptor:3:22:p2b:0
+DEBUG:root:ListenThread.run: received: 0:acceptor:3:25:p2b:0
+DEBUG:root:ListenThread.run: received: 2:replica:3:leader:propose:(34, 2)
+DEBUG:root:Commander.run()
+DEBUG:root:Communicator.send: p2b:0
+DEBUG:root:Communicator.receive: 2:replica:3:leader:propose:(33, 2)
+DEBUG:root:ListenThread.run: received: 1:replica:3:leader:propose:(34, 1)
+DEBUG:root:Commander.receive: p2b:0, sender: (3, 'acceptor')
+DEBUG:root:ListenThread.run: received: 1:32:3:acceptor:p2a:(0, 33, 1)
+DEBUG:root:Communicator.receive: 0:acceptor:3:25:p2b:0

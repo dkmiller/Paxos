@@ -42,7 +42,7 @@ class Commander(Thread):
 
             # Case 1
             if msg[0] == 'p2b':
-                b = int(msg[1])
+                b = ast.literal_eval(msg[1])
                 if b == self.bsp[0]:
                     waitfor.remove(sender)
                     LOG.debug("COMMANDER p2b: " + str(waitfor))
@@ -61,7 +61,7 @@ class Commander(Thread):
                         break
 
                 else:
-                    send_msg = 'preempted:%s' % b
+                    send_msg = 'preempted:' + str(b)
                     self.send(sender, send_msg)
                     LOG.debug('Commander.run: %s' % send_msg)
                     break # This will exit the while loop, ending the thread.
