@@ -38,10 +38,10 @@ class Replica(Thread):
                     continue
                 if msg[0] == "get":
                     masterid = (-1,'master')
-                    send_msg = "chatLog " + str(self.decisions[0][0]) + "-" + str(self.decisions[0][1])
-                    for decision in self.decisions[1:]:
-                        send_msg = send_msg + "," + str(decision[0]) + "-" + str(decision[1])
-                    self.send(masterid, send_msg)
+                    send_msg = "chatLog "
+                    for my_s in self.state:
+                        send_msg += str(my_s) + "-" + str(self.state[my_s]) + ","
+                    self.send(masterid, send_msg[:-1])
                     continue
 
             msg = msg.split(':')
@@ -54,15 +54,15 @@ class Replica(Thread):
             # Case 2
             if msg[0] == "decision":
                 sp = ast.literal_eval(msg[1])
-                new_list = ast.literal_eval(msg[2])
+                #new_list = ast.literal_eval(msg[2])
 
-                self.decisions = list(set(new_list).union(self.decisions))
+                ##self.decisions = list(set(new_list).union(self.decisions))
                 # decisions = decisions union [sp]
                 if sp not in self.decisions:
                     self.decisions.append(sp)
 
-                masterid = (-1,'master')
-                self.send(masterid, "ack " + str(sp[1]) + " " + str(sp[0]))
+##                masterid = (-1,'master')
+##                self.send(masterid, "ack " + str(sp[1]) + " " + str(sp[0]))
 
                 for decision in self.decisions:
                     p_dash = decision[1]
@@ -101,7 +101,7 @@ class Replica(Thread):
                 break
         
         if not incremented:
-            self.state += ',%s' % self.message_to_log
+            self.state[self.slot_num] = p
+            masterid = (-1,'master')
+            self.send(masterid, 'ack ' + str(p) + ' ' + str(self.slot_num))
             self.slot_num += 1
-            #masterid = (-1,'master')
-            #self.send(masterid, 'ack %d' % p)

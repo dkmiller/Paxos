@@ -1,7 +1,7 @@
-0 start 4 9000
-1 start 4 9001
-2 start 4 9002
-3 start 4 9003
+0 start 4 9004
+1 start 4 9005
+2 start 4 9006
+3 start 4 9007
 0 msg 0 WhatsYourName
 -1 waitForAck 0
 1 msg 1 Alice
@@ -10,6 +10,18 @@
 -1 waitForAck 1
 -1 waitForAck 2
 -1 waitForAck 3
+0 get chatLog
+1 get chatLog
+2 get chatLog
+3 get chatLog
+0 get chatLog
+1 get chatLog
+2 get chatLog
+3 get chatLog
+0 get chatLog
+1 get chatLog
+2 get chatLog
+3 get chatLog
 0 get chatLog
 1 get chatLog
 2 get chatLog

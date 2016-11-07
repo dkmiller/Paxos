@@ -34,16 +34,17 @@ class Leader(Thread):
             if msg[0] == 'propose':
                 LOG.debug("Leader: Inside propose")
                 sp = ast.literal_eval(msg[1])
-                s = int(sp[0])
-                p = int(sp[1])
-                # proposals = proposals union [sp]
-                if sp not in proposals:
-                    proposals.append(sp)
-                if active:
-                    bsp = (ballot_num, s, p)
-                    LOG.debug("Leader spawning COM: " + str(bsp)) 
-                    # Spawn commander.
-                    Commander(self.acceptors, self.replicas, bsp, self.communicator).start()
+                s = sp[0]
+                p = sp[1]
+                if all([proposal[0] != s for proposal in proposals]):
+                    # proposals = proposals union [sp]
+                    if sp not in proposals:
+                        proposals.append(sp)
+                    if active:
+                        bsp = (ballot_num, s, p)
+                        LOG.debug("Leader spawning COM: " + str(bsp)) 
+                        # Spawn commander.
+                        Commander(self.acceptors, self.replicas, bsp, self.communicator).start()
                
             # Case 2
             if msg[0] == 'adopted':
@@ -54,7 +55,7 @@ class Leader(Thread):
                 proposals = self.xor(proposals, new_sp_list)
                 LOG.debug("After xor: " + str(proposals))
                 for proposal in proposals:
-                    bsp = (ballot_num, proposal[0], proposal[1])
+                    bsp = (int(msg[1]), proposal[0], proposal[1])
                     LOG.debug("Leader spawning COM: " + str(bsp))
                     Commander(self.acceptors, self.replicas, bsp, self.communicator).start()
                 active = True

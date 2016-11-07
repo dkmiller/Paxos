@@ -140,7 +140,8 @@ def main():
     leaders = [(i, 'leader') for i in xrange(N)]
     replicas = [(i, 'replica') for i in xrange(N)]
     acceptor = Acceptor(communicator)
-    replica = Replica(leaders, '', communicator)
+    my_dict = dict()
+    replica = Replica(leaders, my_dict, communicator)
     leader = Leader(acceptors, replicas, communicator)
 
     acceptor.start()

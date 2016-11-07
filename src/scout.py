@@ -35,14 +35,13 @@ class Scout(Thread):
                 if b == self.b:
                     pvalues = list(set(bsp).union(pvalues))
                     waitfor.remove(sender)
-                    bol = (2*len(waitfor) < len(self.acceptors))
                     if 2*len(waitfor) < len(self.acceptors):
                         send_msg = 'adopted:' + str(self.b) + ":" + str(pvalues)
                         self.send(self.myleader, send_msg)
                         LOG.debug('Scout: dying')
                         break
                 else:
-                    send_msg = 'preempted:%s' % self.b
+                    send_msg = 'preempted:%s' % b
                     self.send(self.myleader, send_msg)
                     LOG.debug('Scout: dying')
                     break
