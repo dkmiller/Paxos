@@ -15,7 +15,7 @@ from replica import Replica
 # Global variables.
 incoming = {} # Hashmap of queues of messages for different subids.
 incoming_lock = Lock()
-flags = {}
+flags = []
 flags_lock = Lock()
 N = None # Number of processes.
 pid = None # Process ID of this process.
@@ -133,9 +133,6 @@ class MasterHandler(Thread):
 
 def send(pid, msg):
     global flags, flags_lock, root_port
-    with flags_lock:
-        for flag in flags:
-            flag.should_I_die(msg)
     try:
         sock = socket(AF_INET, SOCK_STREAM)
         sock.connect((address, root_port + pid))
@@ -143,6 +140,9 @@ def send(pid, msg):
         sock.close()
     except:
         LOG.debug('SOCKET: ERROR ' + str(msg))
+    with flags_lock:
+        for flag in flags:
+            flag.should_I_die(msg)
 
 def main():
     global incoming, incoming_lock, N, pid, port, root_port, send

@@ -3,7 +3,7 @@
 The master program for CS5414 three phase commit project.
 """
 
-import sys, os
+import sys
 import subprocess
 import time
 from threading import Thread, Lock
@@ -20,9 +20,14 @@ wait_for_ack_list = {}
 wait_for_ack = False
 wait_chat_log = False
 
+started_processes = {}
+
+debug = False
+
 class ClientHandler(Thread):
     def __init__(self, index, address, port):
         Thread.__init__(self)
+        self.daemon = True
         self.index = index
         self.sock = socket(AF_INET, SOCK_STREAM)
         self.sock.connect((address, port))
@@ -39,7 +44,6 @@ class ClientHandler(Thread):
                 if len(s) < 2:
                     continue
                 if s[0] == 'ack':
-                    #print l
                     mid = int(s[1])
                     ack_lock.acquire()
                     acked_list[mid] = True
@@ -60,7 +64,7 @@ class ClientHandler(Thread):
                     #sys.stderr.write(data)
                     self.buffer += data
                 except:
-                    print sys.exc_info()
+                    #print sys.exc_info()
                     self.valid = False
                     del threads[self.index]
                     self.sock.close()
@@ -99,17 +103,18 @@ def exit(exit=False):
     for k in threads:
         threads[k].close()
     subprocess.Popen(['./stopall'], stdout=open('/dev/null'), stderr=open('/dev/null'))
+    sys.stdout.flush()
     time.sleep(0.1)
-    os._exit(0)
+    sys.exit(0)
 
 def timeout():
     time.sleep(120)
     exit(True)
 
 def main():
-    global threads, wait_chat_log
-    global wait_for_ack
+    global threads, wait_chat_log, wait_for_ack, started_processes, debug
     timeout_thread = Thread(target = timeout, args = ())
+    timeout_thread.daemon = True
     timeout_thread.start()
 
     while True:
@@ -122,6 +127,15 @@ def main():
             exit()
         line = line.strip() # remove trailing '\n'
         if line == 'exit': # exit when reading 'exit' command
+            if wait_for_ack: # waitForAck wait_for_acks these commands
+                time.sleep(2)
+                if wait_for_ack:
+                    ack_lock.acquire()
+                    to_resend = wait_for_ack_list.copy()
+                    ack_lock.release()
+                    for m in to_resend:
+                        if to_resend[m] >= 0:
+                            send(to_resend[m], msgs[m])
             while wait_for_ack:
                 time.sleep(0.1)
             exit()
@@ -136,11 +150,22 @@ def main():
             ack_lock.acquire()
             if mid not in acked_list:
                 wait_for_ack = True
-                wait_for_ack_list[mid] = True
+                wait_for_ack_list[mid] = pid
             ack_lock.release()
         elif cmd == 'start':
             port = int(sp2[3])
-            subprocess.Popen(['./process', str(pid), sp2[2], sp2[3]], stdout=open('/dev/null'), stderr=open('/dev/null'))
+            # sleep a while if a process is going to recover -- to avoid the
+            # case that the process is started but the previous one hasn't
+            # crashed.
+            if pid not in started_processes:
+                started_processes[pid] = True
+            else:
+                time.sleep(2)
+            # start the process
+            if debug:
+                subprocess.Popen(['./process', str(pid), sp2[2], sp2[3]])
+            else:
+                subprocess.Popen(['./process', str(pid), sp2[2], sp2[3]], stdout=open('/dev/null'), stderr=open('/dev/null'))
             # sleep for a while to allow the process be ready
             time.sleep(1)
             # connect to the port of the pid
@@ -148,19 +173,32 @@ def main():
             threads[pid] = handler
             handler.start()
         else:
-            wait = wait_for_ack
-            while wait: # waitForAck wait_for_acks these commands
+            if wait_for_ack: # waitForAck wait_for_acks these commands
                 time.sleep(2)
-                wait = wait_for_ack
+                if wait_for_ack:
+                    ack_lock.acquire()
+                    to_resend = wait_for_ack_list.copy()
+                    ack_lock.release()
+                    for m in to_resend:
+                        if to_resend[m] >= 0:
+                            send(to_resend[m], msgs[m])
+            while wait_for_ack:
+                time.sleep(0.1)
+
             if cmd == 'msg': # message msgid msg
-                msgs[sp2[2]] = sp2[3]
+                msgs[int(sp2[2])] = sp1[1]
                 send(pid, sp1[1])
             elif cmd[:5] == 'crash': # crashXXX
                 send(pid, sp1[1])
             elif cmd == 'get': # get chatLog
-                while wait_chat_log: # get command blocks next get command
-                    time.sleep(0.1)
+                if not wait_chat_log: # sleep for the first continous get command
+                    time.sleep(1)
+                else:
+                    while wait_chat_log: # get command blocks next get command
+                        time.sleep(0.1)
                 send(pid, sp1[1], set_wait=True)
 
 if __name__ == '__main__':
+    if len(sys.argv) > 1 and sys.argv[1] == 'debug':
+        debug = True
     main()

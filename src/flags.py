@@ -8,7 +8,7 @@ def die():
 
 class Crash:
     def __init__(self):
-         die()
+        die()
 
 class CrashAfter:
     def __init__(self, word, pids):
