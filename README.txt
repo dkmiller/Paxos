@@ -24,6 +24,8 @@ same folder, and b) they are started in increasing order, before any other
 commands. Under these assumptions, our approach is to only spawn a Scout after 
 the process with "pid" N-1 has written its log file.
 
-Logs for the various processes are created in the LOG folder, which should be 
-ignored (along with its contents) while grading.
+Logs for the various processes are created in the folder LOG, which should be 
+ignored (along with its contents) while grading. However, the LOG folder 
+*needs to exist, and be writable by server.py*, otherwise our implementation 
+will not work. 
 
