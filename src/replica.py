@@ -30,9 +30,8 @@ class Replica(Thread):
                 msg = msg.split()
                 p = int(msg[1]) # Message ID
                 self.message_to_log = msg[2]
-                LOG.debug('Replica.receive: about to propose')
                 self.propose(p)
-                LOG.debug('Replica.receive: propose()')
+                LOG.debug('Replica.receive: propose() done')
 
             msg = msg.split(':')
             # Case 2
@@ -68,12 +67,7 @@ class Replica(Thread):
             self.proposals = list(set([sp]).union(self.proposals))
             for leader in self.leaders:
                 send_msg = 'propose:' + str(sp)
-                LOG.debug('Replica.propose: for: send(%s,%s)' % (leader,send_msg))
-                LOG.debug('Replica.propose: type(send) = %s' % type(self.send))
-                LOG.debug('Replica.propose: inspect(send) = ' + str(inspect.getargspec(self.send)))
                 self.send(leader, send_msg)
-                LOG.debug('Replica.propose: for: send() complete')
-        LOG.debug('Replica.propose() ends')
 
     def perform(self, p):
         incremented = False

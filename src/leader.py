@@ -20,12 +20,14 @@ class Leader(Thread):
         ballot_num = 0
         active = False
         proposals = []
-    
+   
         # Spawn a scout.
         me = self.communicator.identity('leader')
+        LOG.debug("Leader about to spawn scout")
         Scout(me, self.acceptors, ballot_num, self.communicator).start()
 
         while True:
+            LOG.debug("Leader in infinite loop")
             sender, msg = self.receive()
             LOG.debug('Leader.receive: (%s,%s)' % (sender, msg))
             msg = msg.split(':')
@@ -40,8 +42,9 @@ class Leader(Thread):
                     proposals.append(sp)
                 if active:
                     bsp = (ballot_num, s, p)
-
+                    
                     # Spawn commander.
+                    LOG("LEADER: spawning commander")
                     Commander(self.acceptors, self.replicas, bsp, self.communicator).start()
                
             # Case 2

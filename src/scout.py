@@ -8,7 +8,7 @@ class Scout(Thread):
         self.b = b
         self.myleader = myleader
 
-        self.send = send, self.receive = communicator.build('scout')
+        self.send, self.receive = communicator.build('scout')
         LOG.debug('Scout(): acceptors = ' + str(acceptors))
 
     def run(self):
@@ -17,11 +17,13 @@ class Scout(Thread):
         pvalues = []
 
         # send to all acceptors
-        for acceptor in acceptors:
+        for acceptor in self.acceptors:
             send_msg = 'p1a:%s' % self.b
+            LOG.debug("SCOUT sending to acceptor")
             self.send(acceptor, send_msg)
 
         while True:
+            LOG.debug("SCOUT in infinite loop")
             # sender = person that sent msg
             sender, msg = self.receive()
             LOG.debug('Scout.receive: (%s,%s)' % (sender, msg))

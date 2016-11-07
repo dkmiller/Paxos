@@ -26,6 +26,7 @@ class Acceptor(Thread):
                 if b > ballot_num:
                     ballot_num = b
                 send_msg = "p1b:" + str(ballot_num) + ":" + str(accepted)
+                LOG.debug("ACCEPTOR sending msg to scout")
                 self.send(sender, send_msg)
 
             # Case 2

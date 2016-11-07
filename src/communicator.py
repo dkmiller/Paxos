@@ -13,7 +13,8 @@ class Communicator:
         self.send = send
 
     # Returns an "identity" (pid, kind) for the calling thread.
-    def identity(kind):
+    def identity(self, kind):
+        LOG.debug("COMMUNICATOR: " + str(self.pid))
         return (self.pid, kind)
 
     # Returns (send, receive) functions (as a pair) for the calling thread.
