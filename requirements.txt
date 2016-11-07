@@ -1,1 +1,2 @@
-Python 2
+This project needs a *nix system with Python 2.7 installed. The files build, 
+process, and stopall need to have execute permissions. 
