@@ -14,7 +14,7 @@ class Communicator:
 
     # Returns an "identity" (pid, kind) for the calling thread.
     def identity(self, kind):
-        LOG.debug("COMMUNICATOR: " + str(self.pid))
+        LOG.debug("Communicator.build(%s,%s)" % (self.pid, kind))
         return (self.pid, kind)
 
     # Returns (send, receive) functions (as a pair) for the calling thread.
@@ -33,9 +33,8 @@ class Communicator:
         # Syntax: sender, message = receive().
         def my_receive():
             # Blocks until a message is ready.
-            LOG.debug('Communicator.receive: before block')
             content = self.incoming[subid].get(block=True)
-            LOG.debug('Communicator.receive: after block')
+            LOG.debug('Communicator.receive: %s' % content)
             content = content.split(':',4)
             sender = (int(content[0]),content[1]) # (pid, subid)
             # Skip recipient pid, subid.
@@ -43,7 +42,7 @@ class Communicator:
             return (sender, message)
 
         def my_send(recipient, message):
-            LOG.debug('Communicator.send')
+            LOG.debug('Communicator.send: %s' % message)
             recipient_pid, recipient_subid = recipient
             if recipient_subid == 'master':
                 self.mhandler.send(message)

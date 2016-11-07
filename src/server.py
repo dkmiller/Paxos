@@ -3,6 +3,7 @@ import os
 from socket import SOCK_STREAM, socket, AF_INET
 import sys
 from threading import Thread, Lock
+import time
 
 # Application code.
 from acceptor import Acceptor
@@ -43,12 +44,9 @@ class ListenThread(Thread):
                     recipient_subid = int(recipient_subid)
                 except ValueError:
                     pass
-                LOG.debug('ListenThread.run: about to put message')
                 with incoming_lock:
                     if recipient_subid in incoming:
-                        LOG.debug('ListenThread.run: inside if, subid = ' + str(recipient_subid))
                         incoming[recipient_subid].put(line)
-                        LOG.debug('ListenThread.run: empty = %s' % incoming[recipient_subid].empty())
             else:
                 try:
                     data = self.conn.recv(1024)
@@ -118,7 +116,7 @@ def send(pid, msg):
         sock.send(str(msg) + '\n')
         sock.close()
     except:
-        LOG.debug('SOCKET: ERROR')
+        LOG.debug('SOCKET: ERROR ' + str(msg))
 
 def main():
     global incoming, incoming_lock, N, pid, port, root_port, send
@@ -127,16 +125,16 @@ def main():
     pid = int(sys.argv[1])
     N = int(sys.argv[2])
     port = int(sys.argv[3])
+
     
     # Start and configure debugger
     LOG.basicConfig(filename='LOG/%d.log' % pid, level=LOG.DEBUG)
-    LOG.debug('Server.main()')
 
     # Create the necessary classes.
     mhandler = MasterHandler(pid, address, port)
     handler = WorkerThread(address, root_port + pid)
     communicator = Communicator(incoming, incoming_lock, pid, send, mhandler)
-    LOG.debug('Handlers initiated')
+    #LOG.debug('Handlers initiated')
 
     acceptors = [(i, 'acceptor') for i in xrange(N)]
     leaders = [(i, 'leader') for i in xrange(N)]
@@ -145,15 +143,15 @@ def main():
     replica = Replica(leaders, '', communicator)
     leader = Leader(acceptors, replicas, communicator)
 
-    LOG.debug('server: incoming = %s' % str(incoming))
-
-    # Spawn Paxos threads.
     acceptor.start()
-    replica.start()
-    leader.start()
-    # Spawn handler threads.
-    mhandler.start()
     handler.start()
+    mhandler.start()
+
+    while not os.path.isfile('LOG/%d.log' % (N-1)):
+        time.sleep(0.1)
+
+    leader.start()
+    replica.start()
 
     LOG.debug('main() ends IDENTITY pid: %d, port: %d ' % (pid, port))
 
