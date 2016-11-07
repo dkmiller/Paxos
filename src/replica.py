@@ -46,10 +46,10 @@ class Replica(Thread):
 
             msg = msg.split(':')
 
-            if msg[0] == "give_internal_state":
-                LOG.debug("REPLICA: GIVING INTERNAL STATE")
-                send_msg = "internal_state:" + str(self.decisions)
-                self.send(sender, send_msg)
+#            if msg[0] == "give_internal_state":
+#                LOG.debug("REPLICA: GIVING INTERNAL STATE")
+#                send_msg = "internal_state:" + str(self.decisions)
+#                self.send(sender, send_msg)
 
             # Case 2
             if msg[0] == "decision":
@@ -64,20 +64,22 @@ class Replica(Thread):
 ##                masterid = (-1,'master')
 ##                self.send(masterid, "ack " + str(sp[1]) + " " + str(sp[0]))
 
-                for decision in self.decisions:
-                    p_dash = decision[1]
-                    if self.slot_num == decision[0]:
-                        proposed = False
+                while any([decision[0] == self.slot_num for decision in self.decisions]):
+                    for decision in self.decisions:
+                        if self.slot_num == decision[0]:
+                            p_dash = decision[1]
+                            proposed = False
 
-                        for proposal in self.proposals:
-                            p_ddash = proposal[1]
-                            if self.slot_num == proposal[0]:
-                                if p_dash != p_ddash:
-                                    self.propose(p_ddash)
-                                    proposed = True
+                            for proposal in self.proposals:
+                                p_ddash = proposal[1]
+                                if self.slot_num == proposal[0]:
+                                    if p_dash != p_ddash:
+                                        self.propose(p_ddash)
+                                        proposed = True
+                                        break
 
-                        if not proposed:
-                            self.perform(p_dash)
+                            if not proposed:
+                                self.perform(p_dash)
 
     def propose(self, p):
         LOG.debug('Replica.propose: p=%s' % p)
@@ -102,6 +104,7 @@ class Replica(Thread):
         
         if not incremented:
             self.state[self.slot_num] = p
+            LOG.debug("----------------ANSWER: " + str(self.slot_num) + ", " + str(p))
             masterid = (-1,'master')
             self.send(masterid, 'ack ' + str(p) + ' ' + str(self.slot_num))
             self.slot_num += 1
