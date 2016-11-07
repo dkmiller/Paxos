@@ -1,6 +1,8 @@
 import ast
 import logging as LOG
+import random
 from threading import Thread, Lock
+import time
 
 from commander import Commander
 from scout import Scout
@@ -68,6 +70,7 @@ class Leader(Thread):
                     active = False
                     ballot_num[0] = b[0] + 1
                     # Spawn Scout.
+                    time.sleep(random.random())
                     me = self.communicator.identity('leader')
                     Scout(me, self.acceptors, ballot_num, self.communicator).start()
     

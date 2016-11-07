@@ -53,8 +53,10 @@ class Replica(Thread):
 
             # Case 2
             if msg[0] == "decision":
+                LOG.debug('Replica: DECISION-------------------------')
                 sp = ast.literal_eval(msg[1])
                 #new_list = ast.literal_eval(msg[2])
+                LOG.debug('Replica: DECISION sp = ' + str(sp))
 
                 ##self.decisions = list(set(new_list).union(self.decisions))
                 # decisions = decisions union [sp]

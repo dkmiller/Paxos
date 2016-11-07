@@ -47,8 +47,7 @@ class Commander(Thread):
                     waitfor.remove(sender)
                     LOG.debug("COMMANDER p2b: " + str(waitfor))
                     if 2*len(waitfor) < len(self.acceptors):
-                        LOG.debug("----------------DECISION----------------")
-
+                        LOG.debug('COMMANDER : going to decide')
                         # ask internal state
 #                        self.ready = True
 #                        replica = self.communicator.identity('replica')
@@ -58,6 +57,7 @@ class Commander(Thread):
                             sp = (self.bsp[1], self.bsp[2])
                             send_msg = 'decision:' + str(sp)
                             self.send(replica, send_msg)
+                            LOG.debug("Commander: DECISION(%s,%s)----------------" % (replica,send_msg))
                         break
 
                 else:
