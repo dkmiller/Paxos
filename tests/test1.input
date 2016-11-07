@@ -1,21 +1,15 @@
-0 start 6 10000
-1 start 6 10001
-2 start 6 10002
-3 start 6 10003
-4 start 6 10004
-5 start 6 10005
+0 start 4 10000
+1 start 4 10001
+2 start 4 10002
+3 start 4 10003
 0 msg 0 WhatsYourName
 -1 waitForAck 0
 1 msg 1 Alice
 2 msg 2 Bob
 3 msg 3 Carol
-4 msg 4 MMMM
-5 msg 5 MMMMM
 -1 waitForAck 1
 -1 waitForAck 2
 -1 waitForAck 3
--1 waitForAck 4
--1 waitForAck 5
 0 get chatLog
 1 get chatLog
 2 get chatLog

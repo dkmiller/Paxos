@@ -1,3 +1,4 @@
+import ast
 import logging as LOG
 from threading import Thread, Lock
 
@@ -23,7 +24,6 @@ class Scout(Thread):
             self.send(acceptor, send_msg)
 
         while True:
-            LOG.debug("SCOUT in infinite loop")
             # sender = person that sent msg
             sender, msg = self.receive()
             LOG.debug('Scout.receive: (%s,%s)' % (sender, msg))
@@ -34,13 +34,15 @@ class Scout(Thread):
                 bsp = ast.literal_eval(msg[2])
                 if b == self.b:
                     pvalues = list(set(bsp).union(pvalues))
-                    waitfor = waitfor.remove(sender)
+                    waitfor.remove(sender)
+                    bol = (2*len(waitfor) < len(self.acceptors))
                     if 2*len(waitfor) < len(self.acceptors):
                         send_msg = 'adopted:' + str(self.b) + ":" + str(pvalues)
                         self.send(self.myleader, send_msg)
+                        LOG.debug('Scout: dying')
                         break
-
                 else:
                     send_msg = 'preempted:%s' % self.b
                     self.send(self.myleader, send_msg)
+                    LOG.debug('Scout: dying')
                     break
