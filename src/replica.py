@@ -29,14 +29,25 @@ class Replica(Thread):
             if sender[1] == 'master':
                 LOG.debug('Replica.receive: received from master')
                 msg = msg.split()
-                p = int(msg[1]) # Message ID
-                self.message_to_log = msg[2]
-                self.propose(p)
-                LOG.debug('Replica.receive: propose() done')
+                
+                if msg[0] == "msg":
+                    p = int(msg[1]) # Message ID
+                    self.message_to_log = msg[2]
+                    self.propose(p)
+                    LOG.debug('Replica.receive: propose() done')
+                    continue
+                if msg[0] == "get":
+                    masterid = (-1,'master')
+                    send_msg = "chatLog " + str(self.decisions[0][0]) + "-" + str(self.decisions[0][1])
+                    for decision in self.decisions[1:]:
+                        send_msg = send_msg + "," + str(decision[0]) + "-" + str(decision[1])
+                    self.send(masterid, send_msg)
+                    continue
 
             msg = msg.split(':')
 
             if msg[0] == "give_internal_state":
+                LOG.debug("REPLICA: GIVING INTERNAL STATE")
                 send_msg = "internal_state:" + str(self.decisions)
                 self.send(sender, send_msg)
 
@@ -49,6 +60,9 @@ class Replica(Thread):
                 # decisions = decisions union [sp]
                 if sp not in self.decisions:
                     self.decisions.append(sp)
+
+                masterid = (-1,'master')
+                self.send(masterid, "ack " + str(sp[1]) + " " + str(sp[0]))
 
                 for decision in self.decisions:
                     p_dash = decision[1]
@@ -89,5 +103,5 @@ class Replica(Thread):
         if not incremented:
             self.state += ',%s' % self.message_to_log
             self.slot_num += 1
-            masterid = (-1,'master')
-            self.send(masterid, 'ack %d' % p)
+            #masterid = (-1,'master')
+            #self.send(masterid, 'ack %d' % p)

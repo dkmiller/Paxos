@@ -5,7 +5,6 @@ from threading import Thread, Lock
 class Commander(Thread):
     def __init__(self, acceptors, replicas, bsp, communicator):
         Thread.__init__(self)
-        LOG.debug('Commander()1')
         self.acceptors = acceptors
         self.replicas = replicas
         self.bsp = bsp
@@ -32,6 +31,7 @@ class Commander(Thread):
             if self.ready:
                 if msg[0] == 'internal_state':
                     internal_state = ast.literal_eval(msg[1])
+                    LOG.debug("COMMANDER: Sending Decision >>>>>>>>>")
                     for replica in self.replicas:
                         sp = (self.bsp[1], self.bsp[2])
                         send_msg = 'decision:' + str(sp) + ":" + str(internal_state)
@@ -43,9 +43,11 @@ class Commander(Thread):
             # Case 1
             if msg[0] == 'p2b':
                 b = int(msg[1])
-                if b == self.b:
+                if b == self.bsp[0]:
                     waitfor.remove(sender)
+                    LOG.debug("COMMANDER p2b: " + str(waitfor))
                     if 2*len(waitfor) < len(self.acceptors):
+                        LOG.debug("----------------DECISION----------------")
 
                         # ask internal state
                         self.ready = True

@@ -29,7 +29,7 @@ class Acceptor(Thread):
                 self.send(sender, send_msg)
 
             # Case 2
-            elif msg[1] == "p2a":
+            elif msg[0] == "p2a":
                 bsp = ast.literal_eval(msg[1])
                 b = bsp[0]
                 s = bsp[1]
