@@ -17,7 +17,8 @@ class Leader(Thread):
 
     def run(self):
         LOG.debug('Leader.run()')
-        ballot_num = (0,self.communicator.pid())
+        ballot_num = (0,self.communicator.identity('leader')[0])
+        LOG.debug("BALLOT: " + str(ballot_num))
         active = False
         proposals = []
    
