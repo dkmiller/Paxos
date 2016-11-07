@@ -59,11 +59,11 @@ class Replica(Thread):
                             p_ddash = proposal[1]
                             if self.slot_num == proposal[0]:
                                 if p_dash != p_ddash:
-                                    propose(p_ddash)
+                                    self.propose(p_ddash)
                                     proposed = True
 
                         if not proposed:
-                            perform(p_dash)
+                            self.perform(p_dash)
 
     def propose(self, p):
         LOG.debug('Replica.propose: p=%s' % p)

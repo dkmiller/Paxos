@@ -32,6 +32,7 @@ class Leader(Thread):
             
             # Case 1
             if msg[0] == 'propose':
+                LOG.debug("Leader: Inside propose")
                 sp = ast.literal_eval(msg[1])
                 s = int(sp[0])
                 p = int(sp[1])
@@ -40,16 +41,21 @@ class Leader(Thread):
                     proposals.append(sp)
                 if active:
                     bsp = (ballot_num, s, p)
-                    
+                    LOG.debug("Leader spawning COM: " + str(bsp)) 
                     # Spawn commander.
                     Commander(self.acceptors, self.replicas, bsp, self.communicator).start()
                
             # Case 2
             if msg[0] == 'adopted':
+                LOG.debug("--------------------ADOPTED-----------------")
+                LOG.debug("PROPOSALS: " + str(proposals))
                 pvalues = ast.literal_eval(msg[2])
-                proposals = xor(proposals, pmax(pvalues))
+                new_sp_list = self.pmax_op(pvalues)
+                proposals = self.xor(proposals, new_sp_list)
+                LOG.debug("After xor: " + str(proposals))
                 for proposal in proposals:
                     bsp = (ballot_num, proposal[0], proposal[1])
+                    LOG.debug("Leader spawning COM: " + str(bsp))
                     Commander(self.acceptors, self.replicas, bsp, self.communicator).start()
                 active = True
                 
@@ -63,7 +69,8 @@ class Leader(Thread):
                     me = self.communicator.identity('leader')
                     Scout(me, self.acceptors, ballot_num, self.communicator).start()
     
-    def pmax(pvals):
+    def pmax_op(self, pvals):
+        LOG.debug("PMAX: " + str(pvals))
         new_sp_list = []
         slots_done = []
         for bsp in pvals:
@@ -83,7 +90,7 @@ class Leader(Thread):
             slots_done.append(s)
         return new_sp_list
     
-    def xor(x, y):
+    def xor(self, x, y):
         new_sp_list = []
         slots_done = []
         for sp in y:

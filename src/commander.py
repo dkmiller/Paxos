@@ -5,10 +5,12 @@ from threading import Thread, Lock
 class Commander(Thread):
     def __init__(self, acceptors, replicas, bsp, communicator):
         Thread.__init__(self)
+        LOG.debug('Commander()1')
         self.acceptors = acceptors
         self.replicas = replicas
         self.bsp = bsp
         self.ready = False
+        self.communicator = communicator
 
         self.send, self.receive = communicator.build('commander')
         LOG.debug('Commander()')

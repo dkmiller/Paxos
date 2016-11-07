@@ -22,7 +22,7 @@ class Communicator:
         with self.incoming_lock:
             if kind == 'commander':
                 subid = self.commander_seq
-                commander_seq += 1
+                self.commander_seq += 1
             else:
                 subid = kind
             if subid not in self.incoming:
