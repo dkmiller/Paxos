@@ -22,9 +22,10 @@ class Replica(Thread):
         LOG.debug('Replica.run()')
 
         while True:
+            LOG.debug("REPLICA_LOOP")
             sender, msg = self.receive()
             LOG.debug('Replica.receive: (%s,%s)' % (sender, msg))
-
+            LOG.debug('ASH_REPLICA ' + str(sender) + " " + str(msg))
             # Case 1: request
             if sender[1] == 'master':
                 LOG.debug('Replica.receive: received from master')
@@ -70,18 +71,15 @@ class Replica(Thread):
                     for decision in self.decisions:
                         if self.slot_num == decision[0]:
                             p_dash = decision[1]
-                            proposed = False
 
                             for proposal in self.proposals:
                                 p_ddash = proposal[1]
                                 if self.slot_num == proposal[0]:
                                     if p_dash != p_ddash:
                                         self.propose(p_ddash)
-                                        proposed = True
                                         break
 
-                            if not proposed:
-                                self.perform(p_dash)
+                            self.perform(p_dash)
 
     def propose(self, p):
         LOG.debug('Replica.propose: p=%s' % p)
